@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{{ current time }} 
+
+<!-- <h1>{{ desired end location }} {{ desired time }}</h1> -->
+
+
+<!-- values are selected from Google Places API -->
+<form action= "url-to-submit-form-to", methods=['POST']>
+    Please fill out the following fields:
+    <label for="end_location">End Address: <input type= "text" name = "end_location"></label>
+    <br>
+    <label for="arrival_time">Desired Time of Arrival: <inpute type="text" name="arrival_time"></label>
+    <br>
+    <br>
+    <p> Please select activities from the selection below: </p>
+        <input type="checkbox" name="type_of_activity" value="aquarium"> Aquarium
+        <input type="checkbox" name="type_of_activity" value="art_gallery"> Art Gallery
+        <input type="checkbox" name="type_of_activity" value="atm"> <!-- there is also an option for bank-->
+        <input type="checkbox" name="type_of_activity" value="bakery"> Bakery
+        <input type="checkbox" name="type_of_activity" value="book_store"> Book Store
+        <input type="checkbox" name="type_of_activity" value="cafe"> Cafe
+        <input type="checkbox" name="type_of_activity" value="car_wash"> Car Wash
+        <input type="checkbox" name="type_of_activity" value="clothing_store"> Clothing Store
+        <input type="checkbox" name="type_of_activity" value="department_store"> Department Store
+        <input type="checkbox" name="type_of_activity" value="gas_station"> Gas Station
+        <input type="checkbox" name="type_of_activity" value="gym"> Gym
+        <input type="checkbox" name="type_of_activity" value="library"> Library
+        <!-- <input type="checkbox" name="type_of_activity" value="movie_theatre"> -->
+        <input type="checkbox" name="type_of_activity" value="museum"> Museum
+        <input type="checkbox" name="type_of_activity" value="park"> Park
+        <input type="checkbox" name="type_of_activity" value="pharmacy"> Pharmacy
+        <input type="checkbox" name="type_of_activity" value="post_office"> Post Office
+        <input type="checkbox" name="type_of_activity" value="restaurant"> Restaurant
+        <input type="checkbox" name="type_of_activity" value="shopping_mall"> Shopping Mall
+        <input type="checkbox" name="type_of_activity" value="spa"> Spa
+        <input type="checkbox" name="type_of_activity" value="zoo"> Zoo
+    
+
+<input type= "submit" value="Let's get started">
+</form>
+
+
+{% endblock %}

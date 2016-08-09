@@ -1,0 +1,9 @@
+As a user, they will be directed to the homepage which will display the current time. They will input the desired location and the end time. There will also be able to select activity types. 
+
+If the user wants to have a direct route (no stops), they will be redirected to a map page that shows their route.
+
+If the user decides to select activities, they will be prompted to confirm from a filtered list 
+(of activity types they had suggested) pit stops they want to take.  
+
+The user will be brought to a final page with their suggested route with stops along the way within their timeframe.
+    -the app will select from what is open and the activity type and along the way
