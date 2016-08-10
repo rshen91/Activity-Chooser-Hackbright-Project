@@ -11,11 +11,11 @@ def load_google_places_id():
     print "Google Places id Place Types"
 
     for i, row in enumerate(open("templates/google_places_place_types")):
-        row = row.rstrip().split
-        google_places_id = row
+        row = row.rstrip().split("|")
+        google_places_id, name, deprecated = row
 
         google_places_id = Preference(google_places_id=google_places_id,
-            name=name, deprecated=deprecated)
+                                        name=name, deprecated=deprecated)
 
         db.session.add(google_places_id)
 
