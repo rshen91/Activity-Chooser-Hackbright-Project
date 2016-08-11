@@ -10,14 +10,23 @@ def load_google_places_id():
 
     print "Google Places id Place Types"
 
-    for i, row in enumerate(open("templates/google_places_place_types")):
-        row = row.rstrip().split("|")
-        google_places_id, name, deprecated = row
+    for i, row in enumerate(open("google_places_place_types")):
+        row = row.rstrip()
+        print row
 
-        google_places_id = Preference(google_places_id=google_places_id,
-                                        name=name, deprecated=deprecated)
+        google_places_id, name, deprecated = row.split("|")
+        
+        # if the len(deprecated) > 0:
+        #   the row is deprecated and NULL should be false
 
-        db.session.add(google_places_id)
+        # changed so that the value is 0s and 1s now 
+
+        google_place = Preference(name=name,
+                                  google_places_id=google_places_id, 
+                                  deprecated=deprecated)
+                                        # deprecated=deprecated)
+
+        db.session.add(google_place)
 
         if i % 100 == 0:
             print i
@@ -39,7 +48,6 @@ def set_val_user_id():
 
 if __name__ == "__main__":
     connect_to_db(app)
-    db.create_all()
 
     load_google_places_id()
-    set_val_user_id
+    # set_val_user_id

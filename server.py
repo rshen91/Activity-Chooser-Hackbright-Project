@@ -8,7 +8,6 @@ from model import db, connect_to_db, Trip, Preference, TripPreference
 app = Flask(__name__)
 
 app.secret_key = "ABC"
-#request handout for requests library
 
 @app.route('/')
 def homepage():
@@ -18,46 +17,42 @@ def homepage():
     the desired location and the end time. There will also be activity 
     selection in a checklist for me to select. """
 
-    return render_template("homepage.html")
+    # Returns a unicode list of the human readable names
+    names=db.session.query(Preference.name).all()
 
-#each trip will have it's own id and need to be stored in session similarly to user_id for login
+    return render_template("homepage.html", names=names)
 
 #this function will take the variables from the homepage and be used to soon ask the user if they want a direct route
-@app.route('/submission', methods= ["POST"])
+@app.route('/submission', methods= ['POST'])
 def variables():
-     """ Take the variables from the homepage""" 
+    """ Take the variables from the homepage""" 
 
-     #Get the form variables
-     end_location = request.form["end_location"]
-     arrival_time = request.form["arrival_time"]
-     activity_type = request.form["activity_type"]
+    #Get the form variables
+    end_location = request.form.get["end_location"]
+    print end_location
+    arrival_time = request.form.get["arrival_time"]
+    print arrival_time
+    activity_type = request.form.get["activity_type"] #will this be a list in a list?
+    print activity_type
 
-     session["trip_id"] = trip.trip_id
-     for activity in activity_type:
+    #store trip similar to user in a session
+    session["trip_id"] = trip.trip_id
+    
+    #store the activity preferences in the database
+    for activity in activity_type:
         act = Preferences(trip_id, activity_type=activity_type)
 
-    # db.session.add(trip_id)
+    db.session.add(act)
+    db.session.add(trip_id)
     # db.session.commit()
 
 #function to list through Google places types gas etc. 
 
-#open now doesnt get stored in the db 
-#     # user's current_address=
-#     # will need to convert the user current location to lat/long for google maps API
-#     # geopy https://pypi.python.org/pypi/geopy
+# geocoding by place name from Google Maps lecture 
 
-# @app.route('direct_or_not.html', methods=["POST"])
-# def direct_route():
-#     """Show the direct or not choice"""
-#     # if direct_reponse == yes:
-#     #     return render_template("direct_route.html")
-#     # else:
-#     #     return render_template("decision_for_activities.html")
-
-# #function to redirect once done with that request?
-
-# #Nina's lightning talk has info about getting json 
-
+# function using Google Directions and Google Places API to see from 
+# what the user selected if it's along their way and prompt them to confirm 
+# activity they want 
 
 # #Google Places API 
 # #separate parameters by &
@@ -74,7 +69,6 @@ def variables():
 # # function that takes the json dictionary and takes the information needed for 
 
 if __name__ == "__main__":
-    # app.run(debug=True)
     DebugToolbarExtension(app)
     connect_to_db(app)
-    app.run(debug=True, host='0.0.0.0', port=5004)
+    app.run(debug=True, host='0.0.0.0', port=5000) #vagrant requires port to be 5000

@@ -29,7 +29,7 @@ class TripPreference(db.Model):
     __tablename__ = "trip_preferences"
 
     trip_preference_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    preference_id = db.Column(db.String(100), db.ForeignKey('preferences.preference_id'), autoincrement=True, primary_key=True)
+    preference_id = db.Column(db.Integer, db.ForeignKey('preferences.preference_id'), autoincrement=True, primary_key=True)
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.trip_id'), nullable=False)
 
     def __repr__(self):
@@ -42,7 +42,7 @@ class Preference(db.Model): #lookup table
 
     __tablename__ = "preferences"
     
-    preference_id = db.Column(db.String(5), primary_key=True) 
+    preference_id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
     name = db.Column(db.String(100), nullable=False) #human readable activity
     google_places_id = db.Column(db.String(100), nullable=False)
     deprecated = db.Column(db.Boolean, default=False) #if that preference is still available on google places, supermarkets
@@ -61,6 +61,7 @@ def connect_to_db(app):
 
     # Configure to use our PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///project'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #    app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)

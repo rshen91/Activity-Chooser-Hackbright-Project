@@ -1,57 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<link rel="stylesheet" href="stylesheet.css">
 
 <!-- values are selected from Google Places API -->
-<form action= "/submission", methods=['POST']>
+<form action= "/submission" methods=['POST']>
     Please fill out the following fields:
     <br>
     <br>
     <br>
-    <label for="end_location">Destination Address: <input type= "text" name = "end_location"></label>
+        <label for="end_location">Destination Address: <input type= "text" name = "end_location"></label>
     <br>
-    <label for="arrival_time">Desired Time of Arrival: <input type="text" name="arrival_time"></label>
+        <label for="arrival_time">Desired Time of Arrival: <input type="time" name="arrival_time"></label>
     <br>
     <br>
-    {% if name %}
+
     Please select activities from the selection below:
     <br>
-        <ul>
-        {% for name in names %}
-            <li> 
-                <input type = "checkbox" name="{{Preference.name}}" value="{{ name }}"> {{Preference.name}} </li>
+    <!-- THIS WORKS!!!! TEARS OF JOY -->
+        <div id="activity_type">
+            {% for name in names %} 
+            <br>
+                <input type = "checkbox" name="{{ name.name }}" value="activity_type"> {{ name.name }}
+            <br>
         {% endfor %}
-        </ul>
-    {% endif %}
-    <!-- for loop this sucker Select all from preferences that are currently active -->
-    <!-- <p> Please select activities from the selection below: </p>
-        <input type="checkbox" name="activity_type" value="aquarium"> Aquarium
-        <input type="checkbox" name="activity_type" value="art_gallery"> Art Gallery
-<input type="checkbox" name="activity_type" value="bank"> Bank
-    there is also an option for atm-->
-<!--         <input type="checkbox" name="activity_type" value="bakery"> Bakery
-        <input type="checkbox" name="activity_type" value="book_store"> Book Store
-        <input type="checkbox" name="activity_type" value="cafe"> Cafe
-        <input type="checkbox" name="activity_type" value="car_wash"> Car Wash
-        <input type="checkbox" name="activity_type" value="clothing_store"> Clothing Store
-        <input type="checkbox" name="activity_type" value="department_store"> Department Store
-        <input type="checkbox" name="activity_type" value="gas_station"> Gas Station
-        <input type="checkbox" name="activity_type" value="gym"> Gym
-        <input type="checkbox" name="activity_type" value="library"> Library -->
-        <!-- <input type="checkbox" name="type_of_activity" value="movie_theatre"> -->
-<!--         <input type="checkbox" name="activity_type" value="museum"> Museum
-        <input type="checkbox" name="activity_type" value="park"> Park
-        <input type="checkbox" name="activity_type" value="pharmacy"> Pharmacy
-        <input type="checkbox" name="activity_type" value="post_office"> Post Office
-        <input type="checkbox" name="activity_type" value="restaurant"> Restaurant
-        <input type="checkbox" name="activity_type" value="shopping_mall"> Shopping Mall
-        <input type="checkbox" name="activity_type" value="spa"> Spa
-        <input type="checkbox" name="activity_type" value="zoo"> Zoo --> 
+    </div>
+
 <br>
 <br>
 <br>
 <input type= "submit" value="Let's get started">
 </form>
 
+<!-- from the google maps lecture  -->
+<div id="map"> 
+    <script>
+    function initMap(position) {
+        // position.coords from HTML5 Geolocation w3schools.com
+        var map_of_user = {position.coords.latitude + "," + position.coords.longitude};
 
+        var map = new google.maps.Map(document.getElementById('map')), {
+        center: map_of_user,
+        zoom: 8,
+    };
+    </script>
+</div>
 {% endblock %}
