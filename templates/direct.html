@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+template for prompt if they want a direct route 
+
+<div>
+    <script>
+    function ask_user_direct() {
+        var answer = prompt("Do you want to have activities built into your trip or would you prefer a direct route?")
+        if (answer == "yes") {
+            // show the map with the direct route
+            document.getElementById("mapidinthehtml");
+        } else {
+            document.getElementById("")
+        }
+    };
+    </script>
+</div>
+
+{% endblock %}
