@@ -4,6 +4,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 import requests
 # from geopy.geocoders import Nominatim
 from model import db, connect_to_db, Trip, Preference, TripPreference
+import helper_functions
 
 app = Flask(__name__)
 
@@ -18,55 +19,54 @@ def homepage():
     selection in a checklist for me to select. """
 
     # Returns a unicode list of the human readable names
-    names=db.session.query(Preference.name).all()
+    names = db.session.query(Preference.name).all()
+    
+    # flask uses Jinja to fill in the blanks and return a string of HTML
+    html = render_template("homepage.html", names=names)
 
-    return render_template("homepage.html", names=names)
+    #flask sends the fully-formed HTML string down the pipes to the front end
+    return html
 
 #this function will take the variables from the homepage and be used to soon ask the user if they want a direct route
-@app.route('/submission', methods= ['POST'])
+@app.route('/submission', methods=['POST'])
 def variables():
     """ Take the variables from the homepage""" 
 
-    #Get the form variables
-    end_location = request.form.get["end_location"]
-    print end_location
-    arrival_time = request.form.get["arrival_time"]
-    print arrival_time
-    activity_type = request.form.get["activity_type"] #will this be a list in a list?
-    print activity_type
+    # Get the form variables
+    # this is a string
+    end_location = request.form["end_location"]
+    #this is a string too
+    arrival_time = request.form["arrival_time"]
+    activity_types = request.form.getlist("activity_type") #tried activity_type and gave an empty list 
+    #this needs to be in parantheses because it's a list not a dict.
+    print activity_types #prints an empty list
 
-    #store trip similar to user in a session
-    session["trip_id"] = trip.trip_id
+    #store the activity preferences in the database this might need to be on JS like with favorites
+    # act_lst= []
+    # for activity in activity_type:
+    #     act = Preferences(trip_id, activity_type=activity_type)
+    #     act_lst.append(act)
+    #     db.session.add(act)
+  
+    # activity_lst = []
+    # act = Preference(trip_id, activity_type=activity_type)
+    # for act in {{ name.name }}:
+    #     valued = request.form.get(checkbox)
+    #     if value:
+    #         activity_lst.append(act)
+    #         db.session.add(act)
+
+    # print act_lst #this prints an empty list
     
-    #store the activity preferences in the database
-    for activity in activity_type:
-        act = Preferences(trip_id, activity_type=activity_type)
+    db.session.commit()
 
-    db.session.add(act)
-    db.session.add(trip_id)
-    # db.session.commit()
+    # where do I want this information to go?
+    return render_template("direct.html", 
+                            end_location=end_location, 
+                            arrival_time=arrival_time,
+                            activity_types=activity_types)
 
-#function to list through Google places types gas etc. 
 
-# geocoding by place name from Google Maps lecture 
-
-# function using Google Directions and Google Places API to see from 
-# what the user selected if it's along their way and prompt them to confirm 
-# activity they want 
-
-# #Google Places API 
-# #separate parameters by &
-# #os.environ needed for the secrets.sh
-# url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-# payload = {'key1': 'value1', 'key2':'value2'} 
-# r = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', data=payload)
-
-# #waypoints are stops between two destinations!
-# https://maps.googleapis.com/maps/api/directions/json?origin=Boston,MA&destination=Concord,MA&waypoints=Charlestown,MA|Lexington,MA&key=YOUR_API_KEY
-
-# #need to find code for the user's current location 
-
-# # function that takes the json dictionary and takes the information needed for 
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)

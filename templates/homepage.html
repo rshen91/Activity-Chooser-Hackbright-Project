@@ -3,14 +3,14 @@
 <link rel="stylesheet" href="stylesheet.css">
 
 <!-- values are selected from Google Places API -->
-<form action= "/submission" methods=['POST']>
+<form action= "/submission" method="POST">
     Please fill out the following fields:
     <br>
     <br>
     <br>
         <label for="end_location">Destination Address: <input type= "text" name = "end_location"></label>
     <br>
-        <label for="arrival_time">Desired Time of Arrival: <input type="time" name="arrival_time"></label>
+        <label for="arrival_time">Desired Time of Arrival: <input type="time" name="arrival_time" value="16:00"></label>
     <br>
     <br>
 
@@ -20,7 +20,7 @@
         <div id="activity_type">
             {% for name in names %} 
             <br>
-                <input type = "checkbox" name="{{ name.name }}" value="activity_type"> {{ name.name }}
+                <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
             <br>
         {% endfor %}
     </div>
@@ -31,9 +31,35 @@
 <input type= "submit" value="Let's get started">
 </form>
 
-<!-- from the google maps lecture  -->
-<div id="map"> 
+
+<div> 
     <script>
+    // Need a loop to see which activities are selected JavaScript 3 with this
+    // function addToActivityList (evt) {
+    //     $.post('/save_activity', {'id': this.id});
+    // }
+
+    // $("activity_type").on('click', addToActivityList);
+    // </script>
+</div> 
+<!-- from the google maps lecture and developers.google.com -->
+<div id="map">
+    <script>
+    // locating the user
+    window.onload = function() {
+        var startPos;
+        var geoSuccess = function(position) {
+            startPos = position;
+            document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+            document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+        }
+        var geoError = function(error) {
+            console.log('Error occured. Error code: ' + error.code);
+        }       
+        };
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+    };
+
     function initMap(position) {
         // position.coords from HTML5 Geolocation w3schools.com
         var map_of_user = {position.coords.latitude + "," + position.coords.longitude};
