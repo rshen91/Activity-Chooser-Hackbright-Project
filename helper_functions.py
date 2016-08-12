@@ -4,6 +4,14 @@ from flask_debugtoolbar import DebugToolbarExtension
 import requests
 # from geopy.geocoders import Nominatim
 from model import db, connect_to_db, Trip, Preference, TripPreference
+import googlemaps
+from datetime import datetime
+
+# gmaps = google.maps.Client(key=)
+    # https://developers.google.com/maps/documentation/geocoding/intro
+
+    # https://maps.googleapis.com/maps/api/geocode/json?address=Winnetka&key=YOUR_API_KEY
+    # https://developers.google.com/maps/web-services/client-library
 
 #store trip similar to user in a session
 def add_trip_to_session():
@@ -14,21 +22,30 @@ def add_trip_to_session():
     db.session.add(trip_id)
     db.session.commit()
 
-    return trip_id
+    return redirect("/") #trip_id
 
-#function to list through Google places types gas etc. 
-# def add_to_activity_list():
-#     """Mark which activity types the user selected"""
-    
-#     activity_lst = []
-#     act = Preferences(trip_id, activity_type=activity_type)
-#     for act in {{ name.name }}:
-#         valued = request.form.get(checkbox)
-#         if value:
-#             activity_lst.append(act)
-#             db.session.add(act)
+# need a function to convert the end address to lat/long
+# http://maps.googleapis.com/maps/api/geocode/json?address="end_location"&key=
 
-#     return checkbox, activity_lst
+def convert_address_to_latlong(end_location):
+    """"This function takes the user's input for where they want to go and convert_address_to_latlong
+
+    it to latitude and longitude coordinates"""
+#     pip install geocoder 
+
+    r = geocoder.google(end_location)
+    return r.latlng 
+
+
+#need a function to find the current location of the user
+#HTML 5 geolocation?
+
+#need a function to ask the user if they want a direct route
+
+#need to find out what activities are near them based on their location and the end location
+#will take in the activity_types, the end_location and the user's current location
+#API parameters to see a bubble around it?
+
 
 
 # geocoding by place name from Google Maps lecture 

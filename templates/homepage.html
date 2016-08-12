@@ -23,7 +23,7 @@
                 <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
             <br>
         {% endfor %}
-    </div>
+        </div>
 
 <br>
 <br>
@@ -31,43 +31,13 @@
 <input type= "submit" value="Let's get started">
 </form>
 
+<div id='map'>
 
-<div> 
-    <script>
-    // Need a loop to see which activities are selected JavaScript 3 with this
-    // function addToActivityList (evt) {
-    //     $.post('/save_activity', {'id': this.id});
-    // }
-
-    // $("activity_type").on('click', addToActivityList);
-    // </script>
 </div> 
 <!-- from the google maps lecture and developers.google.com -->
+<!-- html5 geocoder -->
 <div id="map">
-    <script>
-    // locating the user
-    window.onload = function() {
-        var startPos;
-        var geoSuccess = function(position) {
-            startPos = position;
-            document.getElementById('startLat').innerHTML = startPos.coords.latitude;
-            document.getElementById('startLon').innerHTML = startPos.coords.longitude;
-        }
-        var geoError = function(error) {
-            console.log('Error occured. Error code: ' + error.code);
-        }       
-        };
-        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-    };
-
-    function initMap(position) {
-        // position.coords from HTML5 Geolocation w3schools.com
-        var map_of_user = {position.coords.latitude + "," + position.coords.longitude};
-
-        var map = new google.maps.Map(document.getElementById('map')), {
-        center: map_of_user,
-        zoom: 8,
-    };
-    </script>
+    <script src="/static/working_name.js"></script>
+    
 </div>
 {% endblock %}

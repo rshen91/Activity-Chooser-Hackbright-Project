@@ -5,11 +5,13 @@ import requests
 # from geopy.geocoders import Nominatim
 from model import db, connect_to_db, Trip, Preference, TripPreference
 import helper_functions
+import geocoder
 
 app = Flask(__name__)
 
 app.secret_key = "ABC"
 
+#ROUTES TO DISPLAY PAGES - HELPER FUNCTIONS IN SEPARATE FILE 
 @app.route('/')
 def homepage():
     """Show the homepage to the user.
@@ -22,13 +24,13 @@ def homepage():
     names = db.session.query(Preference.name).all()
     
     # flask uses Jinja to fill in the blanks and return a string of HTML
-    html = render_template("homepage.html", names=names)
-
     #flask sends the fully-formed HTML string down the pipes to the front end
-    return html
+    return render_template("homepage.html", names=names)
 
-#this function will take the variables from the homepage and be used to soon ask the user if they want a direct route
-@app.route('/submission', methods=['POST'])
+
+@app.route('/submission', methods=['POST']) 
+#how do you get the variables from a post request without rendering a page
+#add to the trip_id table 
 def variables():
     """ Take the variables from the homepage""" 
 
@@ -37,36 +39,30 @@ def variables():
     end_location = request.form["end_location"]
     #this is a string too
     arrival_time = request.form["arrival_time"]
-    activity_types = request.form.getlist("activity_type") #tried activity_type and gave an empty list 
-    #this needs to be in parantheses because it's a list not a dict.
-    print activity_types #prints an empty list
+    #fixed the jinja loop in homepage.html to include the value that will be 
+    #sent to the back end and assigned activity_types
+    activity_types = request.form.getlist("activity_type") 
 
-    #store the activity preferences in the database this might need to be on JS like with favorites
-    # act_lst= []
-    # for activity in activity_type:
-    #     act = Preferences(trip_id, activity_type=activity_type)
-    #     act_lst.append(act)
-    #     db.session.add(act)
-  
-    # activity_lst = []
-    # act = Preference(trip_id, activity_type=activity_type)
-    # for act in {{ name.name }}:
-    #     valued = request.form.get(checkbox)
-    #     if value:
-    #         activity_lst.append(act)
-    #         db.session.add(act)
+    #gives the lat/lng for the address the user inputs in the homepage
+    r = geocoder.google(end_location)
 
-    # print act_lst #this prints an empty list
-    
     db.session.commit()
-
-    # where do I want this information to go?
+    
+    #right now this is going to direct.html
     return render_template("direct.html", 
                             end_location=end_location, 
                             arrival_time=arrival_time,
-                            activity_types=activity_types)
+                            activity_types=activity_types,
+                            latlng=r.latlng)
 
 
+
+
+#route to render a direct route html page with a map of the direct route
+
+#render a page with the available activities along their route for them to select
+
+#route to render a route with activities and a map with markers
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)

@@ -37,7 +37,7 @@ class TripPreference(db.Model):
 
         return "<Trip Preferences id =%s Preferences id =%s Trip id =%s>" %(self.trip_preference_id, self.preferences_id, self.trip_id)
 
-class Preference(db.Model): #lookup table
+class Preference(db.Model): 
     """To ensure referential integrity amongst trip preferences (think BookGenre) """
 
     __tablename__ = "preferences"
