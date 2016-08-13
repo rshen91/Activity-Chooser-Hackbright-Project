@@ -1,16 +1,25 @@
 //all the html will load before javascript is run
 $(document).ready(function () {
-
-// locating the user
-//     //call the function for the user html5 geolocation
-//     navigator.geolocation.getCurrentPosition(showPosition);
 //getting a map in the homepage
     var hackbright = {lat: 37.7886679, lng: -122.4114987}
 
     var map = new google.maps.Map(document.getElementById('map'), {
             center: hackbright,
             zoom: 8,
-    });
+    });    
+
+// locating the user
+//     //call the function for the user html5 geolocation
+    function showPosition(location) {
+        console.log(location);
+    }
+// html hidden input - I have a bunch of stuff I want to pass along but I dont want the user to type it in 
+    navigator.geolocation.getCurrentPosition(showPosition);
+
+//JQuery changes the DOM here to change the hidden input value to attri(value="lat")
+                                                // atrr(value="lng")
+
+
 
 //     window.onload = function() {
 //         var startPos;
@@ -44,9 +53,14 @@ $(document).ready(function () {
 //         } else {
 //             document.getElementById("")
 //         }
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    
-    )};
+    var markerOptions = {
+        position new google.maps.LatLng( , )
+    };
+    var marker = new google.maps.Marker(markerOptions);
+    marker.setMap(map);  
+        )};
 
 
 

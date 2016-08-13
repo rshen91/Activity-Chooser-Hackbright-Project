@@ -1,4 +1,4 @@
-import os #for the secrets.sh file 
+import os # for the secrets.sh file 
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
@@ -37,14 +37,15 @@ def convert_address_to_latlong(end_location):
     return r.latlng 
 
 
-#need a function to find the current location of the user
-#HTML 5 geolocation?
+# need a function to find the current location of the user
+# HTML 5 geolocation?
 
-#need a function to ask the user if they want a direct route
+# need a function to ask the user if they want a direct route
 
-#need to find out what activities are near them based on their location and the end location
-#will take in the activity_types, the end_location and the user's current location
-#API parameters to see a bubble around it?
+
+
+# will take in the activity_types, the end_location and the user's current location
+# API parameters to see a bubble around it?
 
 
 
@@ -54,9 +55,9 @@ def convert_address_to_latlong(end_location):
 # what the user selected if it's along their way and prompt them to confirm 
 # activity they want 
 
-# #Google Places API 
-# #separate parameters by &
-# #os.environ needed for the secrets.sh
+# Google Places API 
+# separate parameters by &
+# os.environ needed for the secrets.sh
 # url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
 # payload = {'key1': 'value1', 'key2':'value2'} 
 # r = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', data=payload)

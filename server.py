@@ -1,4 +1,4 @@
-import os #for the secrets.sh file 
+import os # for the secrets.sh file?
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
@@ -6,12 +6,21 @@ import requests
 from model import db, connect_to_db, Trip, Preference, TripPreference
 import helper_functions
 import geocoder
+import SERVER_KEY from secrets.sh
+import json
 
 app = Flask(__name__)
 
 app.secret_key = "ABC"
 
-#ROUTES TO DISPLAY PAGES - HELPER FUNCTIONS IN SEPARATE FILE 
+# GOOGLE API URLS
+# concatenate the key into the functions that send the request to the url
+maps_url = https://maps.googleapis.com/maps/api/directions/json? #&key=SERVER_KEY
+
+
+
+
+# ROUTES TO DISPLAY PAGES - HELPER FUNCTIONS IN SEPARATE FILE 
 @app.route('/')
 def homepage():
     """Show the homepage to the user.
@@ -29,8 +38,8 @@ def homepage():
 
 
 @app.route('/submission', methods=['POST']) 
-#how do you get the variables from a post request without rendering a page
-#add to the trip_id table 
+# how do you get the variables from a post request without rendering a page
+# add to the trip_id table 
 def variables():
     """ Take the variables from the homepage""" 
 
@@ -55,12 +64,34 @@ def variables():
                             activity_types=activity_types,
                             latlng=r.latlng)
 
+# need to find out what activities are near them based on their location and the end location
+@app.route(" ")
+def whats_near("/sendRequest/<string:query>"):
+    """Hopefully this function will call the Google Places API and return a list(?) 
+    of what locations are near the user"""
 
+    SERVER_KEY = os.environ["SERVER_KEY"] #gets the server key and assigns it to a variable
+    places_url = https://maps.googleapis.com/maps/api/place/nearbysearch/json #&key=SERVER_KEY
+    
 
+    #first api call?
+    search_payload = {"key": SERVER_KEY, "location": user_location, "radius":1000, "opennow": , "type":activity_types }
+    r = requests.post('places_url', data=search_payload)
+    print r.url #to see what this looks like when it's "ready"
+    #search_json = search_req.json()
 
+    #see if this gives back lat lngs
+    location_id = search_json["results"][0]["location"]
+
+    return  redirect("/")
+
+    # get the request back from the places_url:
+    # places_near_user_dict = json.load(open("whatever the response is .json"))
+    # $.get(url, [data] successFunction)
 #route to render a direct route html page with a map of the direct route
 
 #render a page with the available activities along their route for them to select
+
 
 #route to render a route with activities and a map with markers
 
