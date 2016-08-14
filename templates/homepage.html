@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<link rel="stylesheet" href="stylesheet.css">
+
 
 <!-- values are selected from Google Places API -->
 <form action= "/submission" method="POST">
@@ -27,20 +27,14 @@
 <br>
 <br>
 <br>
-<input type="submit" value="Let's get started">
+<input type="submit" id="submit" value="Let's get started">
 
-<label class="hidden">lat</label><input type= "text" name="lat" class="hidden" />
-<label class="hidden">lng</label><input type= "text" name="lng" class="hidden" />
+<!-- fixed css and html so that these values are hidden now! -->
+<label class="hidden">lat</label><input type= "text" id="lat" name="lat" value="" class="hidden" />
+<label class="hidden">lng</label><input type= "text" id="lng" name="lng" value="" class="hidden" />
 </form>
 
-<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
-<div id="map">
 
-</div> 
-<!-- from the google maps lecture and developers.google.com -->
-<!-- html5 geocoder -->
-<div id="map">
-    <script src="/static/working_name.js"></script>
-    
-</div>
+<div id="map"></div> 
+
 {% endblock %}

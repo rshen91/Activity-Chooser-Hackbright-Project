@@ -8,18 +8,31 @@ $(document).ready(function () {
             zoom: 8,
     });    
 
-// locating the user
-//     //call the function for the user html5 geolocation
+
+//call the function for the user html5 geolocation
     function showPosition(location) {
         console.log(location);
     }
+// locating the user
 // html hidden input - I have a bunch of stuff I want to pass along but I dont want the user to type it in 
     navigator.geolocation.getCurrentPosition(showPosition);
 
-//JQuery changes the DOM here to change the hidden input value to attri(value="lat")
-                                                // atrr(value="lng")
+    //JQuery changes the DOM here to change the hidden input value to attri(value="lat")
+                                                    // atrr(value="lng")
+    // Once the user clicks submit
+    $("#submit").on("submit", function getLatLng(evt))
+
+    function getLatLng(evt) {
+        $(".hidden").attr("value", "lat"); //want to set the empty value of lat
+        $(".hidden").attr("value", "lng"); //want to set the emty value of lng
+    }
+
+// if the above doesn't work then maybe this will...?
+// $("#lat").attr("value");
+// $("#lng").attr("value");
 
 
+// Random code writings that might be relvant sometime
 
 //     window.onload = function() {
 //         var startPos;
@@ -53,13 +66,16 @@ $(document).ready(function () {
 //         } else {
 //             document.getElementById("")
 //         }
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+// var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    var markerOptions = {
-        position new google.maps.LatLng( , )
-    };
-    var marker = new google.maps.Marker(markerOptions);
-    marker.setMap(map);  
+// var markerOptions = {
+//     position new google.maps.LatLng( , )
+// };
+// var marker = new google.maps.Marker(markerOptions);
+// marker.setMap(map);  
+        
+
+
         )};
 
 

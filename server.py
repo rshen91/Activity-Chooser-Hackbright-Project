@@ -6,7 +6,6 @@ import requests
 from model import db, connect_to_db, Trip, Preference, TripPreference
 import helper_functions
 import geocoder
-import SERVER_KEY from secrets.sh
 import json
 
 app = Flask(__name__)
@@ -15,12 +14,8 @@ app.secret_key = "ABC"
 
 # GOOGLE API URLS
 # concatenate the key into the functions that send the request to the url
-maps_url = https://maps.googleapis.com/maps/api/directions/json? #&key=SERVER_KEY
+# maps_url = https://maps.googleapis.com/maps/api/directions/json? #&key=SERVER_KEY
 
-
-
-
-# ROUTES TO DISPLAY PAGES - HELPER FUNCTIONS IN SEPARATE FILE 
 @app.route('/')
 def homepage():
     """Show the homepage to the user.
@@ -41,7 +36,7 @@ def homepage():
 # how do you get the variables from a post request without rendering a page
 # add to the trip_id table 
 def variables():
-    """ Take the variables from the homepage""" 
+    """ Get the variables from the homepage""" 
 
     # Get the form variables
     # this is a string
@@ -57,31 +52,33 @@ def variables():
 
     db.session.commit()
     
-    #right now this is going to direct.html
-    return render_template("direct.html", 
-                            end_location=end_location, 
-                            arrival_time=arrival_time,
-                            activity_types=activity_types,
-                            latlng=r.latlng)
+    #right now this is going to direct.html 
+    return render_template("/direct.html", 
+                        end_location=end_location, 
+                        arrival_time=arrival_time,
+                        activity_types=activity_types,
+                        latlng=r.latlng)
 
+################################################################################
 # need to find out what activities are near them based on their location and the end location
-@app.route(" ")
-def whats_near("/sendRequest/<string:query>"):
+
+@app.route('/api')
+def whats_near():
     """Hopefully this function will call the Google Places API and return a list(?) 
     of what locations are near the user"""
 
     SERVER_KEY = os.environ["SERVER_KEY"] #gets the server key and assigns it to a variable
-    places_url = https://maps.googleapis.com/maps/api/place/nearbysearch/json #&key=SERVER_KEY
+    places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
     
-
     #first api call?
-    search_payload = {"key": SERVER_KEY, "location": user_location, "radius":1000, "opennow": , "type":activity_types }
+    search_payload = {"key": SERVER_KEY, "location": end_location, "radius":1000, "opennow": {{ opennow }}, "type": activity_types }
     r = requests.post('places_url', data=search_payload)
-    print r.url #to see what this looks like when it's "ready"
+    
+    print "\n\n\n\n\n\n\n\ " + r.url #to see what this looks like when it's "ready"
     #search_json = search_req.json()
-
+    json_object = r.json() 
     #see if this gives back lat lngs
-    location_id = search_json["results"][0]["location"]
+    # location_id = search_json["results"][0]["location"]
 
     return  redirect("/")
 
