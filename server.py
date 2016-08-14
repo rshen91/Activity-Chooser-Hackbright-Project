@@ -2,9 +2,8 @@ import os # for the secrets.sh file?
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
-# from geopy.geocoders import Nominatim
 from model import db, connect_to_db, Trip, Preference, TripPreference
-import helper_functions
+from helper_functions import *
 import geocoder
 import json
 
@@ -59,28 +58,12 @@ def variables():
                         activity_types=activity_types,
                         latlng=r.latlng)
 
+    #want to call this from helper_functions.py
+    whats_near(end_location, activity_types)
+
 ################################################################################
 # need to find out what activities are near them based on their location and the end location
-
-@app.route('/api')
-def whats_near():
-    """Hopefully this function will call the Google Places API and return a list(?) 
-    of what locations are near the user"""
-
-    SERVER_KEY = os.environ["SERVER_KEY"] #gets the server key and assigns it to a variable
-    places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
-    
-    #first api call?
-    search_payload = {"key": SERVER_KEY, "location": end_location, "radius":1000, "opennow": {{ opennow }}, "type": activity_types }
-    r = requests.post('places_url', data=search_payload)
-    
-    print "\n\n\n\n\n\n\n\ " + r.url #to see what this looks like when it's "ready"
-    #search_json = search_req.json()
-    json_object = r.json() 
-    #see if this gives back lat lngs
-    # location_id = search_json["results"][0]["location"]
-
-    return  redirect("/")
+# moved to helper function since I dont want it to render a page
 
     # get the request back from the places_url:
     # places_near_user_dict = json.load(open("whatever the response is .json"))

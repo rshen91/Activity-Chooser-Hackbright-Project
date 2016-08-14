@@ -46,7 +46,24 @@ def convert_address_to_latlong(end_location):
 
 # will take in the activity_types, the end_location and the user's current location
 # API parameters to see a bubble around it?
+def whats_near(end_location, activity_types):
+    """Hopefully this function will call the Google Places API and return a list(?) 
+    of what locations are near the user"""
 
+    key = os.environ.get('KEY_KEY') #gets the server key and assigns it to a variable
+    places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
+    
+    #first api call?
+    search_payload = {"key": key, "location": end_location, "radius":1000, "opennow": {{ opennow }}, "type": activity_types }
+    r = requests.post('places_url', data=search_payload)
+    
+    print "\n\n\n\n\n\n\n\ " + r.url #to see what this looks like when it's "ready"
+    #search_json = search_req.json()
+    json_object = r.json() 
+    #see if this gives back lat lngs
+    # location_id = search_json["results"][0]["location"]
+
+    return json_object
 
 
 # geocoding by place name from Google Maps lecture 
