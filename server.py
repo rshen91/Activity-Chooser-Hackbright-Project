@@ -11,10 +11,6 @@ app = Flask(__name__)
 
 app.secret_key = "ABC"
 
-# GOOGLE API URLS
-# concatenate the key into the functions that send the request to the url
-# maps_url = https://maps.googleapis.com/maps/api/directions/json? #&key=SERVER_KEY
-
 @app.route('/')
 def homepage():
     """Show the homepage to the user.

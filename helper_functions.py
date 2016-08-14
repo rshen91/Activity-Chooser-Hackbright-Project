@@ -36,25 +36,19 @@ def convert_address_to_latlong(end_location):
     r = geocoder.google(end_location)
     return r.latlng 
 
-
-# need a function to find the current location of the user
-# HTML 5 geolocation?
-
 # need a function to ask the user if they want a direct route
-
 
 
 # will take in the activity_types, the end_location and the user's current location
 # API parameters to see a bubble around it?
 def whats_near(end_location, activity_types):
     """Hopefully this function will call the Google Places API and return a list(?) 
-    of what locations are near the user"""
+    of what locations are near the user BUT NOT NECESSARILY BTWN THEIR START/END"""
 
     key = os.environ.get('KEY_KEY') #gets the server key and assigns it to a variable
     places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
     
-    #first api call?
-    search_payload = {"key": key, "location": end_location, "radius":1000, "opennow": {{ opennow }}, "type": activity_types }
+    search_payload = {"key": key, "location": end_location, "rankby": "distance", "open_now": true, "type": activity_types }
     r = requests.post('places_url', data=search_payload)
     
     print "\n\n\n\n\n\n\n\ " + r.url #to see what this looks like when it's "ready"
@@ -63,21 +57,23 @@ def whats_near(end_location, activity_types):
     #see if this gives back lat lngs
     # location_id = search_json["results"][0]["location"]
 
-    return json_object
+    return json_object #can splice this up to get the values I want
 
+# Have the user choose a place to visit from the json
 
+# Google Directions API 
+def whereto():
+    """start with the user's location and get to the first marker?"""
+
+    key = os.environ.get('KEY_KEY')
+    maps_url = "https://maps.googleapis.com/maps/api/directions/json" #&key=SERVER_KEY
+
+    search_payload = {"origin": user_location, "destination": end_location, "key": key}
+    r = requests.post('maps_url', data=search_payload)
+
+    json_object = r.json()
 # geocoding by place name from Google Maps lecture 
 
-# function using Google Directions and Google Places API to see from 
-# what the user selected if it's along their way and prompt them to confirm 
-# activity they want 
-
-# Google Places API 
-# separate parameters by &
-# os.environ needed for the secrets.sh
-# url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-# payload = {'key1': 'value1', 'key2':'value2'} 
-# r = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', data=payload)
 
 # #waypoints are stops between two destinations!
 # https://maps.googleapis.com/maps/api/directions/json?origin=Boston,MA&destination=Concord,MA&waypoints=Charlestown,MA|Lexington,MA&key=YOUR_API_KEY
