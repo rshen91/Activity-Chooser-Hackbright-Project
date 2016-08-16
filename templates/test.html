@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+template for prompt if they want a direct route 
+<br>
+<body>
+{{ end_location }} <br>
+{{ arrival_time }} <br>
+{{ activity_types }} <br>
+
+</body>
+<span id="end-location" data-lat="{{ latlng[0] }}" data-long="{{ latlng[1] }}"> </span>
+
+<div>
+    <script src="/static/working_name.js"> </script>
+</div>
+
+{% endblock %}
