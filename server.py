@@ -44,6 +44,8 @@ def variables():
 
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
+    print "\n\n\n\n" + str(r) + "\n\n\n\n"
+    print "\n\n\n\n" , r.latlng, "\n\n\n\n"
 
     #Get the user's location from the hidden form in the homepage.html
     user_lat = request.form.get("lat") 
@@ -53,19 +55,16 @@ def variables():
 
     db.session.commit()
     
+    #call the api call before the return 
+    whats_near(r.latlng, activity_types)
     #right now this is going to direct.html 
     return render_template("/direct.html", 
-                        end_location=end_location, 
                         arrival_time=arrival_time,
                         activity_types=activity_types,
-                        latlng=r.latlng)
-
-                        # user_lat=user_lat, this is having an issue removed 
-                        # from the function so the server can run and can figure out the map
-                        # user_lng=user_lng)
+                        end_latlng=r.latlng)
 
     #want to call this from helper_functions.py
-    whats_near(end_location, activity_types)
+
 
 ################################################################################
 # need to find out what activities are near them based on their location and the end location

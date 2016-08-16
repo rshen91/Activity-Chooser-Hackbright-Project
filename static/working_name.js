@@ -5,7 +5,6 @@ $(document).ready(function () {
 console.log("HEY YOU, I AM HERE in the document.ready");
 });   //end documentReady
 
-
 function initMap(user_lat, user_lng) {
 
     // for hardcoding these are hb's lat lng
@@ -25,7 +24,6 @@ function initMap(user_lat, user_lng) {
 // this is needed to load the map - triggers the cascade of functions 
 google.maps.event.addDomListener(window, "load", getLocation);
 
-
 function getLocation() {
     if (navigator.geolocation) {  // when the browser has geolocation capability
         navigator.geolocation.getCurrentPosition(handlePositionFound); // when you get the lat/long from the browser, give it as an argument to showPosition.
@@ -33,7 +31,6 @@ function getLocation() {
         alert("Geolocation is not supported by the browser.");
     } 
   } 
-
 
 function handlePositionFound(position) { //get the coords
   //this prints it in the console
