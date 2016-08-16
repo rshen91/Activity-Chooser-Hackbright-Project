@@ -45,10 +45,11 @@ def variables():
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
 
-    """Get the user's location from the hidden form in the homepage.html"""
-
-    user_lat = request.form.get("lat") #this didnt work
+    #Get the user's location from the hidden form in the homepage.html
+    user_lat = request.form.get("lat") 
+    print "\n\n\n\n" + user_lat + "\n\n\n\n"
     user_lng = request.form.get("lng")
+    print "\n\n\n\n" + user_lng + "\n\n\n\n"
 
     db.session.commit()
     
