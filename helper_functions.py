@@ -7,7 +7,6 @@ from model import db, connect_to_db, Trip, Preference, TripPreference
 import googlemaps
 from datetime import datetime
 
-# gmaps = google.maps.Client(key=)
     # https://developers.google.com/maps/documentation/geocoding/intro
 
     # https://maps.googleapis.com/maps/api/geocode/json?address=Winnetka&key=YOUR_API_KEY
@@ -26,6 +25,7 @@ def add_trip_to_session():
 
 # need a function to convert the end address to lat/long
 # http://maps.googleapis.com/maps/api/geocode/json?address="end_location"&key=
+
 
 def convert_address_to_latlong(end_location):
     """"This function takes the user's input for where they want to go and convert_address_to_latlong

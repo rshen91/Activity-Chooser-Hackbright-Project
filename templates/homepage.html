@@ -10,7 +10,7 @@
     <br>
         <label for="end_location">Destination Address: <input type= "text" name = "end_location"></label>
     <br>
-        <label for="arrival_time">Desired Time of Arrival: <input type="time" name="arrival_time" value="16:00"></label>
+        <label for="arrival_time">Desired Time of Arrival: <input type="time" name="arrival_time" value="16:00"></label> 
     <br>
     <br>
 
@@ -29,7 +29,7 @@
 <br>
 <input type="submit" id="submit" value="Let's get started">
 
-<div id="homepage-map" class="map">The map will be here</div> 
+<div id="homepage-map" class="homepage-map"></div> 
 
 <!-- fixed css and html so that these values are hidden now! -->
 <label class="hidden">lat</label><input type= "text" id="lat" name="lat" value="" class="hidden" />
@@ -38,5 +38,9 @@
 
 
 
+
+{% endblock %}
+{% block extra_js %}
+<script src="/static/working_name.js"></script>
 
 {% endblock %}

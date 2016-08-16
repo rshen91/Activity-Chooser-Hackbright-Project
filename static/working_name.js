@@ -1,40 +1,30 @@
 "use strict";
-//all the html will load before javascript is run
+//If this doesn't print in the console then the server.py isn't able to read the js
+console.log("YO I AM HERE");
 
 $(document).ready(function () {
 
-//getting a map in the homepage from lecture notes
-    var hackbright = {lat: 37.7886679, lng: -122.4114987}
 
-    var map = new google.maps.Map(document.getElementById('homepage-map'), {
-          center: hackbright, //want to replace this with user_location
-          zoom: 8,
-            // zoomControl: false,
-    });    
+//from lecture jquery notes page 5
+  function handleLatLngSave(data) {
+    alert("handled lat lng!");
+  }
 
+  function submitOrder(evt) {
+    evt.preventDefault();
 
-//call the function for the user html5 geolocation
-    function showPosition(location) {
-        console.log(location);
-    }
-// locating the user
-// html hidden input - I have a bunch of stuff I want to pass along but I dont want the user to type it in 
-    user_location = navigator.geolocation.getCurrentPosition(showPosition);
+    var formInputs = {
+      "lat": $("#lat").val(),
+      "lng": $("#lng").val()
+    };
 
-    //JQuery changes the DOM here to change the hidden input value to attri(value="lat")
-                                                    // atrr(value="lng")
-    // Once the user clicks submit
-    $("#submit").on("submit", function getLatLng(evt))
+    $.post("/submission",
+            formInputs,
+            handleLatLngSave);
+  }
+  $("#order-form").on("submit", submitOrder);
 
-    function getLatLng(evt) {
-        $(".hidden").attr("value", "lat"); //want to set the empty value of lat
-        $(".hidden").attr("value", "lng"); //want to set the emty value of lng
-    }
-
-// if the above doesn't work then maybe this will...?
-// $("#lat").attr("value");
-// $("#lng").attr("value");
-
+});   //end documentReady
 // There is a JS Places Library var map;
 // var service;
 // var infowindow;
@@ -66,40 +56,11 @@ $(document).ready(function () {
 //   }
 // }
 
+    // var user_lat = $("#lat").val();
+    // var user_lng = $("#lng").val();
 // Random code writings that might be relvant sometime
 // from https://developers.google.com/maps/documentation/javascript/examples/directions-complex
-    function initMap() {
-        var markerArray = [];
-
-        // Instantiate a directions service.
-        var directionsService = new google.maps.DirectionsService;
-
-        // Create a map and center it on HB.
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
-          center: hackbright
-        });
-
-        // Create a renderer for directions and bind it to the map.
-        var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
-
-        // Instantiate an info window to hold step text.
-        var stepDisplay = new google.maps.InfoWindow;
-
-        // Display the route between the initial start and end selections.
-        calculateAndDisplayRoute(
-            directionsDisplay, directionsService, markerArray, stepDisplay, map);
-        // Listen to change events from the start and end lists.
-        var onChangeHandler = function() {
-          calculateAndDisplayRoute(
-              directionsDisplay, directionsService, markerArray, stepDisplay, map);
-        };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
-      }
-
-    function calculateAndDisplayRoute(directionsDisplay, directionsService,
-          markerArray, stepDisplay, map) {
+        function calculateAndDisplayRoute (directionsDisplay, directionsService, markerArray, stepDisplay, map) {
         // First, remove any existing markers from the map.
         for (var i = 0; i < markerArray.length; i++) {
           markerArray[i].setMap(null);
@@ -114,14 +75,14 @@ $(document).ready(function () {
         }, function(response, status) {
           // Route the directions and pass the response to a function to create
           // markers for each step.
-          if (status === 'OK') {
-            document.getElementById('warnings-panel').innerHTML =
+                if (status === 'OK') {
+                    document.getElementById('warnings-panel').innerHTML =
                 '<b>' + response.routes[0].warnings + '</b>';
-            directionsDisplay.setDirections(response);
-            showSteps(response, markerArray, stepDisplay, map);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
+                    directionsDisplay.setDirections(response);
+                    showSteps(response, markerArray, stepDisplay, map);
+                } else {
+                  window.alert('Directions request failed due to ' + status);
+                }
         });
       }
 
@@ -172,7 +133,61 @@ $(document).ready(function () {
         
 
 
-        )};
+
+//user_lat and user_lng are just parameters 
+function initMap(user_lat, user_lng) {
+  debugger;
+
+    var hackbright = {lat: 37.7886679, lng: -122.4114987};
+
+
+
+    var map = new google.maps.Map(document.getElementById('homepage-map'), {
+          center: {lat:parseInt(user_lat), lng: parseInt(user_lng) },
+          zoom: 10,
+          // zoomControl: false,
+    });    
+        var markerArray = [];
+
+        // Instantiate a directions service.
+        var directionsService = new google.maps.DirectionsService;
+
+        // Create a renderer for directions and bind it to the map.
+        var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+
+        // Instantiate an info window to hold step text.
+        var stepDisplay = new google.maps.InfoWindow;
+
+        // Display the route between the initial start and end selections.
+        calculateAndDisplayRoute(
+            directionsDisplay, directionsService, markerArray, stepDisplay, map);
+        // Listen to change events from the start and end lists.
+        var onChangeHandler = function() {
+          calculateAndDisplayRoute(
+              directionsDisplay, directionsService, markerArray, stepDisplay, map);
+        };
+        document.getElementById('start').addEventListener('change', onChangeHandler);
+        document.getElementById('end').addEventListener('change', onChangeHandler);
+      }
+
+google.maps.event.addDomListener(window, "load", getLocation);
+
+
+function getLocation() {
+    if (navigator.geolocation) {  // when the browser has geolocation capability
+        navigator.geolocation.getCurrentPosition(handlePositionFound); // when you get the lat/long from the browser, give it as an argument to showPosition.
+    } else {
+        console.log("Geolocation is not supported by the browser.");
+    } 
+  } 
+function handlePositionFound(position) { //get the coords
+    console.log("Latitude: "+ position.coords.latitude + "<br> Longitude: " + position.coords.longitude);
+  $("#lat").val(position.coords.latitude); //user_lat
+  $("#lng").val(position.coords.longitude); //user_lng
+
+  initMap(position.coords.latitude, position.coords.longitude);
+  }
+  
 
 
 
@@ -190,6 +205,3 @@ $(document).ready(function () {
 
 
 
-
-
-})

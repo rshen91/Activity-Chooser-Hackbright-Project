@@ -45,6 +45,11 @@ def variables():
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
 
+    """Get the user's location from the hidden form in the homepage.html"""
+
+    user_lat = request.form.get("lat") #this didnt work
+    user_lng = request.form.get("lng")
+
     db.session.commit()
     
     #right now this is going to direct.html 
@@ -53,6 +58,10 @@ def variables():
                         arrival_time=arrival_time,
                         activity_types=activity_types,
                         latlng=r.latlng)
+
+                        # user_lat=user_lat, this is having an issue removed 
+                        # from the function so the server can run and can figure out the map
+                        # user_lng=user_lng)
 
     #want to call this from helper_functions.py
     whats_near(end_location, activity_types)
