@@ -18,3 +18,5 @@ key = os.environ.get('KEY_KEY') #gets the server key and assigns it to a variabl
 
 <!-- <span id="end-location" data-lat="{{ latlng[0] }}" data-long="{{ latlng[1] }}"> </span>
  -->
+
+ https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAZPdIeAGcyvKhKXgAqaNbsyEz4Sg1qBX4&location=37.7749,122.4194&radius=50000

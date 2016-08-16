@@ -11,7 +11,6 @@ from datetime import datetime
 
     # https://maps.googleapis.com/maps/api/geocode/json?address=Winnetka&key=YOUR_API_KEY
     # https://developers.google.com/maps/web-services/client-library
-key = os.environ.get('browser_key')
 #store trip similar to user in a session
 def add_trip_to_session():
     """This helper function adds the trip id to the session"""
@@ -29,18 +28,20 @@ def add_trip_to_session():
 def whats_near(end_location, activity_types):
     """Hopefully this function will call the Google Places API and return a list(?) 
     of what locations are near the user BUT NOT NECESSARILY BTWN THEIR START/END"""
-
+    key = os.environ.get('KEY_KEY')
     places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
     
-    search_payload = {"key": key, "location": end_location, "open_now": True, "type": activity_types }
+    search_payload = {"key": key, "location": end_location, "open_now": True, "type": "bar" }
     print search_payload
-    r = requests.post(places_url, data=search_payload)
+    r = requests.post(places_url, params=search_payload)
     
     print "\n\n\n\n\n\n\n\ " + r.url #to see what this looks like when it's "ready"
     
     #search_json = search_req.json()
     json_object = r.json() 
     print "\n\n\n\n\n\n\n\ " , json_object
+
+
     #see if this gives back lat lngs
     # location_id = search_json["results"][0]["location"]
 

@@ -56,7 +56,7 @@ def variables():
     db.session.commit()
     
     #call the api call before the return 
-    whats_near(r.latlng, activity_types)
+    whats_near(str(r.latlng[0])+","+str(r.latlng[1]), activity_types)
     #right now this is going to direct.html 
     return render_template("/direct.html", 
                         arrival_time=arrival_time,
