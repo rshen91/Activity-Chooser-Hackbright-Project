@@ -44,19 +44,27 @@ def variables():
 
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
-    print "\n\n\n\n" + str(r) + "\n\n\n\n"
-    print "\n\n\n\n" , r.latlng, "\n\n\n\n"
+    print "\n\n\n\n this is the  end location as lat lng" , r.latlng, "\n\n\n\n"
+    # unpack the lat lng here for the api call in whats near (can't have a list)
+    end_lat, end_lng = r.latlng
+    # import pdb; pdb.set_trace()
+
+    print "\n\n\n\n"  
+    print end_lat
+    print "\n\n\n\n" 
+    print end_lng
+    print "\n\n\n\n"
 
     #Get the user's location from the hidden form in the homepage.html
     user_lat = request.form.get("lat") 
-    print "\n\n\n\n" + user_lat + "\n\n\n\n"
+    print "\n\n\n\n this is the lat from html of user's current loc" + user_lat + "\n\n\n\n"
     user_lng = request.form.get("lng")
-    print "\n\n\n\n" + user_lng + "\n\n\n\n"
+    print "\n\n\n\n this is the lng from html of user's current loc" + user_lng + "\n\n\n\n"
 
     db.session.commit()
     
     #call the api call before the return 
-    whats_near(str(r.latlng[0])+","+str(r.latlng[1]), activity_types)
+    whats_near(end_lat, end_lng, activity_types)
     #right now this is going to direct.html 
     return render_template("/direct.html", 
                         arrival_time=arrival_time,

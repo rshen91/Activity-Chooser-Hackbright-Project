@@ -25,40 +25,32 @@ def add_trip_to_session():
 
 # will take in the activity_types, the end_location and the user's current location
 # API parameters to see a bubble around it?
-def whats_near(end_location, activity_types):
-    """Hopefully this function will call the Google Places API and return a list(?) 
-    of what locations are near the user BUT NOT NECESSARILY BTWN THEIR START/END"""
+def whats_near(end_lat, end_lng, activity_types):
+    """Makes a call to Google Places API and returns a json object of the results"""
     key = os.environ.get('KEY_KEY')
     places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
     
-    search_payload = {"key": key, "location": end_location, "open_now": True, "type": "bar" }
-    print search_payload
-    r = requests.post(places_url, params=search_payload)
-    
-    print "\n\n\n\n\n\n\n\ " + r.url #to see what this looks like when it's "ready"
-    
-    #search_json = search_req.json()
-    json_object = r.json() 
-    print "\n\n\n\n\n\n\n\ " , json_object
+    activity_feedback = []
 
+    # for loop to go through each activity and add it as a request to the Google Places API
+    for activity in activity_types:
+        # have the type specific to the iterating variable 
+        r = requests.post("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=%s&location=%s,%s&open_now=True&type=%s" % (key, end_lat, end_lng, activity))
+        json_activity = r.json()
+        activity_feedback.append(json_activity)
 
-    #see if this gives back lat lngs
-    # location_id = search_json["results"][0]["location"]
-
-    return json_object #can splice this up to get the values I want
+    # return the compiled API calls for the activities the user requested
+    return activity_feedback 
 
 # Have the user choose a place to visit from the json
+def activity_feedback(activity_feedback):
+    """Input parameter is the json object and this function parses out the name and lat lng of the place in a dict"""
+    
+    activity_feedback_details = {}
+    activity_feedback.split()
+    # will want to present to the user place details along their route
+    # might need to filter this to be inbetween their start and end latlngs
 
-# Google Directions API 
-def whereto():
-    """start with the user's location and get to the first marker?"""
-
-    maps_url = "https://maps.googleapis.com/maps/api/directions/json" #&key=SERVER_KEY
-
-    search_payload = {"origin": user_location, "destination": end_location, "key": key}
-    r = requests.post('maps_url', data=search_payload)
-
-    json_object = r.json()
 # geocoding by place name from Google Maps lecture 
 
 
