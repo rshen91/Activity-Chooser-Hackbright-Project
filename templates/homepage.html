@@ -3,18 +3,18 @@
 
 
 <!-- values are selected from Google Places API -->
-<form action= "/submission" method="POST">
+<form action= "/activity_time" method="POST">
     Please fill out the following fields:
     <br>
     <br>
     <br>
-        <label for="end_location">Destination Address: <input type= "text" name = "end_location"></label>
+        <label for="end_location">Where do you want to go? <input type= "text" name = "end_location"></label>
     <br>
-        <label for="arrival_time">Desired Time of Arrival: <input type="time" name="arrival_time" value="16:00"></label> 
+        <label for="arrival_time">When do you want to be there? <input type="time" name="arrival_time" value="16:00"></label> 
     <br>
     <br>
 
-    Please select activities from the selection below:
+    Select an activity you'd want to hit up in between:
     <br>
         <div id="activity_type">
             {% for name in names %} 

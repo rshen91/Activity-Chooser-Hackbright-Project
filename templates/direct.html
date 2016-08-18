@@ -7,11 +7,19 @@ template for prompt if they want a direct route
 {{ user_lat}} {{ user_lng}} <br>
 {{ arrival_time }} <br>
 {{ activity_types }} <br>
+{{ end_location }}
 
 
 </body>
 
-
+<p>
+    <!-- only have this print if an activity is in their route  -->
+{% if activities %} 
+Here are available activities for you to choose before you arrive at your destination. <br>
+Please choose one:  
+<input type="dropdown" id="" value="" name=""> {{ activity }} 
+{% endif %}
+</p>
 
 
 {% endblock %}

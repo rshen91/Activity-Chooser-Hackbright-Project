@@ -6,6 +6,8 @@ from model import db, connect_to_db, Trip, Preference, TripPreference
 from helper_functions import *
 import geocoder
 import json
+import pdb
+
 
 app = Flask(__name__)
 
@@ -21,13 +23,12 @@ def homepage():
 
     # Returns a unicode list of the human readable names
     names = db.session.query(Preference.name).all()
-    
     # flask uses Jinja to fill in the blanks and return a string of HTML
     #flask sends the fully-formed HTML string down the pipes to the front end
     return render_template("homepage.html", names=names)
 
 
-@app.route('/submission', methods=['POST']) 
+@app.route('/activity_time', methods=['POST']) 
 # how do you get the variables from a post request without rendering a page
 # add to the trip_id table 
 def variables():
@@ -36,11 +37,13 @@ def variables():
     # Get the form variables
     # this is a string
     end_location = request.form["end_location"]
+    print "This is the end location \n\n\n\n\n\n", end_location 
     #this is a string too
     arrival_time = request.form["arrival_time"]
     #fixed the jinja loop in homepage.html to include the value that will be 
     #sent to the back end and assigned activity_types
     activity_types = request.form.getlist("activity_type") 
+    print "These are the activity types \n\n\n\n\n", activity_types 
 
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
@@ -63,13 +66,17 @@ def variables():
 
     db.session.commit()
     
-    #call the api call before the return 
-    whats_near(end_lat, end_lng, activity_types)
+    #The API call before the return statement 
+    print start_oAuth(end_location, str(end_lat), str(end_lng), activity_types)
+
+    # whats_near(end_lat, end_lng, activity_types)
+
     #right now this is going to direct.html 
     return render_template("/direct.html", 
                         arrival_time=arrival_time,
                         activity_types=activity_types,
-                        end_latlng=r.latlng)
+                        end_latlng=r.latlng,
+                        end_location=end_location)
 
     #want to call this from helper_functions.py
 

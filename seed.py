@@ -1,32 +1,30 @@
 """Using ratings as a model for this seed.py. Making this to input some values to the 
-preferences table for name and google_places_id"""
+preferences table for name and yelp_id"""
 from model import Preference, Trip, TripPreference, connect_to_db, db
 from server import app
 
 # need to change the seed file to include pipes with the human readable activity 
 # that is stored in the column "name"
-def load_google_places_id():
+def load_yelp_id():
     """Load google places id into the preferences table."""
 
-    print "Google Places id Place Types"
+    print "Yelp API Place Types"
 
-    for i, row in enumerate(open("google_places_place_types")):
+    for i, row in enumerate(open("yelp_api_places")):
         row = row.rstrip()
         print row
 
-        google_places_id, name, deprecated = row.split("|")
+        yelp_id, name= row.split("|")
         
         # if the len(deprecated) > 0:
         #   the row is deprecated and NULL should be false
 
         # changed so that the value is 0s and 1s now 
 
-        google_place = Preference(name=name,
-                                  google_places_id=google_places_id, 
-                                  deprecated=deprecated)
-                                        # deprecated=deprecated)
+        yelp_place = Preference(name=name,
+                                yelp_id=yelp_id)
 
-        db.session.add(google_place)
+        db.session.add(yelp_place)
 
         if i % 100 == 0:
             print i
@@ -49,5 +47,5 @@ def set_val_user_id():
 if __name__ == "__main__":
     connect_to_db(app)
 
-    load_google_places_id()
+    load_yelp_id()
     # set_val_user_id

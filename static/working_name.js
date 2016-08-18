@@ -6,7 +6,7 @@ console.log("HEY YOU, I AM HERE in the document.ready");
 });   //end documentReady
 
 function initMap(user_lat, user_lng) {
-
+console.log('user_lat:', user_lat, 'user_lng:', user_lng);
     // for hardcoding these are hb's lat lng
     var hackbright = {lat: 37.7886679, lng: -122.4114987};
 
@@ -33,6 +33,7 @@ function getLocation() {
   } 
 
 function handlePositionFound(position) { //get the coords
+  console.log('position:', position); //expand the arrow
   //this prints it in the console
     console.log("Latitude: "+ position.coords.latitude + "<br> Longitude: " + position.coords.longitude);
     $("#lat").val(position.coords.latitude); //user_lat

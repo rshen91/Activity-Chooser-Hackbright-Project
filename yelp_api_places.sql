@@ -1,0 +1,12 @@
+INSERT INTO preferences (yelp_id, name) 
+VALUES ('active', 'Active Life'),
+        ('arts', 'Arts'),
+        ('beautysvc', 'Beauty Services'),
+        ('banks', 'Banks and ATMs'),
+        ('bakeries', 'Bakeries'),
+        ('coffee', 'Coffee'),
+        ('desserts', 'Desserts'),
+        ('grocery', 'Grocery'),
+        ('nightlife', 'Night Life'),
+        ('restaurants', 'Restaurants'),
+        ('shopping', 'Shopping');

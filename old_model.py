@@ -44,7 +44,8 @@ class Preference(db.Model):
     
     preference_id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
     name = db.Column(db.String(100), nullable=False) #human readable activity
-    yelp_id = db.Column(db.String(100), nullable=False)
+    google_places_id = db.Column(db.String(100), nullable=False)
+    deprecated = db.Column(db.Boolean, default=False) #if that preference is still available on google places, supermarkets
     
     trips = db.relationship('Trip', backref='preferences', secondary='trip_preferences')
 
