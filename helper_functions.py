@@ -44,15 +44,15 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     for yelp_request in activity_types:
             r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
             print "\n\n\n\n this the yelp get request \n\n\n", r.json()
-            yelp_values = r.json().values()
-            print "\n\n\n\n this the yelp get request with .values()\n\n\n", yelp_values
-            pdb.set_trace()
-            yelp_values = yelp_response[yelp_request] = {
-                    'name': yelp_values.get('name'), #list object has no attribute get
-                    'coordinates': {'lat': yelp_values['coordinates']['latitude'], 
-                                    'lng': yelp_values['coordinates']['longitude']},
-                    'address': yelp_values.values('location'), ##how to get out of dictionaries another dictionary and assign it a key
-                    'phone': yelp_values.get('phone')
+            yelp_values = r.json()['businesses'][yelp_request] 
+            print "\n\n\n\n this the yelp get request with [""rating""]\n\n\n", yelp_values
+            
+            yelp_values = r.json()['businesses'][yelp_request] = {
+                    'name': r.json()['businesses'][yelp_request].get('name'), #list object has no attribute get
+                    'coordinates': {'lat': r.json()['businesses'][yelp_request]['coordinates'].get('latitude'), 
+                                    'lng': r.json()['businesses'][yelp_request]['coordinates'].get('longitude')},
+                    'address': r.json()['businesses'][yelp_request].get('location'), ##how to get out of dictionaries another dictionary and assign it a key
+                    'phone': r.json()['businesses'][yelp_request].get('phone')
             }
             count += 1
     pdb.set_trace()
