@@ -83,7 +83,18 @@ def get_form_values():
 def render_activity():
     """Takes the json place name, phone number, address, and displays to user"""
 
-    return render_template("/activity.html")
+    start_oAuth(end_location, end_lat, end_lng, activity_types)
+    name = storing_yelp_values.get('name')
+    phone = storing_yelp_values.get('phone')
+    coordinates = storing_yelp_values['coordinates']
+    address = storing_yelp_values['location']
+
+    return render_template("/.html",
+                            name=name,
+                            phone=phone,
+                            lat=coordinates[0],
+                            lng=coordinates[1],
+                            address=address)
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)

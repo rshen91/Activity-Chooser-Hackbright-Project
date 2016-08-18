@@ -1,3 +1,132 @@
+a = {u'businesses': [{u'categories': [{u'alias': u'coffee',
+                                   u'title': u'Coffee & Tea'}],
+                  u'coordinates': {u'latitude': 37.782352,
+                                   u'longitude': -122.407697},
+                  u'id': u'blue-bottle-coffee-co-san-francisco-7',
+                  u'image_url': u'http://s3-media2.fl.yelpcdn.com/bphoto/YKoMObZPbtVi1l7f3g4xwg/o.jpg',
+                  u'location': {u'address1': u'66 Mint St',
+                                u'address2': u'',
+                                u'address3': u'',
+                                u'city': u'San Francisco',
+                                u'country': u'US',
+                                u'state': u'CA',
+                                u'zip_code': u'94103'},
+                  u'name': u'Blue Bottle Coffee Co',
+                  u'phone': u'+15106533394',
+                  u'price': u'$$',
+                  u'rating': 4.0,
+                  u'review_count': 1857,
+                  u'url': u'https://www.yelp.com/biz/blue-bottle-coffee-co-san-francisco-7'},
+                 
+                 {u'categories': [{u'alias': u'coffee',
+                                   u'title': u'Coffee & Tea'},
+                                  {u'alias': u'sandwiches',
+                                   u'title': u'Sandwiches'},
+                                  {u'alias': u'bagels',
+                                   u'title': u'Bagels'}],
+                  u'coordinates': {u'latitude': 37.7901517599821,
+                                   u'longitude': -122.409288436174},
+                  u'id': u'beanstalk-cafe-san-francisco-2',
+                  u'image_url': u'http://s3-media2.fl.yelpcdn.com/bphoto/yvw6fgMum8gpS4b4WIFrEA/o.jpg',
+                  u'location': {u'address1': u'724 Bush St',
+                                u'address2': u'',
+                                u'address3': u'',
+                                u'city': u'San Francisco',
+                                u'country': u'US',
+                                u'state': u'CA',
+                                u'zip_code': u'94108'},
+                  u'name': u'Beanstalk Cafe',
+                  u'phone': u'+14155761966',
+                  u'price': u'$',
+                  u'rating': 4.5,
+                  u'review_count': 509,
+                  u'url': u'https://www.yelp.com/biz/beanstalk-cafe-san-francisco-2'},
+                 
+                 {u'categories': [{u'alias': u'coffee',
+                                   u'title': u'Coffee & Tea'},
+                                  {u'alias': u'sandwiches',
+                                   u'title': u'Sandwiches'},
+                                  {u'alias': u'vietnamese',
+                                   u'title': u'Vietnamese'}],
+                  u'coordinates': {u'latitude': 37.79001,
+                                   u'longitude': -122.41177},
+                  u'id': u'fresh-brew-coffee-san-francisco',
+                  u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/G0xDrpOQyXxrrKnQrYm7iQ/o.jpg',
+                  u'location': {u'address1': u'882 Bush St',
+                                u'address2': u'',
+                                u'address3': u'',
+                                u'city': u'San Francisco',
+                                u'country': u'US',
+                                u'state': u'CA',
+                                u'zip_code': u'94108'},
+                  u'name': u'Fresh Brew Coffee',
+                  u'phone': u'+14155670915',
+                  u'price': u'$',
+                  u'rating': 4.5,
+                  u'review_count': 347,
+                  u'url': u'https://www.yelp.com/biz/fresh-brew-coffee-san-francisco'},
+                 
+                 {u'categories': [{u'alias': u'coffee',
+                                   u'title': u'Coffee & Tea'}],
+                  u'coordinates': {u'latitude': 37.791405,
+                                   u'longitude': -122.419327},
+                  u'id': u'contraband-coffee-bar-san-francisco',
+                  u'image_url': u'http://s3-media4.fl.yelpcdn.com/bphoto/42V-yDiNZcfLFT743jxmPA/o.jpg',
+                  u'location': {u'address1': u'1415 Larkin St',
+                                u'address2': u'',
+                                u'address3': u'',
+                                u'city': u'San Francisco',
+                                u'country': u'US',
+                                u'state': u'CA',
+                                u'zip_code': u'94109'},
+                  u'name': u'Contraband Coffee Bar',
+                  u'phone': u'+14158397388',
+                  u'price': u'$$',
+                  u'rating': 4.0,
+                  u'review_count': 593,
+                  u'url': u'https://www.yelp.com/biz/contraband-coffee-bar-san-francisco'},
+                 
+                 {u'categories': [{u'alias': u'coffee',
+                                   u'title': u'Coffee & Tea'}],
+                  u'coordinates': {u'latitude': 37.7882923185825,
+                                   u'longitude': -122.404029965401},
+                  u'id': u'iron-horse-coffee-bar-san-francisco',
+                  u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/_eMt3Li_B5DdeAkHFsxIJA/o.jpg',
+                  u'location': {u'address1': u'25 Maiden Ln',
+                                u'address2': None,
+                                u'address3': u'',
+                                u'city': u'San Francisco',
+                                u'country': u'US',
+                                u'state': u'CA',
+                                u'zip_code': u'94108'},
+                  u'name': u'Iron Horse Coffee Bar',
+                  u'price': u'$',
+                  u'rating': 4.5,
+                  u'review_count': 60,
+                  u'url': u'https://www.yelp.com/biz/iron-horse-coffee-bar-san-francisco'}],
+ u'total': 4458}
+
+storing_yelp_values= {}
+    #Returns 5 of the first things in the first activity type FIXME: VARIETY
+    
+    # loop over the r.json() to build up the yelp_response dictionary
+    for yelp_request in activity_types:
+            r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
+            print "\n\n\n\n this the yelp get request \n\n\n", r.json()
+            yelp_values = r.json()['businesses'] #getting to the key/values with the good stuff
+
+            for business in yelp_values:  #go through each business in the json response
+                #nesting dictionaries
+                storing_yelp_values[name] =  {}
+                #setting the key in big dict to the name of the business 
+                name = business['name']
+                
+                # setting the values in name key in big dict
+                storing_yelp_values[name]['address'] = business['location']
+                storing_yelp_values[name]['coordinates'] = {'lat': business['coordinates']['latitude'], 
+                                                            'lng': business['coordinates']['longitude']}
+                storing_yelp_values[name]['phone'] = business['phone']
+
 hard coded sort = 1
 {'activity': {u'total': 4458, u'businesses': 
 [{u'rating': 4.0, u'review_count': 1856, u'name': u'Blue Bottle Coffee Co', u'url': u'https://www.yelp.com/biz/blue-bottle-coffee-co-san-francisco-7', u'price': u'$$', 
