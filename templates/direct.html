@@ -9,9 +9,6 @@ template for prompt if they want a direct route
 {{ activity_types }} <br>
 {{ end_location }}
 
-
-</body>
-
 <p>
     <!-- only have this print if an activity is in their route  -->
 {% if activities %} 
@@ -20,6 +17,10 @@ Please choose one:
 <input type="dropdown" id="" value="" name=""> {{ activity }} 
 {% endif %}
 </p>
+
+</body>
+
+
 
 
 {% endblock %}

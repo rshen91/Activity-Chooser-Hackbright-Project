@@ -45,12 +45,13 @@ function handlePositionFound(position) { //get the coords
     // console.log(user_lng);
 }
 
-function addMarker(map, userLat, userLng) {
+function addMarker(map, user_lat, user_lng) {
   var marker = new google.maps.Marker({
-    position: {lat: parseInt(userLat), lng: parseInt(userLng)},
+    position: {lat: user_lat, lng: user_lng}, //parseInt() rounds so the marker isn't on their current location
     title: 'User location!',
     map: map
     })
+    console.log('marker position '+user_lat, user_lng);
   return marker;
 
 }

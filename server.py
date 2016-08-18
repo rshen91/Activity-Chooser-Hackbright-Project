@@ -2,9 +2,9 @@ import os # for the secrets.sh file?
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
+import geocoder
 from model import db, connect_to_db, Trip, Preference, TripPreference
 from helper_functions import *
-import geocoder
 import json
 import pdb
 
@@ -31,7 +31,7 @@ def homepage():
 @app.route('/activity_time', methods=['POST']) 
 # how do you get the variables from a post request without rendering a page
 # add to the trip_id table 
-def variables():
+def get_form_values():
     """ Get the variables from the homepage""" 
 
     # Get the form variables
@@ -67,33 +67,23 @@ def variables():
     db.session.commit()
     
     #The API call before the return statement 
-    print start_oAuth(end_location, str(end_lat), str(end_lng), activity_types)
+    start_oAuth(end_location, str(end_lat), str(end_lng), activity_types)
 
     # whats_near(end_lat, end_lng, activity_types)
 
     #right now this is going to direct.html 
-    return render_template("/direct.html", 
+    return render_template ("/direct.html", 
                         arrival_time=arrival_time,
                         activity_types=activity_types,
                         end_latlng=r.latlng,
                         end_location=end_location)
 
     #want to call this from helper_functions.py
+@app.route('/activity')
+def render_activity():
+    """Takes the json place name, phone number, address, and displays to user"""
 
-
-################################################################################
-# need to find out what activities are near them based on their location and the end location
-# moved to helper function since I dont want it to render a page
-
-    # get the request back from the places_url:
-    # places_near_user_dict = json.load(open("whatever the response is .json"))
-    # $.get(url, [data] successFunction)
-#route to render a direct route html page with a map of the direct route
-
-#render a page with the available activities along their route for them to select
-
-
-#route to render a route with activities and a map with markers
+    return render_template("/activity.html")
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)

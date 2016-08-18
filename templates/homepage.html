@@ -14,11 +14,12 @@
     <br>
     <br>
 
-    Select an activity you'd want to hit up in between:
+    Select a type of activity you want to do in between:
     <br>
-        <div id="activity_type">
+        <div name="activity_type" id="activity_type">
             {% for name in names %} 
             <br>
+<!--                 <option value="{{name[0]}}"> {{ name[0] }} </option> -->
                 <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
             <br>
         {% endfor %}

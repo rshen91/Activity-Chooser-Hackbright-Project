@@ -1,3 +1,85 @@
+hard coded sort = 1
+{'activity': {u'total': 4458, u'businesses': 
+[{u'rating': 4.0, u'review_count': 1856, u'name': u'Blue Bottle Coffee Co', u'url': u'https://www.yelp.com/biz/blue-bottle-coffee-co-san-francisco-7', u'price': u'$$', 
+u'coordinates': {u'latitude': 37.782352, u'longitude': -122.407697}, u'phone': u'+15106533394', u'image_url': u'http://s3-media2.fl.yelpcdn.com/bphoto/YKoMObZPbtVi1l7f3g4xwg/o.jpg', 
+u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'66 Mint St', u'zip_code': u'94103'}, u'id': u'blue-bottle-coffee-co-san-francisco-7', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}]}, {u'rating': 4.5, u'review_count': 509, u'name': u'Beanstalk Cafe', u'url': u'https://www.yelp.com/biz/beanstalk-cafe-san-francisco-2', u'price': u'$', u'coordinates': {u'latitude': 37.7901517599821, u'longitude': -122.409288436174}, u'phone': u'+14155761966', u'image_url': u'http://s3-media2.fl.yelpcdn.com/bphoto/yvw6fgMum8gpS4b4WIFrEA/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'724 Bush St', u'zip_code': u'94108'}, u'id': u'beanstalk-cafe-san-francisco-2', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}, {u'alias': u'sandwiches', u'title': u'Sandwiches'}, {u'alias': u'bagels', u'title': u'Bagels'}]}, {u'rating': 4.5, u'review_count': 347, u'name': u'Fresh Brew Coffee', u'url': u'https://www.yelp.com/biz/fresh-brew-coffee-san-francisco', u'price': u'$', u'coordinates': {u'latitude': 37.79001, u'longitude': -122.41177}, u'phone': u'+14155670915', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/G0xDrpOQyXxrrKnQrYm7iQ/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'882 Bush St', u'zip_code': u'94108'}, u'id': u'fresh-brew-coffee-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}, {u'alias': u'sandwiches', u'title': u'Sandwiches'}, {u'alias': u'vietnamese', u'title': u'Vietnamese'}]}, {u'rating': 4.0, u'review_count': 593, u'name': u'Contraband Coffee Bar', u'url': u'https://www.yelp.com/biz/contraband-coffee-bar-san-francisco', u'price': u'$$', u'coordinates': {u'latitude': 37.791405, u'longitude': -122.419327}, u'phone': u'+14158397388', u'image_url': u'http://s3-media4.fl.yelpcdn.com/bphoto/42V-yDiNZcfLFT743jxmPA/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'1415 Larkin St', u'zip_code': u'94109'}, u'id': u'contraband-coffee-bar-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}]}, 
+{u'rating': 4.5, u'review_count': 60, u'name': u'Iron Horse Coffee Bar', u'url': u'https://www.yelp.com/biz/iron-horse-coffee-bar-san-francisco', u'price': u'$', u'coordinates': {u'latitude': 37.7882923185825, u'longitude': -122.404029965401}, u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/_eMt3Li_B5DdeAkHFsxIJA/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': None, u'address3': u'', u'state': u'CA', u'address1': u'25 Maiden Ln', u'zip_code': u'94108'}, u'id': u'iron-horse-coffee-bar-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}]}]}}
+
+changing term to category_filter
+{'activity': 
+    {u'total': 24875, u'businesses': 
+        [{u'rating': 4.5, u'review_count': 337, 
+          u'name': u'Tadu Ethiopian Kitchen', u'url': u'https://www.yelp.com/biz/tadu-ethiopian-kitchen-san-francisco-3', u'price': u'$$', 
+          u'coordinates': {u'latitude': 37.7847934, u'longitude': -122.4141884}, u'phone': u'+14154096649', u'image_url': u'http://s3-media3.fl.yelpcdn.com/bphoto/EapkmG5rpJuy7u8tu01GYA/o.jpg', 
+          u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'484 Ellis St', u'zip_code': u'94102'}, u'id': u'tadu-ethiopian-kitchen-san-francisco-3', u'categories': [{u'alias': u'ethiopian', u'title': u'Ethiopian'}]}, {u'rating': 4.5, u'review_count': 938, u'name': u'Liholiho Yacht Club', u'url': u'https://www.yelp.com/biz/liholiho-yacht-club-san-francisco-2', u'price': u'$$$', u'coordinates': {u'latitude': 37.7883678084094, u'longitude': -122.414625026286}, u'phone': u'+14154405446', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/uUkGwA2rrwd24RUjIzWmsw/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'871 Sutter St', u'zip_code': u'94109'}, u'id': u'liholiho-yacht-club-san-francisco-2', u'categories': [{u'alias': u'asianfusion', u'title': u'Asian Fusion'}, {u'alias': u'newamerican', u'title': u'American (New)'}, {u'alias': u'seafood', u'title': u'Seafood'}]}, {u'rating': 4.5, u'review_count': 347, u'name': u'Fresh Brew Coffee', u'url': u'https://www.yelp.com/biz/fresh-brew-coffee-san-francisco', u'price': u'$', u'coordinates': {u'latitude': 37.79001, u'longitude': -122.41177}, u'phone': u'+14155670915', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/G0xDrpOQyXxrrKnQrYm7iQ/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'882 Bush St', u'zip_code': u'94108'}, u'id': u'fresh-brew-coffee-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}, {u'alias': u'sandwiches', u'title': u'Sandwiches'}, {u'alias': u'vietnamese', u'title': u'Vietnamese'}]}, {u'rating': 4.5, u'review_count': 254, u'name': u"Hooker's Sweet Treats", u'url': u'https://www.yelp.com/biz/hookers-sweet-treats-san-francisco', u'price': u'$$', u'coordinates': {u'latitude': 37.7852285, u'longitude': -122.4160527}, u'phone': u'+14154414628', u'image_url': u'http://s3-media3.fl.yelpcdn.com/bphoto/izW5V7ghPnQSf6HCIxvS4Q/o.jpg', u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'442 Hyde St', u'zip_code': u'94109'}, u'id': u'hookers-sweet-treats-san-francisco', u'categories': [{u'alias': u'chocolate', u'title': u'Chocolatiers & Shops'}, {u'alias': u'coffee', u'title': u'Coffee & Tea'}]}, {u'rating': 4.5, u'review_count': 153, u'name': u'Tacorea', u'url': u'https://www.yelp.com/biz/tacorea-san-francisco', u'price': u'$', u'coordinates': {u'latitude': 37.7897959388507, u'longitude': -122.410720065236}, u'phone': u'+14158851325', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/TNkHvAH9s6ctXYHG-gNViw/o.jpg', 
+    u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': None, u'state': u'CA', u'address1': u'809 Bush St', u'zip_code': u'94108'}, u'id': u'tacorea-san-francisco', u'categories': [{u'alias': u'asianfusion', u'title': u'Asian Fusion'}, {u'alias': u'mexican', u'title': u'Mexican'}, {u'alias': u'korean', u'title': u'Korean'}]}]}}
+
+term not category_filter
+{'activity': 
+    {u'total': 4458, u'businesses': 
+            [{u'rating': 4.0, u'review_count': 1855, 
+              u'name': u'Blue Bottle Coffee Co', u'url': u'https://www.yelp.com/biz/blue-bottle-coffee-co-san-francisco-7', u'price': u'$$', 
+              u'coordinates': {u'latitude': 37.782352, u'longitude': -122.407697}, 
+              u'phone': u'+15106533394', u'image_url': u'http://s3-media2.fl.yelpcdn.com/bphoto/YKoMObZPbtVi1l7f3g4xwg/o.jpg', 
+              u'location': {u'city': u'San Francisco', u'address1': u'66 Mint St', u'address2': u'', u'address3': u'', u'state': u'CA', u'country': u'US', u'zip_code': u'94103'}, 
+              u'id': u'blue-bottle-coffee-co-san-francisco-7', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}]}, 
+
+            {u'rating': 4.5, u'review_count': 509, 
+            u'name': u'Beanstalk Cafe', u'url': u'https://www.yelp.com/biz/beanstalk-cafe-san-francisco-2', u'price': u'$', 
+            u'coordinates': {u'latitude': 37.7901517599821, u'longitude': -122.409288436174}, 
+            u'phone': u'+14155761966', u'image_url': u'http://s3-media2.fl.yelpcdn.com/bphoto/yvw6fgMum8gpS4b4WIFrEA/o.jpg', 
+            u'location': {u'city': u'San Francisco', u'address1': u'724 Bush St', u'address2': u'', u'address3': u'', u'state': u'CA', u'country': u'US', u'zip_code': u'94108'}, 
+            u'id': u'beanstalk-cafe-san-francisco-2', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}, {u'alias': u'sandwiches', u'title': u'Sandwiches'}, {u'alias': u'bagels', u'title': u'Bagels'}]}, 
+
+           {u'rating': 4.5, u'review_count': 347, u'name': u'Fresh Brew Coffee', u'url': u'https://www.yelp.com/biz/fresh-brew-coffee-san-francisco', u'price': u'$', 
+            u'coordinates': {u'latitude': 37.79001, u'longitude': -122.41177}, 
+            u'phone': u'+14155670915', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/G0xDrpOQyXxrrKnQrYm7iQ/o.jpg', 
+            u'location': {u'city': u'San Francisco', u'address1': u'882 Bush St', u'address2': u'', u'address3': u'', u'state': u'CA', u'country': u'US', u'zip_code': u'94108'}, 
+            u'id': u'fresh-brew-coffee-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}, {u'alias': u'sandwiches', u'title': u'Sandwiches'}, {u'alias': u'vietnamese', u'title': u'Vietnamese'}]}, 
+
+           {u'rating': 4.0, u'review_count': 593, u'name': u'Contraband Coffee Bar', u'url': u'https://www.yelp.com/biz/contraband-coffee-bar-san-francisco', u'price': u'$$', 
+            u'coordinates': {u'latitude': 37.791405, u'longitude': -122.419327}, u'phone': u'+14158397388', u'image_url': u'http://s3-media4.fl.yelpcdn.com/bphoto/42V-yDiNZcfLFT743jxmPA/o.jpg', u'location': {u'city': u'San Francisco', u'address1': u'1415 Larkin St', u'address2': u'', u'address3': u'', u'state': u'CA', u'country': u'US', u'zip_code': u'94109'}, u'id': u'contraband-coffee-bar-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}]}, {u'rating': 4.5, u'review_count': 60, u'name': u'Iron Horse Coffee Bar', u'url': u'https://www.yelp.com/biz/iron-horse-coffee-bar-san-francisco', u'price': u'$', u'coordinates': {u'latitude': 37.7882923185825, u'longitude': -122.404029965401}, u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/_eMt3Li_B5DdeAkHFsxIJA/o.jpg', u'location': {u'city': u'San Francisco', u'address1': u'25 Maiden Ln', u'address2': None, u'address3': u'', u'state': u'CA', u'country': u'US', u'zip_code': u'94108'}, u'id': u'iron-horse-coffee-bar-san-francisco', u'categories': [{u'alias': u'coffee', u'title': u'Coffee & Tea'}]}]}}
+
+
+
+
+
+
+{u'total': 3747, 
+u'businesses': 
+    [{u'rating': 4.0, u'review_count': 439, 
+    u'name': u'Union Square Plaza', u'url': u'https://www.yelp.com/biz/union-square-plaza-san-francisco', 
+    u'coordinates': {u'latitude': 37.7879384, u'longitude': -122.4075056}, 
+    u'phone': u'+14158315500', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/OB2NDnPEVscQfT3VWW6Jxg/o.jpg', 
+    u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'333 Post St', u'zip_code': u'94108'}, 
+    u'id': u'union-square-plaza-san-francisco', u'categories': 
+    [{u'alias': u'parks', u'title': u'Parks'}]}, 
+
+    {u'rating': 4.5, u'review_count': 350, 
+    u'name': u'Yerba Buena Gardens', u'url': u'https://www.yelp.com/biz/yerba-buena-gardens-san-francisco', 
+    u'coordinates': {u'latitude': 37.7848643788333, u'longitude': -122.402581932663}, 
+    u'phone': u'+14158203550', u'image_url': u'http://s3-media3.fl.yelpcdn.com/bphoto/OxPlqMtfR71Z7r_xmBnWqg/o.jpg', 
+    u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'745 Mission St', u'zip_code': u'94103'}, 
+    u'id': u'yerba-buena-gardens-san-francisco', u'categories': [{u'alias': u'parks', u'title': u'Parks'}]}, 
+
+    {u'rating': 4.5, u'review_count': 29, u'name': u'One Kearny', u'url': u'https://www.yelp.com/biz/one-kearny-san-francisco', 
+    u'coordinates': {u'latitude': 37.7877464, u'longitude': -122.4039383}, 
+    u'phone': u'+14157881133', u'image_url': u'http://s3-media3.fl.yelpcdn.com/bphoto/EyFQlNfjt9BzMqO63p-x9w/o.jpg', 
+    u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'Ste 510', u'address3': u'', u'state': u'CA', u'address1': u'23 Geary St', u'zip_code': u'94108'}, 
+    u'id': u'one-kearny-san-francisco', u'categories': [{u'alias': u'parks', u'title': u'Parks'}]}, 
+
+    {u'rating': 5.0, u'review_count': 296, u'name': u"Captain Kirk's San Francisco Sailing", u'url': u'https://www.yelp.com/biz/captain-kirks-san-francisco-sailing-san-francisco', 
+    u'coordinates': {u'latitude': 37.78138, u'longitude': -122.4214}, 
+    u'phone': u'+16509300740', u'image_url': u'http://s3-media3.fl.yelpcdn.com/bphoto/n47k_neGs2uWUu_jlH_csA/o.jpg', 
+    u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': u'Ste E-736', u'address3': u'', u'state': u'CA', u'address1': u'601 Van Ness Ave', u'zip_code': u'94102'}, 
+    u'id': u'captain-kirks-san-francisco-sailing-san-francisco', u'categories': [{u'alias': u'boating', u'title': u'Boating'}, {u'alias': u'boatcharters', u'title': u'Boat Charters'}]}, 
+
+    {u'rating': 4.5, u'review_count': 114, u'name': u'EscapeSF', u'url': u'https://www.yelp.com/biz/escapesf-san-francisco', 
+    u'coordinates': {u'latitude': 37.7937546372414, u'longitude': -122.404572442174}, 
+    u'phone': u'+14152941718', u'image_url': u'http://s3-media1.fl.yelpcdn.com/bphoto/qJ2jt4WRyI47jo7Z5rAUbw/o.jpg', 
+    u'location': {u'city': u'San Francisco', u'country': u'US', u'address2': None, u'address3': u'', u'state': u'CA', u'address1': u'602 Kearny St', u'zip_code': u'94108'}, 
+    u'id': u'escapesf-san-francisco', u'categories': [{u'alias': u'escapegames', u'title': u'Escape Games'}]}]}
+
 import os # for the secrets.sh file?
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
@@ -316,6 +398,60 @@ def start_oAuth():
 #         }
 #     ]
 # }
+
+# def whats_near(end_lat, end_lng, activity_types):
+#     """Makes a call to Google Places API and returns a json object of the results"""
+#     key = os.environ.get('KEY_KEY')
+#     places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" #&key=SERVER_KEY
+#     radar_places_url = "https://maps.googleapis.com/maps/api/place/radarsearch/json" #have to add radius, this is producing an invalid request check the docs 
+
+    
+#     activity_feedback = []
+
+#     # for loop to go through each activity and add it as a request to the Google Places API
+#     for a in activity_types:
+#         # have the type specific to the iterating variable 
+#         r = requests.post("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=%s&location=%s,%s&open_now=True&types=%s" % (key, end_lat, end_lng, a))
+#         json_activity = r.json()
+#         activity_feedback.append(json_activity)
+#         import pdb; pdb.set_trace()
+
+#     # return the compiled API calls for the activities the user requested
+#     return activity_feedback 
+
+# # Make a function to get the place details from the place ids still doesn't include the name of the place 
+# def retrieve_place_details(place_id):
+#     """Given json results, find the place details"""
+
+#     key = os.environ.get('KEY_KEY')
+#     retrieve_place_details = ("https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s" % (place_id, key))
+
+# # Have the user choose a place to visit from the json
+# def parse_activity_feedback(place_id):
+#     """Input parameter is the json object and this function parses out the name and lat lng of the place in a dict"""
+    
+#     activity_feedback_details = {}
+#     activity_feedback.split()
+
+#     # Use .values()
+#     place_location = ["results"][0] # location has the keys lat lng
+#     place_name = ["results"][3] # check that this is the location name
+#     place_activity_type = ["results"][10] # check that this is the activity_type
+
+#     #add to the dictionary THIS MIGHT BE REPETITIVE
+#     activity_feedback["activity_place"] = place_name, place_location, place_activity_type
+#     # will want to present to the user place details along their route
+#     # might need to filter this to be inbetween their start and end latlngs
+
+# # geocoding by place name from Google Maps lecture 
+
+
+# # #waypoints are stops between two destinations!
+# # https://maps.googleapis.com/maps/api/directions/json?origin=Boston,MA&destination=Concord,MA&waypoints=Charlestown,MA|Lexington,MA&key=YOUR_API_KEY
+
+# # #need to find code for the user's current location 
+
+# # # function that takes the json dictionary and takes the
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)
