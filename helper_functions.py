@@ -40,18 +40,29 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     
     #Returns 5 of the first things in the first activity type FIXME: VARIETY
     count = 0
-    for a in activity_types:
-            r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, a, a), headers=payload)
-            yelp_response["activity"] = r.json() 
+    # loop over the r.json() to build up the yelp_response dictionary
+    for yelp_request in activity_types:
+            r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
+            print "\n\n\n\n this the yelp get request \n\n\n", r.json()
+            yelp_values = r.json().values()
+            print "\n\n\n\n this the yelp get request with .values()\n\n\n", yelp_values
+            pdb.set_trace()
+            yelp_values = yelp_response[yelp_request] = {
+                    'name': yelp_values.get('name'), #list object has no attribute get
+                    'coordinates': {'lat': yelp_values['coordinates']['latitude'], 
+                                    'lng': yelp_values['coordinates']['longitude']},
+                    'address': yelp_values.values('location'), ##how to get out of dictionaries another dictionary and assign it a key
+                    'phone': yelp_values.get('phone')
+            }
             count += 1
-    
+    pdb.set_trace()
     print "\n\n\n\n\n THIS IS THE YELP RESPONSE \n\n\n", yelp_response
+    print "\n\n\n\n\n THIS IS THE YELP VALUES \n\n\n", yelp_values
+# def yelp_dict(yelp_response):
+#     """Take out the values I want and render to a html template"""
 
-def yelp_dict(yelp_response):
-    """Take out the values I want and render to a html template"""
-
-    yelp_response = json.dumps(yelp_response, ensure_ascii=False)
-    yelp_response_1 = yelp_response.get("activity").get("businesses")
-    for name, phone, coordinates in yelp_response:
-        print name, phone, coordinates
+#     yelp_response = json.dumps(yelp_response, ensure_ascii=False)
+#     yelp_response_1 = yelp_response.get("activity").get("businesses")
+#     for name, phone, coordinates in yelp_response:
+#         print name, phone, coordinates
     # yelp_response_2 = yelp_response_1.get("businesses")
