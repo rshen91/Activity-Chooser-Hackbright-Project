@@ -14,7 +14,7 @@ Please choose one:
     {% for key, value in business.iteritems() %}
     <dt> {{ name }}</dt> <dd> {{ value }}</dd>
     <dt> {{ phone }}</dt> <dd> {{ value }}</dd>
-    <dt> {{ address['address1'] }}</dt> <dd> {{ value }}</dd>
+    <dt> {# address['address1'] #}</dt> <dd> {# value #}</dd>
     {% endfor %}
 </dl>
 {% endfor %}

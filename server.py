@@ -50,6 +50,8 @@ def get_form_values():
     print "\n\n\n\n this is the  end location as lat lng" , r.latlng, "\n\n\n\n"
     # unpack the lat lng here for the api call in whats near (can't have a list)
     end_lat, end_lng = r.latlng
+    end_lat = str(end_lat)
+    end_lng = str(end_lng)
 
     print "\n\n\n\n"  
     print end_lat
@@ -66,8 +68,7 @@ def get_form_values():
     db.session.commit()
     
     #The API call before the return statement 
-    start_oAuth(end_location, str(end_lat), str(end_lng), activity_types)
-
+    return  #app is going here but I want it to go through the start_oAuth function
     
 #REMOVED APP.ROUTE HERE BECAUSE THE USER DOESNT NEED TO SEE WHAT THIS FUNCTION DOES    
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
