@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+template for prompt if they want a direct route 
+<br>
+<body>
+<h3> Here are suggestions for businesses that satisfy your activity selection.</h3>
+    <!-- only have this print if an activity is in their route  -->
+
+
+Please choose one:  
+
+{% for business in activity %}
+<dl>
+    {% for key, value in business.iteritems() %}
+    <dt> {{ name }}</dt> <dd> {{ value }}</dd>
+    <dt> {{ phone }}</dt> <dd> {{ value }}</dd>
+    <dt> {{ address['address1'] }}</dt> <dd> {{ value }}</dd>
+    {% endfor %}
+</dl>
+{% endfor %}
+
+
+<form action = "/">
+    <input type="submit" value="Continue">
+</form>
+
+<!-- put navbar similar to Angular demo where the next html page of route options is a tab -->
+</body>
+
+
+
+
+{% endblock %}

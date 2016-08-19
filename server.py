@@ -23,13 +23,13 @@ def homepage():
 
     # Returns a unicode list of the human readable names
     names = db.session.query(Preference.name).all()
+
     # flask uses Jinja to fill in the blanks and return a string of HTML
     #flask sends the fully-formed HTML string down the pipes to the front end
     return render_template("homepage.html", names=names)
 
 
 @app.route('/activity_time', methods=['POST']) 
-# how do you get the variables from a post request without rendering a page
 # add to the trip_id table 
 def get_form_values():
     """ Get the variables from the homepage""" 
@@ -50,7 +50,6 @@ def get_form_values():
     print "\n\n\n\n this is the  end location as lat lng" , r.latlng, "\n\n\n\n"
     # unpack the lat lng here for the api call in whats near (can't have a list)
     end_lat, end_lng = r.latlng
-    # import pdb; pdb.set_trace()
 
     print "\n\n\n\n"  
     print end_lat
@@ -59,9 +58,9 @@ def get_form_values():
     print "\n\n\n\n"
 
     #Get the user's location from the hidden form in the homepage.html
-    user_lat = request.form.get("lat") 
+    user_lat = request.form.get("user_lat") 
     print "\n\n\n\n this is the lat from html of user's current loc" + user_lat + "\n\n\n\n"
-    user_lng = request.form.get("lng")
+    user_lng = request.form.get("user_lng")
     print "\n\n\n\n this is the lng from html of user's current loc" + user_lng + "\n\n\n\n"
 
     db.session.commit()
@@ -69,32 +68,50 @@ def get_form_values():
     #The API call before the return statement 
     start_oAuth(end_location, str(end_lat), str(end_lng), activity_types)
 
-    # whats_near(end_lat, end_lng, activity_types)
+    
+#REMOVED APP.ROUTE HERE BECAUSE THE USER DOESNT NEED TO SEE WHAT THIS FUNCTION DOES    
+def start_oAuth(end_location, end_lat, end_lng, activity_types):
+    """Uses oAuth and sends request to Yelp API for activity locations near end location"""
+# oAuth comes back with the bearer information and you have to do .json() because it's just a 200 response object
+#this goes in your post request
+    resp = requests.post("https://api.yelp.com/oauth2/token",
+                     data = {'grant_type': 'client_credentials',
+                             'client_id': os.environ["app_id"],
+                             'client_secret': os.environ["app_secret"]})
 
-    #right now this is going to direct.html 
-    return render_template ("/direct.html", 
-                        arrival_time=arrival_time,
-                        activity_types=activity_types,
-                        end_latlng=r.latlng,
-                        end_location=end_location)
+    #this is a dictionary like json object 
+    for_get_request = resp.json()
+    bearer_buddy = for_get_request["access_token"]
+    #bearer_buddy is a string
 
-    #want to call this from helper_functions.py
-@app.route('/activity')
-def render_activity():
-    """Takes the json place name, phone number, address, and displays to user"""
+    payload = {'Authorization': 'Bearer '+ bearer_buddy}
 
-    start_oAuth(end_location, end_lat, end_lng, activity_types)
-    name = storing_yelp_values.get('name')
-    phone = storing_yelp_values.get('phone')
-    coordinates = storing_yelp_values['coordinates']
-    address = storing_yelp_values['location']
+    storing_yelp_values= []
+    all_businesses_in_activities = []
 
-    return render_template("/.html",
-                            name=name,
-                            phone=phone,
-                            lat=coordinates[0],
-                            lng=coordinates[1],
-                            address=address)
+    # loop over the r.json() to build up the yelp_response dictionary
+    for yelp_request in activity_types:
+        #for each activity, send an API call to get business details
+        r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
+        all_businesses_in_activities.extend(r.json()['businesses'])
+            #each of these businesses should be added to the list 
+        for business in all_businesses_in_activities:
+            # for each business give me the name, coordinates, address and phone number
+            # businesses = {}
+            business = {
+                'name': business['name'],
+                'coordinates': {'lat': business.get('coordinates').get('latitude'),
+                                'lng': business.get('coordinates').get('longitude')},
+                'address': business.get('location'),
+                'phone1': business.get('phone'),
+                'categories': business['categories']
+                }
+        storing_yelp_values.append(business)
+    # storing_yelp_values 
+    return render_template("choose_activity.html",
+                            activity=storing_yelp_values,
+                            end_location=end_location)
+
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)
