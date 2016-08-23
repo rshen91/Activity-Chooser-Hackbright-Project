@@ -4,11 +4,12 @@
 
 <!-- values are selected from Google Places API -->
 <form action= "/activity_time" method="POST">
-    Please fill out the following fields:
+    <h3>This app will take your activity selection into consideration and provide you with one option from each activity type you choose below. </h3>
+    To continue, please fill out the following fields:
     <br>
     <br>
     <br>
-        <label for="end_location">Where do you want to go? <input type= "text" name = "end_location"></label>
+        <label for="end_location">Where do you want to go? Please enter an address. <input type= "text" name = "end_location"></label>
     <br>
         <label for="arrival_time">When do you want to be there? <input type="time" name="arrival_time" value="16:00"></label> 
     <br>
@@ -16,10 +17,12 @@
 
     Select a type of activity you want to do in between:
     <br>
+    <br>
+
         <div name="activity_type" id="activity_type">
             {% for name in names %} 
             <br>
-<!--                 <option value="{{name[0]}}"> {{ name[0] }} </option> -->
+
                 <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
             <br>
         {% endfor %}

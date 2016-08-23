@@ -1,33 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
-template for prompt if they want a direct route 
+
 <br>
 <body>
-<h3> Here are suggestions for businesses that satisfy your activity selection.</h3>
+<h3> Here are suggestions for businesses that satisfy your activity selection. Please choose one to visit between you reach your destination.</h3>
     <!-- only have this print if an activity is in their route  -->
 
 
 Please choose one:  
+<br>
 
 {% for business in activity %}
-<dl>
-    {% for key, value in business.iteritems() %}
-    <dt> {{ name }}</dt> <dd> {{ value }}</dd>
-    <dt> {{ phone }}</dt> <dd> {{ value }}</dd>
-    <dt> {# address['address1'] #}</dt> <dd> {# value #}</dd>
-    {% endfor %}
-</dl>
+    <br>
+    <br>
+    <form action="/choose", method="POST" >
+        <input type= "radio" name= "activity" value="{{ business.name }}"> {{ business.name }}
+        {{ business.categories.title }} <br>
+        {{ business.phone }} <br>
+        {{ business.address.address1 }}
+        {{ business.address.city }} 
+        {{ business.address.zipcode }}<br>
+<!--         {{ business.coordinates.lat }}
+        {{ business.coordinates.lng }} -->
+
+        <input type="hidden" id="business_coordinate_lat" value="{{business.coordinates.lat}}" class="hidden"/>
+        <input type="text" id="business_coordinate_lat" value="{{business.coordinates.lng}}" class="hidden"/>
+        <input type="text" id="user_lat" value="user_lat" class="hidden"/>
+        <input type="text" id="user_lng" value="user_lng" class="hidden"/>
+
+
+<br>
 {% endfor %}
-
-
-<form action = "/">
+<br>
     <input type="submit" value="Continue">
 </form>
+
+<script type="text/javascript">
+// Success handler
+function 
+
+// Event handler
+function addToGoogleWaypoint(evt) {
+
+}
+
+// Event listener
+$('').click()
+</script>
+
+<!-- Map of each location on a map -->
+<div id= "marker_map"></div>
+
 
 <!-- put navbar similar to Angular demo where the next html page of route options is a tab -->
 </body>
 
-
-
-
 {% endblock %}
+{% block extra_js %}
+<script src="/static/working_name.js"></script>
+{% endblock %}
+
+

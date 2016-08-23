@@ -56,7 +56,32 @@ function addMarker(map, user_lat, user_lng) {
 
 }
 
+//JS for choose_activity.html where a map is on the page showing the different businesses as markers
 
+// google.maps.event.addDomListener(window, "load", getLocation); 
+
+
+// function initMap() {
+//         var myLatLng = {lat: "user_lat", lng: "user_lng"};
+
+//         var map = new google.maps.Map(document.getElementById('marker-map'), {
+//           zoom: 18,
+//           center: myLatLng
+//         });
+
+// function addMarker(map, user_lat, user_lng) {
+//   var marker = new google.maps.Marker({
+//     position: {lat: user_lat, lng: user_lng}, //parseInt() rounds so the marker isn't on their current location
+//     title: 'User location!',
+//     map: map
+//     })
+
+//   var business = new google.maps.Marker({
+//     position: {lat: user_lat, lng: user_lng},
+//     title: 'Business.name',
+//     map: map
+//   })
+//   return marker;
 
 
 

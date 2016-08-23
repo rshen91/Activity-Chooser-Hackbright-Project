@@ -7,6 +7,8 @@ from model import db, connect_to_db, Trip, Preference, TripPreference
 from helper_functions import *
 import json
 import pdb
+import googlemaps
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -48,17 +50,21 @@ def get_form_values():
     
     user_lng = request.form.get("user_lng")
     
-    db.session.commit()
+    # db.session.commit()
 
     #The API call before the return statement 
-    results = start_oAuth(end_location, end_lat, end_lng, activity_types)
-    
+    results = start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng)
+    # p results[0]['coordinates']['lng']
+    # pdb.set_trace()
     return render_template("choose_activity.html",
                             activity=results,
-                            end_location=end_location) #app is going here but I want it to go through the start_oAuth function
-    
-#REMOVED APP.ROUTE HERE BECAUSE THE USER DOESNT NEED TO SEE WHAT THIS FUNCTION DOES    
-def start_oAuth(end_location, end_lat, end_lng, activity_types):
+                            end_location=end_location,
+                            user_lat=user_lat,
+                            user_lng=user_lng)
+                            # end_lat=end_lat,
+                            # end_lng=end_lng) 
+       
+def start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 
     The function compiles API response in a list of dictionaries, each business is a dictionary
@@ -84,20 +90,47 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
         all_businesses_in_activities.extend(r.json()['businesses'])
             #each of these businesses should be added to the list 
+# FIX ME ONLY ADDS ONE TYPE OF BUSINESS OUT OF EACH BUSINESS TYPE
         for business in all_businesses_in_activities:
-
             business = {
                 'name': business['name'],
                 'coordinates': {'lat': business.get('coordinates').get('latitude'),
                                 'lng': business.get('coordinates').get('longitude')},
                 'address': business.get('location'),
-                'phone1': business.get('phone'),
+                'phone': business.get('phone'),
                 'categories': business['categories']
                 }
+        
         storing_yelp_values.append(business)
     return storing_yelp_values
-    
 
+@app.route('/choose', methods=['POST'])
+def activity_chosen():
+    """Get the form variable chosen for the business the user wants in between"""
+
+    chosen_business = request.form.getlist("business.name")
+    # These arent showing
+    chosen_business_lat = request.form.get("business.coordinates.lat") 
+    chosen_business_lng = request.form.get("business.coordinates.lng")
+
+    print "\n\n\n\n\n\n", chosen_business 
+    print "\n\n\n\n\n\n", chosen_business_lat
+    print "\n\n\n\n\n\n", chosen_business_lat 
+
+    user_lat = request.form["user_lat"]
+    print "\n\n\n\n\n\n", user_lat
+    user_lng = request.form["user_lng"]
+    print "\n\n\n\n\n\n", user_lng
+    user_location = (user_lat, user_lng)
+    print "\n\n\n\n\n\n", user_location
+
+    gmaps = googlemaps.Client(key=os.environ["KEY_KEY"]) 
+    now = datetime.now()
+    directions_results = gmaps.directions(user_location,
+                                          end_location,
+                                          waypoints = [choosen_business_lat, choosen_business_lng],
+                                          departure_time=now) 
+    return directions_results
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)
