@@ -4,31 +4,36 @@ $(document).ready(function () {
 
 // google.maps.event.addDomListener(window, "load", getLocation); 
 // from Google Maps lecture 
-var user_latlng = {lat: , lng: }
-var activity = {lat: , lng: }
-var user_end = {lat: , lng: }
+var user_latlng = {lat: "user_lat", lng: "user_lng"}
+console.log(user_latlng);
+var activity = {lat: "activity_lat", lng: "activity_lng"}
+console.log(activity);
+var user_end = {lat: "end_lat", lng: "end_lng"}
+console.log(user_end);
 
 var activityWaypoint = {
     location: activity,
     stopover: true
 }
-function initMap() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var final_map = new google.maps.Map(document.getElementById('final-map'), {
-      zoom: 6,
-      center: activity  //what are the lat lngs I want for the center of the map? 
-        });
-directionsDisplay.setMap(final_map);
+var routeOptions = {
+    origin: user_latlng,
+    desintation: user_end,
+    waypoints: [activityWaypoint],
+    travelMode: google.maps.TravelMode.DRIVING
+}
 
-// document.getElementById('submit').addEventListener('click', function(){
-//   calculateAndDisplayRoute(directionsService, directionsDisplay);
-// }); 
-// }
+var directionsService = new google.maps.DirectionsService;
+var directionsService.route(routeOptions, function(response, status){
+    if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+    } else {
+        window.alert('Directions request failed due to ' + status);
+    }
+});
 
-// function calculateAndDisplayRoute (directionsService, directionsDisplay) {
-//   var waypts = []; //put the activity they choose here
-// }
+var directionsDisplay = new google.maps.DirectionsRenderer;
+directionsDisplay.setMap(map);
+}
 
 // // function addMarker(map, user_lat, user_lng) {
 // //   var marker = new google.maps.Marker({

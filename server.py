@@ -59,9 +59,9 @@ def get_form_values():
                             activity=results,
                             end_location=end_location,
                             user_lat=user_lat,
-                            user_lng=user_lng)
-                            # end_lat=end_lat,
-                            # end_lng=end_lng) 
+                            user_lng=user_lng,
+                            end_lat=end_lat,
+                            end_lng=end_lng) 
        
 def start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
@@ -113,13 +113,23 @@ def activity_chosen():
     chosen_business = request.form.get("business_name_"+ chosen_phone)
     chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
     chosen_business_lng = request.form.get("business_lng_" + chosen_phone) #lng is showing as lat
+    
+    # these variables have come from the homepage form values and travel through the app
+    # might want to store in a session?
+    user_lat = request.form.get("user_lat")
+    user_lng = request.form.get("user_lng")
+    end_lat = request.form.get("end_lat")
+    end_lng = request.form.get("end_lng")
 
-    print "\n\n\n\n\n\n", chosen_business 
-    print "\n\n\n\n\n\n", chosen_business_lat
-    print "\n\n\n\n\n\n", chosen_business_lng
 
     return render_template("final_route.html",
-                            )
+                            business_name=chosen_business,
+                            activity_lat=chosen_business_lat,
+                            activity_lng=chosen_business_lng,
+                            user_lat=user_lat,
+                            user_lng=user_lng,
+                            end_lat=end_lat,
+                            end_lng=end_lng)
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)
