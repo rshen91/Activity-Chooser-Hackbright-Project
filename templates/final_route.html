@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% block extra_js %}
+<script type="text/javascript" src="static/final_page.js"></script>
+{% endblock %}
 {% block content %}
 <div id ="final-map"> </div>
 <!-- see developers guide for waypoints --> 
-
+<form>
+    <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
+    <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
+    <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
+</form>
 {% endblock %}
-{% block extra_js %}
-<script src="/static/working_name.js"></script>
 
-{% endblock %}
+

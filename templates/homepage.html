@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block extra_js %}
+<script type="text/javascript" src="static/homepage.js"></script>
+{% endblock %}
 {% block content %}
 
 
@@ -36,15 +39,10 @@
 <div id="homepage-map" class="homepage-map"></div> 
 
 <!-- fixed css and html so that these values are hidden now! -->
-<label class="hidden">lat</label><input type= "text" id="user_lat" name="user_lat" value="" class="hidden" />
-<label class="hidden">lng</label><input type= "text" id="user_lng" name="user_lng" value="" class="hidden" />
+<label class="hidden">lat</label><input type="hidden" id="user_lat" name="user_lat" value=""/>
+<label class="hidden">lng</label><input type="hidden" id="user_lng" name="user_lng" value=""/>
 </form>
 
 
-
-
-{% endblock %}
-{% block extra_js %}
-<script src="/static/working_name.js"></script>
 
 {% endblock %}

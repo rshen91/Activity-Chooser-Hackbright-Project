@@ -14,7 +14,8 @@ Please choose one:
     <br>
     <br>
     <form action="/choose", method="POST" >
-        <input type= "radio" name= "activity" value="{{ business.name }}"> {{ business.name }}
+        <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
+        {{ business.name }}
         {{ business.categories.title }} <br>
         {{ business.phone }} <br>
         {{ business.address.address1 }}
@@ -23,14 +24,17 @@ Please choose one:
 <!--         {{ business.coordinates.lat }}
         {{ business.coordinates.lng }} -->
 
-        <input type="hidden" id="business_coordinate_lat" value="{{business.coordinates.lat}}" class="hidden"/>
-        <input type="text" id="business_coordinate_lat" value="{{business.coordinates.lng}}" class="hidden"/>
-        <input type="text" id="user_lat" value="user_lat" class="hidden"/>
-        <input type="text" id="user_lng" value="user_lng" class="hidden"/>
+        <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
+        <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
+        <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
+{% endfor %}
+
+        <input type="hidden" id="user_lat" value="user_lat"/>
+        <input type="hidden" id="user_lng" value="user_lng"/>
 
 
 <br>
-{% endfor %}
+
 <br>
     <input type="submit" value="Continue">
 </form>
