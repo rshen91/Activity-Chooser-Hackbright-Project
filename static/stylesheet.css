@@ -12,3 +12,9 @@
 #body {
     height: 100%;
 }
+#final-map {
+    height:800px;
+    width:500px;
+    margin:0;
+    padding:0;
+}

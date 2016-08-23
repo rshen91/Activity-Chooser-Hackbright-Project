@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block extra_js %}
+<script src="/static/homepage.js"></script>
+{% endblock %}
+
 {% block content %}
 
 <br>
@@ -42,18 +47,7 @@ Please choose one:
     <input type="submit" value="Continue">
 </form>
 
-<script type="text/javascript">
-// Success handler
-function 
 
-// Event handler
-function addToGoogleWaypoint(evt) {
-
-}
-
-// Event listener
-$('').click()
-</script>
 
 <!-- Map of each location on a map -->
 <div id= "marker_map"></div>
@@ -62,9 +56,6 @@ $('').click()
 <!-- put navbar similar to Angular demo where the next html page of route options is a tab -->
 </body>
 
-{% endblock %}
-{% block extra_js %}
-<script src="/static/working_name.js"></script>
 {% endblock %}
 
 

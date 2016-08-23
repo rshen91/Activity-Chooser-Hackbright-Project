@@ -54,7 +54,7 @@ def get_form_values():
 
     #The API call before the return statement 
     results = start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng)
-    
+    print "\n\n\n\n\n", end_lat
     return render_template("choose_activity.html",
                             activity=results,
                             end_location=end_location,
