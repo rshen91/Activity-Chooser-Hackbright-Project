@@ -4,12 +4,9 @@ from flask_debugtoolbar import DebugToolbarExtension
 import requests
 import geocoder
 from model import db, connect_to_db, Trip, Preference, TripPreference
-from helper_functions import *
 import json
 import pdb
 import googlemaps
-from datetime import datetime
-
 
 app = Flask(__name__)
 
@@ -26,7 +23,6 @@ def homepage():
 
 
 @app.route('/activity_time', methods=['POST']) 
-# add to the trip_id table 
 def get_form_values():
     """ Get the variables from the homepage""" 
 
@@ -50,8 +46,6 @@ def get_form_values():
     user_lat = request.form.get("user_lat") 
     
     user_lng = request.form.get("user_lng")
-    
-    # db.session.commit()
 
     #The API call before the return statement 
     results = start_oAuth(end_location, end_lat, end_lng, activity_types)
@@ -65,6 +59,15 @@ def get_form_values():
                             end_lng=end_lng,
                             user_lat=user_lat,
                             user_lng=user_lng) 
+
+def add_trip_to_model(arrival_time, end_location): 
+    """From get_form_values, can add the values to my model.py for the trip"""
+# add to the trip_id table 
+# add start_time datetime.now?
+# add arrival time
+# add end_location
+# call the function within get_form_values (before start_oAuth?)   
+    # db.session.commit() 
        
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
@@ -105,6 +108,13 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
         
         storing_yelp_values.append(business)
     return storing_yelp_values
+
+def add_preference_to_model(name, yelp_id):
+    """From start_oAuth, can add the values to model.py for the user's preference"""
+# add the name 
+# add the yelp_id
+# need to review one to many
+    # db.session.commit() 
 
 @app.route('/choose', methods=['POST'])
 def activity_chosen():
