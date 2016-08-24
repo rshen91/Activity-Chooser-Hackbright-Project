@@ -5,11 +5,27 @@ $(document).ready(function () {
     // from Google Maps lecture 
 
     // need a function to initMap
-    function initMap(user_latlng, activity, user_end) {
+
+    function getLocation() {
+        if (navigator.geolocation) {  // when the browser has geolocation capability
+            navigator.geolocation.getCurrentPosition(handlePositionFound); // when you get the lat/long from the browser, give it as an argument to showPosition.
+        } else {
+            alert("Geolocation is not supported by the browser.");
+        } 
+      } 
+    function handlePositionFound(position) { //get the coords
+    console.log('position:', position); //expand the arrow
+    //this prints it in the console
+    console.log("Latitude: "+ position.coords.latitude + "<br> Longitude: " + position.coords.longitude);
+    $("#lat").val(position.coords.latitude); //user_lat
+    $("#lng").val(position.coords.longitude); //user_lng
+    $("#end_lat").data()
+    initMap(activity, )
+    function initMap(activity, user_end) {
 
         //rendering a new map on the homepage in the div homepage-map
-        var user_lat = $("#user_lat").val();
-        var user_lng = $("#user_lng").val();
+        var user_lat = $("#lat").val();
+        var user_lng = $("#lng").val();
         var activity_lat = $("#activity_lat").val();
         var activity_lng = $("#activity_lng").val();
         var end_lat = $("#end_lat").val();
@@ -26,8 +42,8 @@ $(document).ready(function () {
         var userEndMarker = addMarker(final_map, user_end);
         displayDirections(final_map);
     }
-
-    google.maps.event.addDomListener(window, "load", initMap);
+}
+    google.maps.event.addDomListener(window, "load", getLocation);
 
     function displayDirections(map) {
         var user_lat = $("#user_lat").val();

@@ -46,6 +46,7 @@ def get_form_values():
     end_lng = str(end_lng)
 
     #Get the user's location from the hidden form in the homepage.html
+    #Think about if I need this since it's not carrying over to the final map
     user_lat = request.form.get("user_lat") 
     
     user_lng = request.form.get("user_lng")
@@ -53,18 +54,19 @@ def get_form_values():
     # db.session.commit()
 
     #The API call before the return statement 
-    results = start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng)
-    print "\n\n\n\n\n\n user_lat", user_lat
-    print "\n\n\n\n\n\n user_lng", user_lng
+    results = start_oAuth(end_location, end_lat, end_lng, activity_types)
+    # print "\n\n\n\n\n\n end_lat", end_lat
+    # print "\n\n\n\n\n\n end_lng", end_lng
+    # pdb.set_trace()
     return render_template("choose_activity.html",
                             activity=results,
                             end_location=end_location,
-                            user_lat=user_lat,
-                            user_lng=user_lng,
                             end_lat=end_lat,
-                            end_lng=end_lng) 
+                            end_lng=end_lng,
+                            user_lat=user_lat,
+                            user_lng=user_lng) 
        
-def start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng):
+def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 
     The function compiles API response in a list of dictionaries, each business is a dictionary
@@ -112,23 +114,20 @@ def activity_chosen():
     # each business has a unique phone number
     chosen_business = request.form.get("business_name_"+ chosen_phone)
     chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
-    chosen_business_lng = request.form.get("business_lng_" + chosen_phone) #lng is showing as lat
+    chosen_business_lng = request.form.get("business_lng_" + chosen_phone) 
     print "\n\n\n\n\n\n" + chosen_business
     print "\n\n\n\n\n\n" + chosen_business_lat
     print "\n\n\n\n\n\n" + chosen_business_lng
-    # these variables have come from the homepage form values and travel through the app
-    # might want to store in a session?
-    user_lat = request.form.get("user_lat")
-    pdb.set_trace() 
-    # check type()
-    print "\n\n\n\n\n\n", user_lat
-    user_lng = request.form.get("user_lng")
-    # check type()
-    print "\n\n\n\n\n\n", user_lng
+
+    # these are currently empty strings
     end_lat = request.form.get("end_lat")
     print "\n\n\n\n\n\n end_lat", end_lat
     end_lng = request.form.get("end_lng")
     print "\n\n\n\n\n\n end_lng", end_lng
+    user_lat = request.form.get("user_lat")
+    print "\n\n\n\n\n\n user_lat", user_lat
+    user_lng = request.form.get("user_lng")
+    print "\n\n\n\n\n\n user_lng", user_lng
 
 
     return render_template("final_route.html",
