@@ -119,7 +119,6 @@ def activity_chosen():
     print "\n\n\n\n\n\n" + chosen_business_lat
     print "\n\n\n\n\n\n" + chosen_business_lng
 
-    # these are currently empty strings
     end_lat = request.form.get("end_lat")
     print "\n\n\n\n\n\n end_lat", end_lat
     end_lng = request.form.get("end_lng")

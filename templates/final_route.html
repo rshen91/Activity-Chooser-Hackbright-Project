@@ -8,15 +8,15 @@
 <h4>Please see the suggested route for your trip. </h4>
 <!-- see developers guide for waypoints --> 
 <form>
-    <input type="hidden" id="business_name" value="business.name" name="business_name"/>
-    <input type="hidden" id="activity_lat" value="activity_lat" name="activity_lat"/>
-    <input type="hidden" id="activity_lng" value="activity_lng" name="activity_lng"/>
+    <input type="hidden" id="business_name" value="business.name" name="{{ business_name }}"/>
+    <input type="hidden" id="activity_lat" value="activity_lat" name="{{ activity_lat }}"/>
+    <input type="hidden" id="activity_lng" value="activity_lng" name="{{ activity_lng }}"/>
 
 
-    <input type="hidden" id="lat" name="user_lat" value=""/>
-    <input type="hidden" id="lng" name="user_lng" value=""/>
-    <input type="hidden" id="end_lat" name="end_lat" value="end_lat"/>
-    <input type="hidden" id="end_lng" name="end_lng" value="end_lng"/>
+    <input type="text" id="user_lat" name="user_lat" value=="{{ user_lat }}"/>
+    <input type="text" id="user_lng" name="user_lng" value="{{ user_lng }}"/>
+    <input type="text" id="end_lat" name="end_lat" value="{{ end_lat }}"/>
+    <input type="text" id="end_lng" name="end_lng" value="{{ end_lng }}"/>
 </form>
 {% endblock %}
 

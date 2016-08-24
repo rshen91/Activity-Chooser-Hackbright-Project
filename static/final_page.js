@@ -5,45 +5,30 @@ $(document).ready(function () {
     // from Google Maps lecture 
 
     // need a function to initMap
-
-    function getLocation() {
-        if (navigator.geolocation) {  // when the browser has geolocation capability
-            navigator.geolocation.getCurrentPosition(handlePositionFound); // when you get the lat/long from the browser, give it as an argument to showPosition.
-        } else {
-            alert("Geolocation is not supported by the browser.");
-        } 
-      } 
-    function handlePositionFound(position) { //get the coords
-    console.log('position:', position); //expand the arrow
-    //this prints it in the console
-    console.log("Latitude: "+ position.coords.latitude + "<br> Longitude: " + position.coords.longitude);
-    $("#lat").val(position.coords.latitude); //user_lat
-    $("#lng").val(position.coords.longitude); //user_lng
-    $("#end_lat").data()
-    initMap(activity, )
-    function initMap(activity, user_end) {
+    function initMap(user_lat, user_lng, business_lat, business_lng, end_lat, end_lng) {
 
         //rendering a new map on the homepage in the div homepage-map
-        var user_lat = $("#lat").val();
-        var user_lng = $("#lng").val();
+        var user_lat = $("#user_lat").val();
+        var user_lng = $("#user_lng").val();
         var activity_lat = $("#activity_lat").val();
         var activity_lng = $("#activity_lng").val();
         var end_lat = $("#end_lat").val();
         var end_lng = $("#end_lng").val();
-        var user_latlng = {lat: user_lat, lng: user_lng};
+        var user_lat = $("#user_lat").val();
+        var user_lng = $("#user_lng").val();
         var final_map = new google.maps.Map(document.getElementById('final-map'), {
           //this function gets the values out of the DOM, see handlePositionFound
-              center: user_latlng,
+              center: {lat: user_lat, lng: user_lng},
               zoom: 18
               // zoomControl: false,
         });    
-        var userMarker = addMarker(final_map, user_latlng);
-        var activityMarker = addMarker(final_map, activity);
-        var userEndMarker = addMarker(final_map, user_end);
+        var userMarker = addMarker(final_map, user_lat, user_lng);
+        var activityMarker = addMarker(final_map, activity_lat, activity_lng);
+        var userEndMarker = addMarker(final_map, user_lat, user_lng);
         displayDirections(final_map);
     }
-}
-    google.maps.event.addDomListener(window, "load", getLocation);
+
+    google.maps.event.addDomListener(window, "load", initMap);
 
     function displayDirections(map) {
         var user_lat = $("#user_lat").val();
@@ -52,19 +37,15 @@ $(document).ready(function () {
         var activity_lng = $("#activity_lng").val();
         var end_lat = $("#end_lat").val();
         var end_lng = $("#end_lng").val();
-        var user_latlng = {lat: user_lat, lng: user_lng};
-        console.log(user_latlng);
-        var activity = {lat: activity_lat, lng: activity_lng};
-        console.log(activity);
-        var user_end = {lat: end_lat, lng: end_lng};
-        console.log(user_end);
+        var user_lat = $("#user_lat").val();
+        var user_lng = $("#user_lng").val();
         var activityWaypoint = {
-            location: activity,
+            location: {lat: activity_lat, lng: activity_lng},
             stopover: true
         };
         var routeOptions = {
-            origin: user_latlng,
-            desintation: user_end,
+            origin: {lat: user_lat, lng: user_lng},
+            desintation: {lat: end_lat, lng: end_lng},
             waypoints: [activityWaypoint],
             travelMode: google.maps.TravelMode.DRIVING
         };
@@ -82,16 +63,17 @@ $(document).ready(function () {
         directionsDisplay.setMap(map);
     }
 
-    function addMarker(map, user_latlng) {
+    function addMarker(map, user_lat, user_lng) {
         var user_lat = $("#user_lat").val();
         var user_lng = $("#user_lng").val();
         var activity_lat = $("#activity_lat").val();
         var activity_lng = $("#activity_lng").val();
         var end_lat = $("#end_lat").val();
-        var end_lng = $("#end_lng").val(); 
-        var user_latlng = {lat: user_lat, lng: user_lng};    
+        var end_lng = $("#end_lng").val();
+        var user_lat = $("#user_lat").val();
+        var user_lng = $("#user_lng").val();  
         var marker = new google.maps.Marker({
-            position: user_latlng, //parseInt() rounds so the marker isn't on their current location
+            position: {lat: user_lat, lng: user_lng}, //parseInt() rounds so the marker isn't on their current location
             // title: 'User location!',
             map: map
         });
