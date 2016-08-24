@@ -20,7 +20,7 @@ console.log("HEY YOU, I AM HERE in the document.ready");
       
       $("#lng").val(position.coords.longitude); //user_lng
       
-      initMap(position.coords.latitude, position.coords.longitude);
+      // initMap(position.coords.latitude, position.coords.longitude);
       // console.log(user_lat);
       // console.log(user_lng);
   }

@@ -1,3 +1,12 @@
+// in the callback from google maps directions service
+var lenOfDirections = response.routes[0].legs[0].steps.length;
+var halfWayDirectionIndex = lenOfDirections/2;
+var theHalfwayDirection = response.routes[0[].legs[0].step[halfWayDirectionIndex];
+var theHalfwayDirectionLatLng = {lat: theHalfwayDirection.end_point.lat(), lng: theHalfwayDirection.end_point.lng()};
+response.routes[0].legs[0].steps[4].end_point.lng()
+
+
+
 function initMap() {
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
