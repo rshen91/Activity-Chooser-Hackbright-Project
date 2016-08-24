@@ -1,10 +1,6 @@
 $(document).ready(function () {
     console.log("HEY YOU, I AM HERE in the document.ready");
-    //////////////////////////////////////////////////////////////////////////////////
 
-    // from Google Maps lecture 
-
-    // need a function to initMap
     function initMap(user_lat, user_lng, business_lat, business_lng, end_lat, end_lng) {
 
         //rendering a new map on the homepage in the div homepage-map
@@ -18,13 +14,13 @@ $(document).ready(function () {
         var user_lng = $("#user_lng").val();
         var final_map = new google.maps.Map(document.getElementById('final-map'), {
           //this function gets the values out of the DOM, see handlePositionFound
-              center: {lat: user_lat, lng: user_lng},
+              center: {lat: Number(user_lat), lng: Number(user_lng)},
               zoom: 18
               // zoomControl: false,
         });    
-        var userMarker = addMarker(final_map, user_lat, user_lng);
+        var userMarker = addMarker(final_map, Number(user_lat), Number(user_lng));
         var activityMarker = addMarker(final_map, activity_lat, activity_lng);
-        var userEndMarker = addMarker(final_map, user_lat, user_lng);
+        var userEndMarker = addMarker(final_map, Number(end_lat), Number(end_lng));
         displayDirections(final_map);
     }
 
@@ -73,15 +69,10 @@ $(document).ready(function () {
         var user_lat = $("#user_lat").val();
         var user_lng = $("#user_lng").val();  
         var marker = new google.maps.Marker({
-            position: {lat: user_lat, lng: user_lng}, //parseInt() rounds so the marker isn't on their current location
-            // title: 'User location!',
+            position: {lat: Number(user_lat), lng: Number(user_lng)}, 
             map: map
         });
       return marker;
     }
-
-
-
-    //HELLO!!!!!!
 
 }); //end documentReady

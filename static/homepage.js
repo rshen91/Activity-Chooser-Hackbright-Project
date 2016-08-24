@@ -6,7 +6,7 @@ console.log("HEY YOU, I AM HERE in the document.ready");
 
 
 function initMap(user_lat, user_lng) {
-console.log('user_lat:', user_lat, 'user_lng:', user_lng);
+    console.log('user_lat:', user_lat, 'user_lng:', user_lng);
     // for hardcoding these are hb's lat lng
     var hackbright = {lat: 37.7886679, lng: -122.4114987};
 
