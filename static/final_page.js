@@ -14,6 +14,7 @@ $(document).ready(function () {
         var activity_lng = $("#activity_lng").val();
         var end_lat = $("#end_lat").val();
         var end_lng = $("#end_lng").val();
+        var user_latlng = {lat: user_lat, lng: user_lng};
         var final_map = new google.maps.Map(document.getElementById('final-map'), {
           //this function gets the values out of the DOM, see handlePositionFound
               center: user_latlng,
@@ -71,7 +72,8 @@ $(document).ready(function () {
         var activity_lat = $("#activity_lat").val();
         var activity_lng = $("#activity_lng").val();
         var end_lat = $("#end_lat").val();
-        var end_lng = $("#end_lng").val();  
+        var end_lng = $("#end_lng").val(); 
+        var user_latlng = {lat: user_lat, lng: user_lng};    
         var marker = new google.maps.Marker({
             position: user_latlng, //parseInt() rounds so the marker isn't on their current location
             // title: 'User location!',

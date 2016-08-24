@@ -54,7 +54,8 @@ def get_form_values():
 
     #The API call before the return statement 
     results = start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_lng)
-    print "\n\n\n\n\n", end_lat
+    print "\n\n\n\n\n\n user_lat", user_lat
+    print "\n\n\n\n\n\n user_lng", user_lng
     return render_template("choose_activity.html",
                             activity=results,
                             end_location=end_location,
@@ -103,7 +104,6 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types, user_lat, user_l
         storing_yelp_values.append(business)
     return storing_yelp_values
 
-##################################################################################
 @app.route('/choose', methods=['POST'])
 def activity_chosen():
     """Get the form variable chosen for the business the user wants in between"""
@@ -113,13 +113,22 @@ def activity_chosen():
     chosen_business = request.form.get("business_name_"+ chosen_phone)
     chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
     chosen_business_lng = request.form.get("business_lng_" + chosen_phone) #lng is showing as lat
-    
+    print "\n\n\n\n\n\n" + chosen_business
+    print "\n\n\n\n\n\n" + chosen_business_lat
+    print "\n\n\n\n\n\n" + chosen_business_lng
     # these variables have come from the homepage form values and travel through the app
     # might want to store in a session?
     user_lat = request.form.get("user_lat")
+    pdb.set_trace() 
+    # check type()
+    print "\n\n\n\n\n\n", user_lat
     user_lng = request.form.get("user_lng")
+    # check type()
+    print "\n\n\n\n\n\n", user_lng
     end_lat = request.form.get("end_lat")
+    print "\n\n\n\n\n\n end_lat", end_lat
     end_lng = request.form.get("end_lng")
+    print "\n\n\n\n\n\n end_lng", end_lng
 
 
     return render_template("final_route.html",
