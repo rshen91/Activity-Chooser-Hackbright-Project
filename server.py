@@ -36,7 +36,7 @@ def get_form_values():
 
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
-    
+     
     # unpack the lat lng here for the api call in whats near (can't have a list)
     end_lat, end_lng = r.latlng
     end_lat = str(end_lat)
@@ -47,6 +47,10 @@ def get_form_values():
     user_lat = request.form.get("user_lat") 
     
     user_lng = request.form.get("user_lng")
+    
+    #user's current address based on lat lngs
+    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
+    start_location = s.json()['results'][0]['formatted_address']
 
     # New trip being added to the Trip table
     trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
@@ -56,8 +60,10 @@ def get_form_values():
     db.session.add(trip_id)
     db.session.commit()
     #The API call before the return statement 
-    results = start_oAuth(end_location, end_lat, end_lng, activity_types)
 
+    near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
+    near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
+    near_halfway = start_oAuth(, activity_types)
     return render_template("choose_activity.html",
                             activity=results,
                             end_location=end_location,
