@@ -19,7 +19,6 @@ def homepage():
 
     # Returns a unicode list of the human readable names
     names = db.session.query(Preference.name).all()
-
     return render_template("homepage.html", names=names)
 
 
@@ -29,9 +28,7 @@ def get_form_values():
 
     # Get the form variables
     end_location = request.form["end_location"] 
-
     arrival_time = request.form["arrival_time"]
-
     activity_types = request.form.getlist("activity_type") 
 
     #gives the lat/lng for the address the user inputs in the homepage
@@ -45,12 +42,12 @@ def get_form_values():
     #Get the user's location from the hidden form in the homepage.html
     #Think about if I need this since it's not carrying over to the final map
     user_lat = request.form.get("user_lat") 
-    
     user_lng = request.form.get("user_lng")
     
     #user's current address based on lat lngs
     s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
     start_location = s.json()['results'][0]['formatted_address']
+    print "\n\n\n\n\n\n\n start location", start_location
 
     # New trip being added to the Trip table
     trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
@@ -59,13 +56,22 @@ def get_form_values():
     
     db.session.add(trip_id)
     db.session.commit()
-    #The API call before the return statement 
 
+    activity_location_preference = request.form.get("activity_location_preference") 
+    print "\n\n\n\n\n\n\n activity_location_preference", activity_location_preference #currently None
+    
+    # if user selected near their destination
     near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
+    
+    # elif user selected near their current location
     near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
-    near_halfway = start_oAuth(, activity_types)
+    
+    # elif user selected midpoint
+    # near_halfway = start_oAuth(, activity_types)
+
+    # else user didnt select or input a wrong value 
     return render_template("choose_activity.html",
-                            activity=results,
+                            activity=near_end_location_results,
                             end_location=end_location,
                             end_lat=end_lat,
                             end_lng=end_lng,
@@ -90,7 +96,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
 
     payload = {'Authorization': 'Bearer '+ bearer_buddy}
 
-    storing_yelp_values= []
+
     all_businesses_in_activities = []
 
     # loop over the r.json() to build up the yelp_response dictionary
@@ -99,8 +105,13 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
         all_businesses_in_activities.extend(r.json()['businesses'])
             #each of these businesses should be added to the list 
-# FIX ME ONLY ADDS ONE TYPE OF BUSINESS OUT OF EACH BUSINESS TYPE
-        for business in all_businesses_in_activities:
+    return all_businesses_in_activities
+    pdb.set_trace() #want to see if this only includes one activity of each activity type the user selected
+
+def make_activity_dict(all_businesses_in_activities):
+    storing_yelp_values= []
+    # FIX ME ONLY ADDS ONE TYPE OF BUSINESS OUT OF EACH BUSINESS TYPE
+    for business in all_businesses_in_activities:
             business = {
                 'name': business['name'],
                 'coordinates': {'lat': business.get('coordinates').get('latitude'),
@@ -109,8 +120,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
                 'phone': business.get('phone'),
                 'categories': business['categories']
                 }
-        
-        storing_yelp_values.append(business)
+            storing_yelp_values.append(business)
     return storing_yelp_values
 
 def add_preference_to_model(name, yelp_id):
