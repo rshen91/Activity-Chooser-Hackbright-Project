@@ -50,35 +50,39 @@ def get_form_values():
     print "\n\n\n\n\n\n\n start location", start_location
 
     # New trip being added to the Trip table
-    trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
-                   arrival_time=arrival_time, end_location=end_location, 
-                   end_lat=end_lat, end_lng=end_lng)
-    
-    db.session.add(trip_id)
-    db.session.commit()
+    add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
 
-    activity_location_preference = request.form.get("activity_location_preference") 
-    print "\n\n\n\n\n\n\n activity_location_preference", activity_location_preference #currently None
+    activity_location_preference = request.form["activity_location_preference"] 
+    # #it's a string
     
-    # if user selected near their destination
-    near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
-    
-    # elif user selected near their current location
-    near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
-    
-    # elif user selected midpoint
-    # near_halfway = start_oAuth(, activity_types)
+    # if activity_location_preference == "near_end_location":
+    #     # if user selected near their destination
+    #     near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
+    # elif activity_location_preference == "near_user":
+    #     # elif user selected near their current location
+    #     near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
+    # else:
+    #     near_user_results = start_oAuth(halfway_location)
 
-    # else user didnt select or input a wrong value 
     return render_template("choose_activity.html",
-                            activity=near_end_location_results,
+                            # activity=near_end_location_results,
                             end_location=end_location,
                             end_lat=end_lat,
                             end_lng=end_lng,
                             user_lat=user_lat,
                             user_lng=user_lng) 
 
-       
+def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
+   """Add current trip to Trip table"""
+   trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
+                     arrival_time=arrival_time, end_location=end_location, 
+                      end_lat=end_lat, end_lng=end_lng)
+   db.session.add(trip_id)
+   db.session.commit()
+
+def find_user_activity_location_preference(activity_location_preference):
+    """Use the activity_location_preference from the get form values function and have the if/else statement here"""
+
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 

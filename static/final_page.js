@@ -63,7 +63,6 @@ $(document).ready(function () {
         });
 
         var directionsDisplay = new google.maps.DirectionsRenderer;
-
         directionsDisplay.setMap(map);
     }
 

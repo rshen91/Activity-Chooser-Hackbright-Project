@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-
+{% block extra_js %}
+<script type="text/javascript" src="static/choose_activity.js"></script>
+{% endblock %}
 {% block content %}
 
 <br>
@@ -46,7 +48,7 @@ Please choose one:
 
 
 <!-- Map of each location on a map -->
-<div id= "marker_map"></div>
+<div id= "marker_map" type="hidden"></div>
 
 
 <!-- put navbar similar to Angular demo where the next html page of route options is a tab -->

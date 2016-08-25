@@ -12,7 +12,8 @@
     <br>
     <br>
     <br>
-        <label for="end_location">Where do you want to go? Please enter an address. <input type= "text" name = "end_location"></label>
+        <label for="end_location">Where do you want to go?<br> 
+        Please enter an address. <input type="text" name ="end_location"></label>
     <br>
         <label for="arrival_time">When do you want to be there? <input type="time" name="arrival_time" value="16:00"></label> 
     <br>
@@ -31,22 +32,24 @@
         {% endfor %}
         </div>
         <br>
-Do you prefer an activity...<br>
-<div id= "activity_location_preference" name="activity_location_preference">
-    <input type="radio" name="near_user" value="near_user"> Near your current location <br>
-    <input type="radio" name="near_end_locatin" value="near_end_location"> Near your destination <br>
-    <input type="radio" name="halfway" value="halfway"> Halfway inbetween<br> 
-</div>
-<br>
-<br>
-<br>
-<input type="submit" id="submit" value="Let's get started"><br>
 
-<div id="homepage-map" class="homepage-map"></div> 
+    Do you prefer an activity...<br><br>
+    <div id="activity_location_preference">
+        <select name="activity_location_preference">
+            <option value="near_user"> Closer to your current location </option><br>
+            <option value="halfway"> Halfway inbetween </option><br>
+            <option value="near_end_location" selected="near_end_destination"> Closer to your destination </option><br>
+        </select>
+    </div>
+    <br>
+    <br>
+    <br>
+    <input type="submit" id="submit" value="Let's get started"><br>
 
-<!-- fixed css and html so that these values are hidden now! -->
-<label class="hidden">lat</label><input type="hidden" id="lat" name="user_lat" value=""/>
-<label class="hidden">lng</label><input type="hidden" id="lng" name="user_lng" value=""/>
+    <div id="homepage-map" class="homepage-map"></div> 
+
+    <label class="hidden">lat</label><input type="hidden" id="lat" name="user_lat" value=""/>
+    <label class="hidden">lng</label><input type="hidden" id="lng" name="user_lng" value=""/>
 </form>
 
 
