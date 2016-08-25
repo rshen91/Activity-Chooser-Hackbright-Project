@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy 
-from datetime import datetime
+import datetime
 
 db = SQLAlchemy()
 
@@ -12,10 +12,13 @@ class Trip(db.Model):
     #seems weird to make this plural since it's a one to many relationship
 
     trip_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    start_time = db.Column(db.DateTime, nullable=False) #need datetime for this
-    start_location = db.Column(db.String(100), nullable=False) #not provided by the user but found using HTML5 Geolocation
-    arrival_time = db.Column(db.DateTime, nullable=False) #need datetime for this
+    start_time = db.Column(db.DateTime, default=datetime.datetime.now()) #need datetime for this
+    user_lat = db.Column(db.String(100), nullable=False) #not provided by the user but found using HTML5 Geolocation
+    user_lng = db.Column(db.String(100), nullable=False)
+    arrival_time = db.Column(db.String(100), nullable=False) #need datetime for this
     end_location = db.Column(db.String(100), nullable=False)
+    end_lat = db.Column(db.String(100), nullable=False)
+    end_lng = db.Column(db.String(100), nullable=False)
     #take the string and convert to lat-long using google map directions api
 
     def __repr__(self):

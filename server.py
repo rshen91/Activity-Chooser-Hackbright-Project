@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
 import geocoder
+from datetime import datetime
 from model import db, connect_to_db, Trip, Preference, TripPreference
 import json
 import pdb
@@ -27,7 +28,7 @@ def get_form_values():
     """ Get the variables from the homepage""" 
 
     # Get the form variables
-    end_location = request.form["end_location"]
+    end_location = request.form["end_location"] 
 
     arrival_time = request.form["arrival_time"]
 
@@ -47,11 +48,16 @@ def get_form_values():
     
     user_lng = request.form.get("user_lng")
 
+    # New trip being added to the Trip table
+    trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
+                   arrival_time=arrival_time, end_location=end_location, 
+                   end_lat=end_lat, end_lng=end_lng)
+    
+    db.session.add(trip_id)
+    db.session.commit()
     #The API call before the return statement 
     results = start_oAuth(end_location, end_lat, end_lng, activity_types)
-    # print "\n\n\n\n\n\n end_lat", end_lat
-    # print "\n\n\n\n\n\n end_lng", end_lng
-    # pdb.set_trace()
+
     return render_template("choose_activity.html",
                             activity=results,
                             end_location=end_location,
@@ -60,14 +66,6 @@ def get_form_values():
                             user_lat=user_lat,
                             user_lng=user_lng) 
 
-def add_trip_to_model(arrival_time, end_location): 
-    """From get_form_values, can add the values to my model.py for the trip"""
-# add to the trip_id table 
-# add start_time datetime.now?
-# add arrival time
-# add end_location
-# call the function within get_form_values (before start_oAuth?)   
-    # db.session.commit() 
        
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 

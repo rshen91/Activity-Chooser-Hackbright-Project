@@ -17,13 +17,13 @@ $(document).ready(function () {
         var final_map = new google.maps.Map(document.getElementById('final-map'), {
           //this function gets the values out of the DOM, see handlePositionFound
               center: {lat: Number(user_lat), lng: Number(user_lng)},
-              zoom: 18
+              zoom: 8
               // zoomControl: false,
         });
 
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(final_map);    
-        
+
         var userMarker = addMarker(final_map, Number(user_lat), Number(user_lng));
         var activityMarker = addMarker(final_map, activity_lat, activity_lng);
         var userEndMarker = addMarker(final_map, Number(end_lat), Number(end_lng));
