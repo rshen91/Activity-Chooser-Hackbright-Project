@@ -1,0 +1,51 @@
+airport|Airport|0
+amusement_park|Amusement Park|0
+aquarium|Aquarium|0
+art_gallery|Art Gallery|0 
+atm|ATM|0
+bakery|Bakery|0 
+bank|Bank|0
+bar|Bar|0
+beauty_salon|Beauty Salon|0 
+bicycle_store|Bike Store|0
+book_store|Book Store|0
+bowling_alley|Bowling|0
+cafe|Cafe|0
+campground|Campground|0
+car_dealer|Car dealership|0
+car_rental|Car Rental|0
+car_repair|Car Repair|0
+car_wash|Car Wash|0
+clothing_store|Clothing Store|0
+convenience_store|Convenience Store|0
+department_store|Department Store|0
+fire_station|Fire Station|0
+florist|Florist|0
+food|Food|1
+furniture_store|Furniture Store|0
+gas_station|Gas|0
+grocery_or_supermarket|Supermarket|1
+gym|Gym|0
+hair_care|Hair Care|0
+hardware_store|Hardware Store|0
+health|Health|1
+home_goods_store|Home Goods Store|0
+hospital|Hospital|0
+jewelry_store|Jewelry Store|0
+laundry|Laundromat|0
+lawyer|Law Office|0
+library|Library|0
+liquor_store|Liquor Store|0
+museum|Museum|0
+night_club|Night Club|0
+pet_store|Pet Store|0
+pharmacy|Pharmacy|0
+post_office|Post Office|0
+restaurant|Restaurant|0
+shoe_store|Shoes|0
+shopping_mall|Shopping Mall|0
+spa|Spa|0
+stadium|Stadium|0
+storage|Storage Facility|0
+veterinary_care|Veterinary Care|0
+zoo|Zoo|0
