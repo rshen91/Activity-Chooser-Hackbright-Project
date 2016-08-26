@@ -95,7 +95,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
 
     payload = {'Authorization': 'Bearer '+ bearer_buddy}
 
-    storing_yelp_values= []
+    storing_yelp_values = []
     all_businesses_in_activities = []
 
     # loop over the r.json() to build up the yelp_response dictionary
@@ -116,7 +116,21 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
                     }
 
                 storing_yelp_values.append(business)
-    return storing_yelp_values
+
+    unique_results = remove_duplicate_businesses(storing_yelp_values)
+
+    return unique_results
+
+def remove_duplicate_businesses(storing_yelp_values):
+    """Helper function to remove duplicate businesses from start_oAuth"""
+    
+    unique_results = []
+
+    for business in storing_yelp_values:
+        if business not in unique_results:
+            unique_results.append(business)
+
+    return unique_results     
 
 def add_preference_to_model(name, yelp_id):
     """From start_oAuth, can add the values to model.py for the user's preference"""
