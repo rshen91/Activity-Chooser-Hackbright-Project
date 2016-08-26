@@ -47,24 +47,22 @@ def get_form_values():
     #user's current address based on lat lngs
     s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
     start_location = s.json()['results'][0]['formatted_address']
-    print "\n\n\n\n\n\n\n start location", start_location
-
-    halfway_lat = request.form.get("halfway_lat") #returning None
-    halfway_lng = request.form.get("halfway_lng") #returning None
-    pdb.set_trace()
-
-    h = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(halfway_lat, halfway_lng, os.environ['KEY_KEY']))
-    halfway_location = h.json()['results'][0]['formatted_address']
-    print "\n\n\n\n\n\n\n halfway location", halfway_location
 
     # New trip being added to the Trip table
     add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
 
     activity_location_preference = request.form["activity_location_preference"] 
-    # #it's a string
+    # it's a string
 
+    if activity_location_preference == "near_end_location":
+        # if user selected near their destination
+        results = start_oAuth(end_location, end_lat, end_lng, activity_types)
+    else: # activity_location_preference == "near_user"
+        # elif user selected near their current location
+        results = start_oAuth(start_location, user_lat, user_lng, activity_types)
+    
     return render_template("choose_activity.html",
-                            activity_location_preference=activity_location_preference,
+                            activity=results,
                             end_location=end_location,
                             end_lat=end_lat,
                             end_lng=end_lng,
@@ -79,25 +77,13 @@ def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, e
    db.session.add(trip_id)
    db.session.commit()
 
-def find_user_activity_location_preference(activity_location_preference):
-    """Use the activity_location_preference from the get form values function and have the if/else statement here"""
-
 @app.route('/r.json', methods=['POST'])
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 
     The function compiles API response in a list of dictionaries, each business is a dictionary
     in the list"""
-
-    if activity_location_preference == "near_end_location":
-        # if user selected near their destination
-        near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
-    elif activity_location_preference == "near_user":
-        # elif user selected near their current location
-        near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
-    else:
-        pass 
-        near_user_results = start_oAuth(halfway_location, halfway_lat, halfway_lng, activity_types)
+    
     resp = requests.post("https://api.yelp.com/oauth2/token",
                      data = {'grant_type': 'client_credentials',
                              'client_id': os.environ["app_id"],
@@ -109,7 +95,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
 
     payload = {'Authorization': 'Bearer '+ bearer_buddy}
 
-
+    storing_yelp_values= []
     all_businesses_in_activities = []
 
     # loop over the r.json() to build up the yelp_response dictionary

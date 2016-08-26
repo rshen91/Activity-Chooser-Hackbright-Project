@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block extra_js %}
-<script type="text/javascript" src="static/choose_activity.js"></script>
+<!-- <script type="text/javascript" src="static/choose_activity.js"></script> -->
 {% endblock %}
 {% block content %}
 
@@ -14,10 +14,24 @@
 Please choose one:  
 <br>
 
-use JavaScript to put the yelp activities based on the user's location preference 
--AJAX call for json blob can call the start_oAuth function here 
-<div id="activity_types">
-</div> 
+{% for business in activity %}
+    <br>
+    <br>
+    <form action="/choose", method="POST" >
+        <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
+        {{ business.name }}
+        {{ business.categories.title }} <br>
+        {{ business.phone }} <br>
+        {{ business.address.address1 }}
+        {{ business.address.city }} 
+        {{ business.address.zipcode }}<br>
+<!--         {{ business.coordinates.lat }}
+        {{ business.coordinates.lng }} -->
+
+        <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
+        <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
+        <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
+{% endfor %}
 
 
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
@@ -25,12 +39,12 @@ use JavaScript to put the yelp activities based on the user's location preferenc
 <input type="hidden" id="user_lat" name="user_lat" value="{{ user_lat }}"/> 
 <input type="hidden" id="user_lng" name="user_lng" value="{{ user_lng }}"/>
 
-<div id= "halfwayLat">
+<!-- <div id= "halfwayLat">
     <input type="text" id="halfway_lat" name="halfway_lat" value=""/> 
 </div>
 <div id= "halwayLng">
     <input type="text" id="halfway_lng" name="halfway_lng" value=""/>
-</div>
+</div> -->
 
 <br>
 
@@ -41,8 +55,8 @@ use JavaScript to put the yelp activities based on the user's location preferenc
 
 
 <!-- Map of each location on a map -->
-<div id= "marker_map" type="hidden"></div>
-
+<!-- <div id= "marker_map" type="hidden"></div>
+ -->
 
 <!-- put navbar similar to Angular demo where the next html page of route options is a tab -->
 </body>
