@@ -19,6 +19,7 @@ function initMap(user_lat, user_lng, end_lat, end_lng) {
         displayDirections(marker_map);
         
     }
+  //When the page loads run initMap
   google.maps.event.addDomListener(window, "load", initMap);
 
   function getLocation() {
@@ -72,26 +73,50 @@ function initMap(user_lat, user_lng, end_lat, end_lng) {
         var lenOfDirections = response.routes[0].legs[0].steps.length;
         console.log("The length of directions "+ lenOfDirections);
 
-        var halfWayDirectionIndex = Math.round(lenOfDirections/2);
-        console.log("The halfway direction index "+ halfWayDirectionIndex);
+        var halfwayDirectionIndex = Math.round(lenOfDirections/2);
+        console.log("The halfway direction index "+ halfwayDirectionIndex);
 
-        var theHalfwayDirection = response.routes[0].legs[0].steps[halfWayDirectionIndex];
-        console.log("The halfway direction "+ theHalfwayDirection);
+        var halfwayDirection = response.routes[0].legs[0].steps[halfwayDirectionIndex];
+        console.log("The halfway direction "+ halfwayDirection);
 
-        var theHalfwayDirectionLatLng = {lat: Number(theHalfwayDirection.end_point.lat()), lng: Number(theHalfwayDirection.end_point.lng())};
-        console.log("The theHalfwayDirectionLatLng "+ (theHalfwayDirectionLatLng);
-        var halfwaylat = response.route[0].legs[0].steps[theHalfwayDirectionIndex].end_point.lat()
-        var halfwayLng = response.routes[0].legs[0].steps[theHalfwayDirectionIndex].end_point.lng()
+        var halfwayDirectionLatLng = {lat: Number(halfwayDirection.end_point.lat()), lng: Number(halfwayDirection.end_point.lng())};
+        console.log("The halfwayDirectionLatLng "+ (halfwayDirectionLatLng));
+        var halfwayLat = response.routes[0].legs[0].steps[halfwayDirectionIndex].end_point.lat();
+        debugger;
+        console.log("halfwayLat " + halfwayLat);
+        // $("#halfway_lat").val(halfwayLat)
+        $("#halfway_lat").innerhtml(halfwayLat);
+        // $("halfway_lat").data(halfwayLat)
+
+        var halfwayLng = response.routes[0].legs[0].steps[halfwayDirectionIndex].end_point.lng();
         console.log("halfwayLng " + halfwayLng);
-        
+        // $("#halfway_lng").val(halfwayLng)
+        $("#halfway_lng").innerhtml(halfwayLng);
 
         }); //end of directionsService 
 
         var directionsDisplay = new google.maps.DirectionsRenderer;
         directionsDisplay.setMap(map);
+
+
+        function makeoAuthYelpCall() {
+
+          var formInputs = $("activity_types").serialize();
+          $.post("/r.json", formInputs, function (results) {
+            if (results.code == "OK") {
+              $("#activity_types").html("<p>" + results.msg + "</p>");
+            }
+            else {
+              $("#activity_types").addClass("order-error");
+              $("#activity_types").html("<p><b>" + results.msg + "</b></p>");
+            }
+          });
+
+        }
+        $("#activity_types").on("submit", makeoAuthYelpCall);
         } //end of displayDirections
 
-        
+
     }); //end documentReady
 
 

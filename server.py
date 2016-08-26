@@ -49,23 +49,22 @@ def get_form_values():
     start_location = s.json()['results'][0]['formatted_address']
     print "\n\n\n\n\n\n\n start location", start_location
 
+    halfway_lat = request.form.get("halfway_lat") #returning None
+    halfway_lng = request.form.get("halfway_lng") #returning None
+    pdb.set_trace()
+
+    h = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(halfway_lat, halfway_lng, os.environ['KEY_KEY']))
+    halfway_location = h.json()['results'][0]['formatted_address']
+    print "\n\n\n\n\n\n\n halfway location", halfway_location
+
     # New trip being added to the Trip table
     add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
 
     activity_location_preference = request.form["activity_location_preference"] 
     # #it's a string
-    
-    # if activity_location_preference == "near_end_location":
-    #     # if user selected near their destination
-    #     near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
-    # elif activity_location_preference == "near_user":
-    #     # elif user selected near their current location
-    #     near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
-    # else:
-    #     near_user_results = start_oAuth(halfway_location)
 
     return render_template("choose_activity.html",
-                            # activity=near_end_location_results,
+                            activity_location_preference=activity_location_preference,
                             end_location=end_location,
                             end_lat=end_lat,
                             end_lng=end_lng,
@@ -83,12 +82,22 @@ def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, e
 def find_user_activity_location_preference(activity_location_preference):
     """Use the activity_location_preference from the get form values function and have the if/else statement here"""
 
+@app.route('/r.json', methods=['POST'])
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 
     The function compiles API response in a list of dictionaries, each business is a dictionary
     in the list"""
 
+    if activity_location_preference == "near_end_location":
+        # if user selected near their destination
+        near_end_location_results = start_oAuth(end_location, end_lat, end_lng, activity_types)
+    elif activity_location_preference == "near_user":
+        # elif user selected near their current location
+        near_user_results = start_oAuth(start_location, user_lat, user_lng, activity_types)
+    else:
+        pass 
+        near_user_results = start_oAuth(halfway_location, halfway_lat, halfway_lng, activity_types)
     resp = requests.post("https://api.yelp.com/oauth2/token",
                      data = {'grant_type': 'client_credentials',
                              'client_id': os.environ["app_id"],
@@ -109,22 +118,18 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
         all_businesses_in_activities.extend(r.json()['businesses'])
             #each of these businesses should be added to the list 
-    return all_businesses_in_activities
-    pdb.set_trace() #want to see if this only includes one activity of each activity type the user selected
+        for business in all_businesses_in_activities:
 
-def make_activity_dict(all_businesses_in_activities):
-    storing_yelp_values= []
-    # FIX ME ONLY ADDS ONE TYPE OF BUSINESS OUT OF EACH BUSINESS TYPE
-    for business in all_businesses_in_activities:
-            business = {
-                'name': business['name'],
-                'coordinates': {'lat': business.get('coordinates').get('latitude'),
-                                'lng': business.get('coordinates').get('longitude')},
-                'address': business.get('location'),
-                'phone': business.get('phone'),
-                'categories': business['categories']
-                }
-            storing_yelp_values.append(business)
+                business = {
+                    'name': business['name'],
+                    'coordinates': {'lat': business.get('coordinates').get('latitude'),
+                                    'lng': business.get('coordinates').get('longitude')},
+                    'address': business.get('location'),
+                    'phone': business.get('phone'),
+                    'categories': business['categories']
+                    }
+
+                storing_yelp_values.append(business)
     return storing_yelp_values
 
 def add_preference_to_model(name, yelp_id):

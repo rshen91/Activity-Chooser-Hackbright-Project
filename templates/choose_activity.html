@@ -14,30 +14,23 @@
 Please choose one:  
 <br>
 
-{% for business in activity %}
-    <br>
-    <br>
-    <form action="/choose", method="POST" >
-        <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
-        {{ business.name }}
-        {{ business.categories.title }} <br>
-        {{ business.phone }} <br>
-        {{ business.address.address1 }}
-        {{ business.address.city }} 
-        {{ business.address.zipcode }}<br>
-<!--         {{ business.coordinates.lat }}
-        {{ business.coordinates.lng }} -->
+use JavaScript to put the yelp activities based on the user's location preference 
+-AJAX call for json blob can call the start_oAuth function here 
+<div id="activity_types">
+</div> 
 
-        <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
-        <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
-        <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
-{% endfor %}
-<!-- how to get the end location from the address the user put in here  -->
+
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
 <input type="hidden" id="end_lng" name="end_lng" value="{{ end_lng }}"/>
 <input type="hidden" id="user_lat" name="user_lat" value="{{ user_lat }}"/> 
 <input type="hidden" id="user_lng" name="user_lng" value="{{ user_lng }}"/>
 
+<div id= "halfwayLat">
+    <input type="text" id="halfway_lat" name="halfway_lat" value=""/> 
+</div>
+<div id= "halwayLng">
+    <input type="text" id="halfway_lng" name="halfway_lng" value=""/>
+</div>
 
 <br>
 
