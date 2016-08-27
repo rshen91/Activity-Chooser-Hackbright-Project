@@ -31,6 +31,8 @@ def get_form_values():
     arrival_time = request.form["arrival_time"]
     activity_types = request.form.getlist("activity_type") 
 
+    # add_preference_to_model(activity_types)
+
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
      
@@ -68,14 +70,6 @@ def get_form_values():
                             end_lng=end_lng,
                             user_lat=user_lat,
                             user_lng=user_lng) 
-
-def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
-   """Add current trip to Trip table"""
-   trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
-                     arrival_time=arrival_time, end_location=end_location, 
-                      end_lat=end_lat, end_lng=end_lng)
-   db.session.add(trip_id)
-   db.session.commit()
 
 @app.route('/r.json', methods=['POST'])
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
@@ -132,12 +126,29 @@ def remove_duplicate_businesses(storing_yelp_values):
 
     return unique_results     
 
-def add_preference_to_model(name, yelp_id):
-    """From start_oAuth, can add the values to model.py for the user's preference"""
-# add the name 
-# add the yelp_id
-# need to review one to many
-    # db.session.commit() 
+def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
+   """Add current trip to Trip table"""
+
+   trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
+                     arrival_time=arrival_time, end_location=end_location, 
+                      end_lat=end_lat, end_lng=end_lng)
+   db.session.add(trip_id)
+   db.session.commit()
+
+# def add_preference_to_model(activity_types):
+#     """From start_oAuth, can add the values to model.py for the user's preference"""
+
+#     for activity in activity_types:
+#         name = Preference(name)
+
+#         trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
+#                      arrival_time=arrival_time, end_location=end_location, 
+#                       end_lat=end_lat, end_lng=end_lng)
+#    db.session.add(trip_id)
+#    db.session.commit()
+
+
+
 
 @app.route('/choose', methods=['POST'])
 def activity_chosen():
