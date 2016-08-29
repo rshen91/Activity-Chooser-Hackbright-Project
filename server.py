@@ -108,6 +108,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
                                     'lng': business.get('coordinates').get('longitude')},
                     'address': business.get('location'),
                     'phone': business.get('phone'),
+                    'rating': business.get('rating'),
                     'categories': business['categories']
                     }
 

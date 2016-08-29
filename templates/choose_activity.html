@@ -20,13 +20,13 @@ Please choose one:
     <form action="/choose", method="POST" >
         <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
         {{ business.name }}
-        {{ business.categories.title }} <br>
+        {{ business.categories.title}} <br>
         {{ business.phone }} <br>
         {{ business.address.address1 }}
         {{ business.address.city }} 
         {{ business.address.zipcode }}<br>
-<!--         {{ business.coordinates.lat }}
-        {{ business.coordinates.lng }} -->
+        Rating on Yelp 
+        {{ business.rating }}
 
         <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
         <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
@@ -49,7 +49,7 @@ Please choose one:
 <br>
 
 <br>
-    <input type="submit" value="Continue">
+    <input type="submit" value="Continue to map">
 </form>
 
 

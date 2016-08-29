@@ -6,17 +6,28 @@ console.log("HEY YOU, I AM HERE in the document.ready");
 
 function initMap(user_lat, user_lng) {
     console.log('user_lat:', user_lat, 'user_lng:', user_lng);
-
+    
     //rendering a new map on the homepage in the div homepage-map
     var map = new google.maps.Map(document.getElementById('homepage-map'), {
       //this function gets the values out of the DOM, see handlePositionFound
           center: {"lat":user_lat, "lng":user_lng},
-          zoom: 18
+          zoom: 10
     });    
 
         var userMarker = addMarker(map, user_lat, user_lng);
         var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(map);    
+        trafficLayer.setMap(map); 
+        initAutocomplete();
+
+        function initAutocomplete() {
+          autocomplete = new google.maps.places.Autocomplete(
+            (document.getElementById('autocomplete')),
+          {types: ['geocode']});
+
+          autocomplete.addDomListener();
+        }
+
+      
     }
     
 // this is needed to load the map - triggers the cascade of functions 

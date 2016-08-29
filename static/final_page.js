@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     function initMap(user_lat, user_lng, business_lat, business_lng, end_lat, end_lng) {
 
-        //rendering a new map on the homepage in the div homepage-map
+        //getting variables out of the DOM
         var user_lat = $("#user_lat").val();
         var user_lng = $("#user_lng").val();
         var activity_lat = $("#activity_lat").val();
@@ -14,20 +14,30 @@ $(document).ready(function () {
         var end_lng = $("#end_lng").val();
         var user_lat = $("#user_lat").val();
         var user_lng = $("#user_lng").val();
+        //documentation for route panel
+        //these appear to be set in the displayDirections function
+        // var displayDirections = new google.maps.DirectionsRenderer;
+        // var directionsService = new google.maps.DirectionsService;
         var final_map = new google.maps.Map(document.getElementById('final-map'), {
-          //this function gets the values out of the DOM, see handlePositionFound
               center: {lat: Number(user_lat), lng: Number(user_lng)},
-              zoom: 8
-              // zoomControl: false,
+              zoom: 18
         });
+        displayDirections.setMap('final_map');
+        displayDirections.setPanel(document.getElementById('right-panel'));
 
+        var onChangeHandler = function(){
+            calculateAndDisplayRoute(directionsService, displayDirections);
+        };
+
+        //sets the map traffic layer
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(final_map);    
 
+        //adding the markers
         var userMarker = addMarker(final_map, Number(user_lat), Number(user_lng));
         var activityMarker = addMarker(final_map, activity_lat, activity_lng);
         var userEndMarker = addMarker(final_map, Number(end_lat), Number(end_lng));
-        displayDirections(final_map);
+        
     }
 
     google.maps.event.addDomListener(window, "load", initMap);
@@ -55,15 +65,16 @@ $(document).ready(function () {
         var directionsService = new google.maps.DirectionsService;
         directionsService.route(routeOptions, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(response);
+                displayDirections.setDirections(response);
 
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
         });
 
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        directionsDisplay.setMap(map);
+        var displayDirections = new google.maps.DirectionsRenderer;
+        displayDirections.setMap(map);
+
     }
 
     function addMarker(map, user_lat, user_lng) {

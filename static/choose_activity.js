@@ -82,7 +82,7 @@ function initMap(user_lat, user_lng, end_lat, end_lng) {
         var halfwayDirectionLatLng = {lat: Number(halfwayDirection.end_point.lat()), lng: Number(halfwayDirection.end_point.lng())};
         console.log("The halfwayDirectionLatLng "+ (halfwayDirectionLatLng));
         var halfwayLat = response.routes[0].legs[0].steps[halfwayDirectionIndex].end_point.lat();
-        debugger;
+        
         console.log("halfwayLat " + halfwayLat);
         // $("#halfway_lat").val(halfwayLat)
         $("#halfway_lat").innerhtml(halfwayLat);
@@ -99,35 +99,24 @@ function initMap(user_lat, user_lng, end_lat, end_lng) {
         directionsDisplay.setMap(map);
 
 
-        function makeoAuthYelpCall() {
+        // function makeoAuthYelpCall() {
 
-          var formInputs = $("activity_types").serialize();
-          $.post("/r.json", formInputs, function (results) {
-            if (results.code == "OK") {
-              $("#activity_types").html("<p>" + results.msg + "</p>");
-            }
-            else {
-              $("#activity_types").addClass("order-error");
-              $("#activity_types").html("<p><b>" + results.msg + "</b></p>");
-            }
-          });
+        //   var formInputs = $("activity_types").serialize();
+        //   $.post("/r.json", formInputs, function (results) {
+        //     if (results.code == "OK") {
+        //       $("#activity_types").html("<p>" + results.msg + "</p>");
+        //     }
+        //     else {
+        //       $("#activity_types").addClass("order-error");
+        //       $("#activity_types").html("<p><b>" + results.msg + "</b></p>");
+        //     }
+        //   });
 
-        }
-        $("#activity_types").on("submit", makeoAuthYelpCall);
+        // }
+        // $("#activity_types").on("submit", makeoAuthYelpCall);
         } //end of displayDirections
 
-        var end_location = document.getElementById('end_location');
-        var end_autocomplete = new google.maps.places.Autocomplete(end_location);
-          end_autocomplete.bindTo('bounds', map); //not sure what bounds is in docs
-      
-        end_autocomplete.addListener('place_changed', function() {
-          var place = destination_autocomplete.getPlace();
-          if (!place.geometry) {
-            window.alert("Autocomplete's returned place contains no geometry");
-          return;
-          }
-        expandviewportToFitPlace(map, place);
-        })
+
     }); //end documentReady
 
 

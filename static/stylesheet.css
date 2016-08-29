@@ -25,3 +25,9 @@
     margin:0;
     padding:0;
 }
+
+#right-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
