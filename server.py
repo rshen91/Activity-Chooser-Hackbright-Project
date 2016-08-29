@@ -45,6 +45,7 @@ def get_form_values():
     #Think about if I need this since it's not carrying over to the final map
     user_lat = request.form.get("user_lat") 
     user_lng = request.form.get("user_lng")
+    print "\n\n\n\n", 
     
     #user's current address based on lat lngs
     s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
@@ -61,7 +62,7 @@ def get_form_values():
         results = start_oAuth(end_location, end_lat, end_lng, activity_types)
     else: # activity_location_preference == "near_user"
         # elif user selected near their current location
-        results = start_oAuth(start_location, user_lat, user_lng, activity_types)
+        results = start_oAuth(start_location, str(user_lat), str(user_lng), activity_types)
     
     return render_template("choose_activity.html",
                             activity=results,
@@ -96,6 +97,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     for yelp_request in activity_types:
         #for each activity, send an API call to get business details
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
+        
         all_businesses_in_activities.extend(r.json()['businesses'])
             #each of these businesses should be added to the list 
         for business in all_businesses_in_activities:

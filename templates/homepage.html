@@ -6,7 +6,7 @@
 
 
 <!-- values are selected from Google Places API -->
-<form action= "/activity_time" method="POST">
+<div class="container-fluid"><form action= "/activity_time" method="POST">
     <h3>This app will take your activity selection into consideration and provide you with one option from each activity type you choose below. </h3>
     To continue, please fill out the following fields:
     <br>
@@ -23,18 +23,19 @@
     <br>
     <br>
 
-        <div name="activity_type" id="activity_type">
+        <div name="activity_type" id="activity_type" class="row">
             {% for name in names %} 
             <br>
-
-                <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
+                <div class="col-xs-4">
+                    <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
+                </div>  
             <br>
         {% endfor %}
         </div>
         <br>
 
     Do you prefer an activity...<br><br>
-    <div id="activity_location_preference">
+    <div id="activity_location_preference" class=>
         <select name="activity_location_preference">
             <option value="near_user"> Closer to your current location </option><br>
             <option value="near_end_location" selected="near_end_location"> Closer to your destination </option><br>

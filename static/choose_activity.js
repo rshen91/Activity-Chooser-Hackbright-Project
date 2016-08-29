@@ -116,7 +116,18 @@ function initMap(user_lat, user_lng, end_lat, end_lng) {
         $("#activity_types").on("submit", makeoAuthYelpCall);
         } //end of displayDirections
 
-
+        var end_location = document.getElementById('end_location');
+        var end_autocomplete = new google.maps.places.Autocomplete(end_location);
+          end_autocomplete.bindTo('bounds', map); //not sure what bounds is in docs
+      
+        end_autocomplete.addListener('place_changed', function() {
+          var place = destination_autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+          return;
+          }
+        expandviewportToFitPlace(map, place);
+        })
     }); //end documentReady
 
 
