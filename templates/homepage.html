@@ -7,11 +7,11 @@
 
 <!-- values are selected from Google Places API -->
 <div class="container-fluid"><form action= "/activity_time" method="POST">
-    <h3>This app will take your activity selection into consideration and provide you with one option from each activity type you choose below. </h3>
-    To continue, please fill out the following fields:
+    <h3>ActivityChooser will take your activity selection into consideration and provide you with one option from each activity type you choose below.<br><br><br></h3> 
+    <h4>To continue, please fill out the following fields:</h4>
     <br>
     <br>
-    <br>
+
         <label for="end_location">Where do you want to go?<br> 
         Please enter an address. <input type="text" name="end_location" id="end_location" placeholder="180 Lippard Ave. San Francisco, CA 94131"></label></input>
     <br>
@@ -26,7 +26,7 @@
         <div name="activity_type" id="activity_type" class="row">
             {% for name in names %} 
             <br>
-                <div class="col-xs-4">
+                <div class="col-xs-12 col-md-6">
                     <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
                 </div>  
             <br>

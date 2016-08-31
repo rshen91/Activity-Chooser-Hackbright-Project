@@ -6,9 +6,7 @@ import geocoder
 from datetime import datetime
 from model import db, connect_to_db, Trip, Preference, TripPreference
 import json
-import pdb
 import googlemaps
-import urllib
 
 app = Flask(__name__)
 
@@ -30,7 +28,7 @@ def get_form_values():
     ################FORM VARIABLES##############################################
     end_location = request.form["end_location"] 
     arrival_time = request.form["arrival_time"]
-    print "\n\n\n\n\n", arrival_time
+
     activity_types = request.form.getlist("activity_type") 
     #Get the user's location from the hidden form in the homepage.html
     user_lat = request.form.get("user_lat") 
@@ -43,7 +41,7 @@ def get_form_values():
     start_location = s.json()['results'][0]['formatted_address']
 
     ###############GETTTING LAT LNGS FOR END ADDRESS############################
-    #gives the lat/lng for the address the user inputs in the homepage
+    # gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
      
     # unpack the lat lng here for the api call in whats near (can't have a list)
@@ -78,7 +76,8 @@ def activity_chosen():
     """Get the form variable chosen for the business the user wants in between"""
     
     chosen_phone = request.form.get("business_phone")
-    # each business has a unique phone number
+    
+    # each business has a unique phone number to select information only from the chosen business
     chosen_business = request.form.get("business_name_"+ chosen_phone)
     chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
     chosen_business_lng = request.form.get("business_lng_" + chosen_phone) 
@@ -88,21 +87,14 @@ def activity_chosen():
     chosen_business_street = request.form.get("business_street_" + chosen_phone)
     chosen_business_city = request.form.get("business_city_" + chosen_phone)
     chosen_business_zipcode = request.form.get("business_zipcode_" + chosen_phone)
-    end_lat = request.form.get("end_lat")
-    print "\n\n\n\n\n\n end_lat", end_lat
-    end_lng = request.form.get("end_lng")
-    print "\n\n\n\n\n\n end_lng", end_lng
-    end_location = request.form.get("end_location")
+    
+    # variables from hidden text fields in choose_activity.html 
     user_lat = request.form.get("user_lat")
-    print "\n\n\n\n\n\n user_lat", user_lat
     user_lng = request.form.get("user_lng")
-    print "\n\n\n\n\n\n user_lng", user_lng
+    end_lat = request.form.get("end_lat")
+    end_lng = request.form.get("end_lng")
     start_location = request.form.get("start_location")
-
-    # url = request.form.get("url")
-    # print "\n\n\n\n\n\n url", url    
-    # os.chdir('/home/vagrant/src/project/static')
-    # urllib.urlretrieve(url, yelp_image_url)
+    end_location = request.form.get("end_location")
 
     return render_template("final_route.html",
                             business_name=chosen_business,
@@ -146,7 +138,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     for yelp_request in activity_types:
         #for each activity, send an API call to get business details
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
-        print "\n\n\n", r.json()
+
         all_businesses_in_activities.extend(r.json()['businesses'])
 
         for business in all_businesses_in_activities:
@@ -163,20 +155,19 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
                     'image_url': business.get('image_url'), #this is unicode
                     'url' : business.get('url')
                     }
-                print "\n\n\n\n\n\n\n", business.get('categories')
-                print "\n\n\n\n\n\n\n image url", business.get('image_url')
-                print "\n\n\n\n\n\n\n url", business.get('url')
 
                 storing_yelp_values.append(business)
 
     unique_results = remove_duplicate_businesses(storing_yelp_values)
-    # got the business lat lngs is it possible to determine distance from user 
-    # and present that on the choose activity page
 
     return unique_results
 
 def remove_duplicate_businesses(storing_yelp_values):
-    """Helper function to remove duplicate businesses from start_oAuth"""
+    """Helper function to remove duplicate businesses from start_oAuth
+
+    >>> remove_duplicate_businesses([cat, cat, dog, fred])
+    [cat, dog, fred]
+    """
     
     unique_results = []
 
