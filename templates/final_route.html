@@ -3,14 +3,28 @@
 <script type="text/javascript" src="static/final_page.js"></script>
 {% endblock %}
 {% block content %}
-<div id ="final-map"> </div><div id="right-panel"></div> <!-- want right panel to appear next to the map -->
-<p>Here is the suggested route between your current location to {{ business_name }} to your final destination. </p>
 
-<div id = "business_info"> 
-    <h3>{{ business_name }}</h3>
-    <h3>{{ business_rating }}</h3> 
-    <h3> {{ business_image_url }}</h3>
-    <h3><img src="{{ business_image_url }}"></h3>
+<br>
+<br>
+<h3>Here is the suggested route between your current location to {{ business_name }} to your final destination. </h3>
+<div id ="final-map" class="col-xs-12 col-md-9"> </div>
+<br>
+<br>
+<div id = "business_info" class="col-xs-12 col-md-3 col-md-push-1"> 
+    <ul>
+        <li>{{ start_location }}<br></li>
+        <li>{{ business_street }}
+        {{ business_city }}
+        {{ business_zipcode }}<br></li>
+        <li>{{ end_location }}</li>
+    </ul>
+<br>
+
+    <h4>{{ business_name }}</h4><br>
+
+    <h4>Yelp Rating {{ business_rating }}</h4> 
+
+    <h3><a href="{{ business_url }}" ><img id="business_image" class="img-circle" src="{{ business_image }}"></a></h3>
 </div>
 
 <!-- see developers guide for waypoints --> 

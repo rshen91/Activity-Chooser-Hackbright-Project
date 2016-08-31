@@ -26,19 +26,25 @@
         Rating on Yelp 
         {{ business.rating }}<br>
 
-
-
         <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
         <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
         <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
-        <input type="hidden" id="business_image_url" value="{{ business.image_url }}" name="buisness_image_{{business.phone}}"/>
+        <input type="hidden" id="business_image_{{business.phone}}" value="{{business.image_url}}" name="business_image_{{business.phone}}"/>
+        <input type="hidden" id="business_rating_{{business.phone}}" value="{{business.rating}}" name="business_rating_{{business.phone}}"/>
+        <input type="hidden" id="business_url_{{business.phone}}" value="{{business.url}}" name="business_url_{{business.phone}}"/>
+
+        <input type="hidden" id="business_street_{{business.phone}}" value="{{business.address.address1}}"name="business_street_{{business.phone}}"/>
+        <input type="hidden" id="business_city_{{business.phone}}" value="{{business.address.city}}"name="business_city_{{business.phone}}"/>
+        <input type="hidden" id="business_zipcode_{{business.phone}}" value="{{business.address.zipcode}}"name="business_zipcode_{{business.phone}}"/>
 {% endfor %}
 
 
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
 <input type="hidden" id="end_lng" name="end_lng" value="{{ end_lng }}"/>
+<input type="text" id="end_location" name="end_location" value="{{ end_location }}"/>
 <input type="hidden" id="user_lat" name="user_lat" value="{{ user_lat }}"/> 
 <input type="hidden" id="user_lng" name="user_lng" value="{{ user_lng }}"/>
+<input type="hidden" id="start_location" name="start_location" value="{{ start_location }}"/>
 
 <!-- <div id= "halfwayLat">
     <input type="text" id="halfway_lat" name="halfway_lat" value=""/> 
@@ -50,7 +56,7 @@
 <br>
 
 <br>
-    <input type="submit" value="Continue to map">
+    <input class="btn btn-default" type="submit" value="Continue to map">
 </form>
 
 

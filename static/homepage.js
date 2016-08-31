@@ -11,7 +11,7 @@ function initMap(user_lat, user_lng) {
     var map = new google.maps.Map(document.getElementById('homepage-map'), {
       //this function gets the values out of the DOM, see handlePositionFound
           center: {"lat":user_lat, "lng":user_lng},
-          zoom: 15
+          zoom: 13
     });    
 
         var userMarker = addMarker(map, user_lat, user_lng);

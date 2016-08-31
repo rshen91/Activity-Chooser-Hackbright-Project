@@ -65,6 +65,7 @@ def get_form_values():
     return render_template("choose_activity.html",
                             activity=results,
                             end_location=end_location,
+                            start_location=start_location,
                             end_lat=end_lat,
                             end_lng=end_lng,
                             user_lat=user_lat,
@@ -75,29 +76,29 @@ def get_form_values():
 @app.route('/choose', methods=['POST'])
 def activity_chosen():
     """Get the form variable chosen for the business the user wants in between"""
-    pdb.set_trace()
+    
     chosen_phone = request.form.get("business_phone")
     # each business has a unique phone number
     chosen_business = request.form.get("business_name_"+ chosen_phone)
     chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
     chosen_business_lng = request.form.get("business_lng_" + chosen_phone) 
     chosen_business_rating = request.form.get("business_rating_" + chosen_phone)
-    chosen_business_image_url = request.form.get("business_image_" + chosen_phone)
-    print "\n\n\n\n\n\n" + chosen_business
-    print "\n\n\n\n\n\n" + chosen_business_lat
-    print "\n\n\n\n\n\n" + chosen_business_lng
-    print "\n\n\n\n\n\n\n" + str(chosen_business_image_url) #printing in terminal as None
-
+    chosen_business_image = request.form.get("business_image_" + chosen_phone)
+    chosen_business_url = request.form.get("business_url_"+ chosen_phone)
+    chosen_business_street = request.form.get("business_street_" + chosen_phone)
+    chosen_business_city = request.form.get("business_city_" + chosen_phone)
+    chosen_business_zipcode = request.form.get("business_zipcode_" + chosen_phone)
     end_lat = request.form.get("end_lat")
     print "\n\n\n\n\n\n end_lat", end_lat
     end_lng = request.form.get("end_lng")
     print "\n\n\n\n\n\n end_lng", end_lng
+    end_location = request.form.get("end_location")
     user_lat = request.form.get("user_lat")
     print "\n\n\n\n\n\n user_lat", user_lat
     user_lng = request.form.get("user_lng")
     print "\n\n\n\n\n\n user_lng", user_lng
-    # image_url = request.form.get("image_url")
-    # print "\n\n\n\n\n\n image_url", image_url
+    start_location = request.form.get("start_location")
+
     # url = request.form.get("url")
     # print "\n\n\n\n\n\n url", url    
     # os.chdir('/home/vagrant/src/project/static')
@@ -108,11 +109,17 @@ def activity_chosen():
                             business_rating=chosen_business_rating,
                             activity_lat=chosen_business_lat,
                             activity_lng=chosen_business_lng,
-                            business_image_url=chosen_business_image_url,
+                            business_image=chosen_business_image,
+                            business_url=chosen_business_url,
+                            business_street=chosen_business_street,
+                            business_city=chosen_business_city,
+                            business_zipcode=chosen_business_zipcode,
                             user_lat=user_lat,
                             user_lng=user_lng,
                             end_lat=end_lat,
-                            end_lng=end_lng)
+                            end_lng=end_lng,
+                            end_location=end_location,
+                            start_location=start_location)
 
     ############## HELPER FUNCTIONS ############################################
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
@@ -153,14 +160,15 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
                     'rating': business.get('rating'),
                     'categories': business.get('categories'),
                     'price': business.get('price'),
-                    'image_url': business.get('image_url'),
+                    'image_url': business.get('image_url'), #this is unicode
                     'url' : business.get('url')
                     }
                 print "\n\n\n\n\n\n\n", business.get('categories')
-                print "\n\n\n\n\n\n\n", business.get('image_url')
-                print "\n\n\n\n\n\n\n", business.get('url')
+                print "\n\n\n\n\n\n\n image url", business.get('image_url')
+                print "\n\n\n\n\n\n\n url", business.get('url')
 
                 storing_yelp_values.append(business)
+
     unique_results = remove_duplicate_businesses(storing_yelp_values)
     # got the business lat lngs is it possible to determine distance from user 
     # and present that on the choose activity page

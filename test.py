@@ -28,7 +28,9 @@ def test_no_duplicates(self):
     """Make sure that the remove_duplicates removes duplicates"""
 
 def remove_duplicate_businesses(storing_yelp_values):
-    """Helper function to remove duplicate businesses from start_oAuth"""
+    """Helper function to remove duplicate businesses from start_oAuth
+
+    remove_duplicate_businesses([cat, cat, dog, fred])"""
     
     unique_results = []
 
