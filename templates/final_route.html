@@ -3,12 +3,19 @@
 <script type="text/javascript" src="static/final_page.js"></script>
 {% endblock %}
 {% block content %}
-<div id ="final-map"> </div><div id="right-panel"></div>
+<div id ="final-map"> </div><div id="right-panel"></div> <!-- want right panel to appear next to the map -->
+<p>Here is the suggested route between your current location to {{ business_name }} to your final destination. </p>
 
-<h4>Please see the suggested route for your trip. </h4>
+<div id = "business_info"> 
+    <h3>{{ business_name }}</h3>
+    <h3>{{ business_rating }}</h3> 
+    <h3> {{ business_image_url }}</h3>
+    <h3><img src="{{ business_image_url }}"></h3>
+</div>
+
 <!-- see developers guide for waypoints --> 
 <form>
-    <input type="hidden" id="business_name" value="business.name" name="{{ business_name }}"/>
+    <input type="hidden" id="business_name" value="business_name" name="{{ business_name }}"/>
     <input type="hidden" id="activity_lat" value="{{ activity_lat }}" name="{{ activity_lat }}"/>
     <input type="hidden" id="activity_lng" value="{{ activity_lng }}" name="{{ activity_lng }}"/>
 
@@ -18,7 +25,6 @@
     <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/>
     <input type="hidden" id="end_lng" name="end_lng" value="{{ end_lng }}"/>
 </form>
-<p>Here is the suggested route between your current location to {{ business_name }} to your final destination. </p>
 {% endblock %}
 
 

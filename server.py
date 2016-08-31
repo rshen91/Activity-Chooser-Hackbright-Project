@@ -8,6 +8,7 @@ from model import db, connect_to_db, Trip, Preference, TripPreference
 import json
 import pdb
 import googlemaps
+import urllib
 
 app = Flask(__name__)
 
@@ -26,13 +27,22 @@ def homepage():
 def get_form_values():
     """ Get the variables from the homepage""" 
 
-    # Get the form variables
+    ################FORM VARIABLES##############################################
     end_location = request.form["end_location"] 
     arrival_time = request.form["arrival_time"]
+    print "\n\n\n\n\n", arrival_time
     activity_types = request.form.getlist("activity_type") 
+    #Get the user's location from the hidden form in the homepage.html
+    user_lat = request.form.get("user_lat") 
+    user_lng = request.form.get("user_lng")
+    activity_location_preference = request.form["activity_location_preference"] 
+    # it's a string
+    
+    #user's current address based on lat lngs
+    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
+    start_location = s.json()['results'][0]['formatted_address']
 
-    # add_preference_to_model(activity_types)
-
+    ###############GETTTING LAT LNGS FOR END ADDRESS############################
     #gives the lat/lng for the address the user inputs in the homepage
     r = geocoder.google(end_location)
      
@@ -41,27 +51,15 @@ def get_form_values():
     end_lat = str(end_lat)
     end_lng = str(end_lng)
 
-    #Get the user's location from the hidden form in the homepage.html
-    #Think about if I need this since it's not carrying over to the final map
-    user_lat = request.form.get("user_lat") 
-    user_lng = request.form.get("user_lng")
-    print "\n\n\n\n", 
-    
-    #user's current address based on lat lngs
-    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
-    start_location = s.json()['results'][0]['formatted_address']
-
-    # New trip being added to the Trip table
+    ##############ADDING THE TRIP TO THE MODEL##################################
     add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
 
-    activity_location_preference = request.form["activity_location_preference"] 
-    # it's a string
+    # Model.add_preference_to_model(activity_types)
 
+    ##############ACTIVITY YELP API CALL BASED ON LOCATION PREFERENCE###########
     if activity_location_preference == "near_end_location":
-        # if user selected near their destination
         results = start_oAuth(end_location, end_lat, end_lng, activity_types)
     else: # activity_location_preference == "near_user"
-        # elif user selected near their current location
         results = start_oAuth(start_location, str(user_lat), str(user_lng), activity_types)
     
     return render_template("choose_activity.html",
@@ -72,7 +70,51 @@ def get_form_values():
                             user_lat=user_lat,
                             user_lng=user_lng) 
 
-@app.route('/r.json', methods=['POST'])
+
+
+@app.route('/choose', methods=['POST'])
+def activity_chosen():
+    """Get the form variable chosen for the business the user wants in between"""
+    pdb.set_trace()
+    chosen_phone = request.form.get("business_phone")
+    # each business has a unique phone number
+    chosen_business = request.form.get("business_name_"+ chosen_phone)
+    chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
+    chosen_business_lng = request.form.get("business_lng_" + chosen_phone) 
+    chosen_business_rating = request.form.get("business_rating_" + chosen_phone)
+    chosen_business_image_url = request.form.get("business_image_" + chosen_phone)
+    print "\n\n\n\n\n\n" + chosen_business
+    print "\n\n\n\n\n\n" + chosen_business_lat
+    print "\n\n\n\n\n\n" + chosen_business_lng
+    print "\n\n\n\n\n\n\n" + str(chosen_business_image_url) #printing in terminal as None
+
+    end_lat = request.form.get("end_lat")
+    print "\n\n\n\n\n\n end_lat", end_lat
+    end_lng = request.form.get("end_lng")
+    print "\n\n\n\n\n\n end_lng", end_lng
+    user_lat = request.form.get("user_lat")
+    print "\n\n\n\n\n\n user_lat", user_lat
+    user_lng = request.form.get("user_lng")
+    print "\n\n\n\n\n\n user_lng", user_lng
+    # image_url = request.form.get("image_url")
+    # print "\n\n\n\n\n\n image_url", image_url
+    # url = request.form.get("url")
+    # print "\n\n\n\n\n\n url", url    
+    # os.chdir('/home/vagrant/src/project/static')
+    # urllib.urlretrieve(url, yelp_image_url)
+
+    return render_template("final_route.html",
+                            business_name=chosen_business,
+                            business_rating=chosen_business_rating,
+                            activity_lat=chosen_business_lat,
+                            activity_lng=chosen_business_lng,
+                            business_image_url=chosen_business_image_url,
+                            user_lat=user_lat,
+                            user_lng=user_lng,
+                            end_lat=end_lat,
+                            end_lng=end_lng)
+
+    ############## HELPER FUNCTIONS ############################################
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 
@@ -97,24 +139,31 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     for yelp_request in activity_types:
         #for each activity, send an API call to get business details
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
-        
+        print "\n\n\n", r.json()
         all_businesses_in_activities.extend(r.json()['businesses'])
-            #each of these businesses should be added to the list 
+
         for business in all_businesses_in_activities:
 
                 business = {
-                    'name': business['name'],
+                    'name': business.get('name'),
                     'coordinates': {'lat': business.get('coordinates').get('latitude'),
                                     'lng': business.get('coordinates').get('longitude')},
                     'address': business.get('location'),
                     'phone': business.get('phone'),
                     'rating': business.get('rating'),
-                    'categories': business['categories']
+                    'categories': business.get('categories'),
+                    'price': business.get('price'),
+                    'image_url': business.get('image_url'),
+                    'url' : business.get('url')
                     }
+                print "\n\n\n\n\n\n\n", business.get('categories')
+                print "\n\n\n\n\n\n\n", business.get('image_url')
+                print "\n\n\n\n\n\n\n", business.get('url')
 
                 storing_yelp_values.append(business)
-
     unique_results = remove_duplicate_businesses(storing_yelp_values)
+    # got the business lat lngs is it possible to determine distance from user 
+    # and present that on the choose activity page
 
     return unique_results
 
@@ -127,8 +176,14 @@ def remove_duplicate_businesses(storing_yelp_values):
         if business not in unique_results:
             unique_results.append(business)
 
-    return unique_results     
+    return unique_results  
 
+# def find_distance_from_user(unique_results):
+#     """Helper function to determine activity's distance from start or end"""
+
+#     int(business_coordinate_lat)
+
+    ################ MODELS FUNCTION ###########################################       
 def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
    """Add current trip to Trip table"""
 
@@ -150,40 +205,6 @@ def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, e
 #    db.session.add(trip_id)
 #    db.session.commit()
 
-
-
-
-@app.route('/choose', methods=['POST'])
-def activity_chosen():
-    """Get the form variable chosen for the business the user wants in between"""
-
-    chosen_phone = request.form.get("business_phone")
-    # each business has a unique phone number
-    chosen_business = request.form.get("business_name_"+ chosen_phone)
-    chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
-    chosen_business_lng = request.form.get("business_lng_" + chosen_phone) 
-    print "\n\n\n\n\n\n" + chosen_business
-    print "\n\n\n\n\n\n" + chosen_business_lat
-    print "\n\n\n\n\n\n" + chosen_business_lng
-
-    end_lat = request.form.get("end_lat")
-    print "\n\n\n\n\n\n end_lat", end_lat
-    end_lng = request.form.get("end_lng")
-    print "\n\n\n\n\n\n end_lng", end_lng
-    user_lat = request.form.get("user_lat")
-    print "\n\n\n\n\n\n user_lat", user_lat
-    user_lng = request.form.get("user_lng")
-    print "\n\n\n\n\n\n user_lng", user_lng
-
-
-    return render_template("final_route.html",
-                            business_name=chosen_business,
-                            activity_lat=chosen_business_lat,
-                            activity_lng=chosen_business_lng,
-                            user_lat=user_lat,
-                            user_lng=user_lng,
-                            end_lat=end_lat,
-                            end_lng=end_lng)
 
 if __name__ == "__main__":
     DebugToolbarExtension(app)

@@ -98,22 +98,6 @@ function initMap(user_lat, user_lng, end_lat, end_lng) {
         var directionsDisplay = new google.maps.DirectionsRenderer;
         directionsDisplay.setMap(map);
 
-
-        // function makeoAuthYelpCall() {
-
-        //   var formInputs = $("activity_types").serialize();
-        //   $.post("/r.json", formInputs, function (results) {
-        //     if (results.code == "OK") {
-        //       $("#activity_types").html("<p>" + results.msg + "</p>");
-        //     }
-        //     else {
-        //       $("#activity_types").addClass("order-error");
-        //       $("#activity_types").html("<p><b>" + results.msg + "</b></p>");
-        //     }
-        //   });
-
-        // }
-        // $("#activity_types").on("submit", makeoAuthYelpCall);
         } //end of displayDirections
 
 

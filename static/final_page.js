@@ -1,5 +1,3 @@
-// var final_map;
-
 $(document).ready(function () {
     console.log("HEY YOU, I AM HERE in the document.ready");
 
@@ -22,8 +20,8 @@ $(document).ready(function () {
               center: {lat: Number(user_lat), lng: Number(user_lng)},
               zoom: 18
         });
-        displayDirections.setMap('final_map');
-        displayDirections.setPanel(document.getElementById('right-panel'));
+        directionsDisplay(final_map);
+        // directionsDisplay(document.getElementById('right-panel'));
 
         var onChangeHandler = function(){
             calculateAndDisplayRoute(directionsService, displayDirections);
@@ -42,7 +40,7 @@ $(document).ready(function () {
 
     google.maps.event.addDomListener(window, "load", initMap);
 
-    function displayDirections(map) {
+    function directionsDisplay(map) {
         var user_lat = $("#user_lat").val();
         var user_lng = $("#user_lng").val();
         var activity_lat = $("#activity_lat").val();

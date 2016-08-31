@@ -32,7 +32,7 @@ class TripPreference(db.Model):
     __tablename__ = "trip_preferences"
 
     trip_preference_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    preference_id = db.Column(db.Integer, db.ForeignKey('preferences.preference_id'), autoincrement=True, primary_key=True)
+    preference_id = db.Column(db.Integer, db.ForeignKey('preferences.preference_id'), nullable=False)
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.trip_id'), nullable=False)
 
     def __repr__(self):
@@ -57,7 +57,7 @@ class Preference(db.Model):
 
         return "<Preferences id =%s Name =%s Google Places id = %s Deprecated =%s>" %(self.preference_id, self.name, self.google_places_id, self.deprecated)
 
-
+    #####################TEST FUNCTIONS ########################################
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
@@ -70,9 +70,17 @@ def connect_to_db(app):
 
 def example_data():
     """Create some sample data"""
-    
 
-    db.session.add_all([])
+    exactivity1 = Preference(name="Outdoor", yelp_id="OUT")
+    exactivity2 = Preference(name="Eat", yelp_id="EAT")
+    exactivity3 = Preference(name="Shop", yelp_id="SHOP")
+
+
+    extrip1 = Trip(user_lat="37.2939421", user_lng="-122.0063066", arrival_time="12:00", end_location="683 Sutter Street San Francisco CA", end_lat="37.788668", end_lng="-122.411499")
+    extrip2 = Trip(user_lat="37.2638324", user_lng="-122.0230146", arrival_time="16:00", end_location="2 Fox Run Wilton CT", end_lat="41.244991", end_lng="-73.476671")
+    extrip3 = Trip(user_lat="23.028779", user_lng="72.425437", arrival_time="4:00", end_location="333 Brannan St San Francisco CA", end_lat="37.780798", end_lng="-122.392501")
+
+    db.session.add_all([exactivity1, exactivity2, exactivity3])
     db.session.commit()
 
 if __name__== "__main__":

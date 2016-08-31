@@ -1,6 +1,6 @@
 .map, #homepage-map {
-    height:800px;
-    width:500px;
+    height:400px;
+    width:300px;
     margin:0;
     padding:0;
 }
@@ -26,8 +26,3 @@
     padding:0;
 }
 
-#right-panel {
-    font-family: 'Roboto','sans-serif';
-    line-height: 30px;
-    padding-left: 10px;
-}

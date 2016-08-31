@@ -7,11 +7,8 @@
 
 <br>
 <body>
-<h3> Here are suggestions for businesses that satisfy your activity selection. Please choose one to visit between you reach your destination.</h3>
-    <!-- only have this print if an activity is in their route  -->
-
-
-Please choose one:  
+<h3> Here are businesses you can visit that match your criteria. <br>
+    Please choose one business to visit. </h3> 
 <br>
 
 {% for business in activity %}
@@ -19,18 +16,22 @@ Please choose one:
     <br>
     <form action="/choose", method="POST" >
         <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
-        {{ business.name }}
-        {{ business.categories.title}} <br>
+        {{ business.name }}<br>
+        {{ business.price }}<br>
+        {{ business.categories.0.title}}<br> 
         {{ business.phone }} <br>
         {{ business.address.address1 }}
         {{ business.address.city }} 
         {{ business.address.zipcode }}<br>
         Rating on Yelp 
-        {{ business.rating }}
+        {{ business.rating }}<br>
+
+
 
         <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
         <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
         <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
+        <input type="hidden" id="business_image_url" value="{{ business.image_url }}" name="buisness_image_{{business.phone}}"/>
 {% endfor %}
 
 
@@ -52,11 +53,6 @@ Please choose one:
     <input type="submit" value="Continue to map">
 </form>
 
-
-
-<!-- Map of each location on a map -->
-<!-- <div id= "marker_map" type="hidden"></div>
- -->
 
 <!-- put navbar similar to Angular demo where the next html page of route options is a tab -->
 </body>

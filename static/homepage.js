@@ -6,12 +6,12 @@ console.log("HEY YOU, I AM HERE in the document.ready");
 
 function initMap(user_lat, user_lng) {
     console.log('user_lat:', user_lat, 'user_lng:', user_lng);
-    
+
     //rendering a new map on the homepage in the div homepage-map
     var map = new google.maps.Map(document.getElementById('homepage-map'), {
       //this function gets the values out of the DOM, see handlePositionFound
           center: {"lat":user_lat, "lng":user_lng},
-          zoom: 10
+          zoom: 15
     });    
 
         var userMarker = addMarker(map, user_lat, user_lng);
@@ -27,7 +27,7 @@ function initMap(user_lat, user_lng) {
           autocomplete.addDomListener();
         }
 
-      
+        
     }
     
 // this is needed to load the map - triggers the cascade of functions 
@@ -59,6 +59,26 @@ function addMarker(map, user_lat, user_lng) {
   return marker;
 
 }
+
+// $(function() {
+
+//   $("#end_location").geocomplete();
+
+//     .bind("geocode: result", function(event, result){
+//       $.log("Result: "+ result.formatted_address);
+//     })
+//     .bind("geocode:error", function(event, status){
+//       $.log("ERROR: "+ status);
+//     })
+//     .bind("geocode:multiple", function(event, results){
+//       $.log("Multiple: "+ results.length + " results found");
+//     });
+
+//   $("#submit").click(function(){
+//     $("#end_location").trigger("geocode");
+//   });
+
+// })
 
 
 });   //end documentReady
