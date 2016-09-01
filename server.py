@@ -177,11 +177,6 @@ def remove_duplicate_businesses(storing_yelp_values):
 
     return unique_results  
 
-# def find_distance_from_user(unique_results):
-#     """Helper function to determine activity's distance from start or end"""
-
-#     int(business_coordinate_lat)
-
     ################ MODELS FUNCTION ###########################################       
 def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
    """Add current trip to Trip table"""
@@ -192,17 +187,8 @@ def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, e
    db.session.add(trip_id)
    db.session.commit()
 
-# def add_preference_to_model(activity_types):
-#     """From start_oAuth, can add the values to model.py for the user's preference"""
-
-#     for activity in activity_types:
-#         name = Preference(name)
-
-#         trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
-#                      arrival_time=arrival_time, end_location=end_location, 
-#                       end_lat=end_lat, end_lng=end_lng)
-#    db.session.add(trip_id)
-#    db.session.commit()
+# Preference table is populated through sql yelp api file 
+# How is TripPreference generated?
 
 
 if __name__ == "__main__":

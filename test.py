@@ -1,53 +1,64 @@
 import unittest
-import server
+from server import app
 import doctest
+from selenium import webdriver
 
-def setUp(self):
-    """Stuff to do before every test"""
+class TestDatabase(unittest.TestCase):
 
-    self.client = app.test_client()
-    app.config['TESTING'] = True
-    #Connect to test database
-    connect_to_db(app, "postgresql:///testdb")
+    def setUp(self):
+        """Stuff to do before every test"""
 
-    #Create tables and add sample data
-    db.create_all()
-    example_data()
+        self.client = app.test_client()
+        app.config['TESTING'] = True
+        #Connect to test database
+        connect_to_db(app, "postgresql:///testdb")
 
-def tearDown(self):
-    """Do at the end of every test"""
+        #Create tables and add sample data
+        db.create_all()
+        example_data()
 
-    db.session.close()
-    db.drop_all()
+    def tearDown(self):
+        """Do at the end of every test"""
+
+        db.session.close()
+        db.drop_all()
+
+    def test_homepage_activity_types(self):
+        """Want to make sure that Preference is displaying on the homepage"""
+        result = self.client.get("/")
+        # Sample data has a preference called Outdoor that should appear on the homepage if the def homepage() works
+        self.assertIn("Outdoor", result.data)
+
+    def test_add_trip_to_table(self):
+        """Test the add_trip_to_table()"""
+        result = self.client.get("/choose")
+        # user lat is in the hidden value in the second page so it should appear from the sample data
+        self.assertIn("37.2939421", result.data)
 
 class TestCase(object):
-    def test_activity_in_database(self):
-        """Make sure that activity on homepage is from the Preference table"""
-
-        result = client.post(, data={})
 
     def test_homepage(self):
         """Make sure that address field appears on the homepage"""
         result = client.get('/')
         self.assertIn('address', result.data)
 
-def test_no_duplicates(self):
-    """Make sure that the remove_duplicates removes duplicates"""
+    def test_no_duplicates(self):
+        """Make sure that the remove_duplicates removes duplicates"""
+        
+# this class is for a selenium test
+class TestApp(unittest.TestCase):
 
-def remove_duplicate_businesses(storing_yelp_values):
-    """Helper function to remove duplicate businesses from start_oAuth
+    def setUp(self):
+        self.browser = webdriver.Firefox()
 
-    >>>>remove_duplicate_businesses([cat, cat, dog, fred])
-    [cat, dog, fred]
-    """
-    
-    unique_results = []
+    def tearDown(selt):
+        self.browser.quit()
 
-    for business in storing_yelp_values:
-        if business not in unique_results:
-            unique_results.append(business)
+    def test_title(self):
+        self.browser.get('http://127.0.0.1/')
+        self.assertEqual(self.browser.title, 'ActivityChooser')
 
-    return unique_results  
+    #def test_some_integration
 
 if __name__=="__main__":
     unittest.main()
