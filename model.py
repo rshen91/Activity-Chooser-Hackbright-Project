@@ -58,11 +58,13 @@ class Preference(db.Model):
         return "<Preferences id =%s Name =%s Google Places id = %s Deprecated =%s>" %(self.preference_id, self.name, self.google_places_id, self.deprecated)
 
     #####################TEST FUNCTIONS ########################################
-def connect_to_db(app):
+#defaults to the project actual database
+def connect_to_db(app, dburi='postgresql:///project'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///project'
+    #dburi is in test.py so when the setUp is called it goes here and uses the test example data below
+    app.config['SQLALCHEMY_DATABASE_URI'] = dburi 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #    app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
@@ -70,6 +72,10 @@ def connect_to_db(app):
 
 def example_data():
     """Create some sample data"""
+
+    # From demo, in case this is run more than once, empty out existing data
+    Trip.query.delete()
+    Preference.query.delete()
 
     exactivity1 = Preference(name="Outdoor", yelp_id="OUT")
     exactivity2 = Preference(name="Eat", yelp_id="EAT")
@@ -80,7 +86,7 @@ def example_data():
     extrip2 = Trip(user_lat="37.2638324", user_lng="-122.0230146", arrival_time="16:00", end_location="2 Fox Run Wilton CT", end_lat="41.244991", end_lng="-73.476671")
     extrip3 = Trip(user_lat="23.028779", user_lng="72.425437", arrival_time="4:00", end_location="333 Brannan St San Francisco CA", end_lat="37.780798", end_lng="-122.392501")
 
-    db.session.add_all([exactivity1, exactivity2, exactivity3])
+    db.session.add_all([exactivity1, exactivity2, exactivity3, extrip1, extrip2, extrip3])
     db.session.commit()
 
 if __name__== "__main__":
