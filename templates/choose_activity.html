@@ -11,6 +11,7 @@
     Please choose one business to visit. </h3> 
 <br>
 
+<div class="container">
 {% for business in activity %}
     <br>
     <br>
@@ -37,7 +38,7 @@
         <input type="hidden" id="business_city_{{business.phone}}" value="{{business.address.city}}"name="business_city_{{business.phone}}"/>
         <input type="hidden" id="business_zipcode_{{business.phone}}" value="{{business.address.zipcode}}"name="business_zipcode_{{business.phone}}"/>
 {% endfor %}
-
+</div>
 
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
 <input type="hidden" id="end_lng" name="end_lng" value="{{ end_lng }}"/>
