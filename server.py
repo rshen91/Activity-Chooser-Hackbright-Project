@@ -30,6 +30,7 @@ def get_form_values():
     arrival_time = request.form["arrival_time"]
 
     activity_types = request.form.getlist("activity_type") 
+    print "\n\n\n\n\n\n", activity_types
     #Get the user's location from the hidden form in the homepage.html
     user_lat = request.form.get("user_lat") 
     user_lng = request.form.get("user_lng")
@@ -67,7 +68,8 @@ def get_form_values():
                             end_lat=end_lat,
                             end_lng=end_lng,
                             user_lat=user_lat,
-                            user_lng=user_lng) 
+                            user_lng=user_lng,
+                            activity_types=activity_types) 
 
 
 
@@ -131,36 +133,45 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
 
     payload = {'Authorization': 'Bearer '+ bearer_buddy}
 
-    storing_yelp_values = []
-    all_businesses_in_activities = []
+    all_businesses = []
+    all_businesses_in_activity = []
 
     # loop over the r.json() to build up the yelp_response dictionary
     for yelp_request in activity_types:
         #for each activity, send an API call to get business details
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
+        all_businesses_in_activity.extend(r.json()['businesses'])
+        
+        yelp_values = helper_function_api(all_businesses_in_activity)
 
-        all_businesses_in_activities.extend(r.json()['businesses'])
-
-        for business in all_businesses_in_activities:
-
-                business = {
-                    'name': business.get('name'),
-                    'coordinates': {'lat': business.get('coordinates').get('latitude'),
-                                    'lng': business.get('coordinates').get('longitude')},
-                    'address': business.get('location'),
-                    'phone': business.get('phone'),
-                    'rating': business.get('rating'),
-                    'categories': business.get('categories'),
-                    'price': business.get('price'),
-                    'image_url': business.get('image_url'), #this is unicode
-                    'url' : business.get('url')
-                    }
-
-                storing_yelp_values.append(business)
-
-    unique_results = remove_duplicate_businesses(storing_yelp_values)
+        all_businesses.extend(yelp_values)
+        
+        unique_results = remove_duplicate_businesses(all_businesses)
 
     return unique_results
+
+def helper_function_api(all_businesses_in_activity):
+    """Creating a list of dictionaries from the json response in start_oAuth"""
+    storing_yelp_values = []
+
+    for business in all_businesses_in_activity:
+
+            business = {
+                'name': business.get('name'),
+                'coordinates': {'lat': business.get('coordinates').get('latitude'),
+                                'lng': business.get('coordinates').get('longitude')},
+                'address': business.get('location'),
+                'phone': business.get('phone'),
+                'rating': business.get('rating'),
+                'categories': business.get('categories'),
+                'price': business.get('price'),
+                'image_url': business.get('image_url'), #this is unicode
+                'url' : business.get('url')
+                }
+
+            storing_yelp_values.append(business)
+    print "\n\n\n\n\n\n", storing_yelp_values
+    return storing_yelp_values
 
 def remove_duplicate_businesses(storing_yelp_values):
     """Helper function to remove duplicate businesses from start_oAuth
