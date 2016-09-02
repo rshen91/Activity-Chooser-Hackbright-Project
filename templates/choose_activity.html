@@ -1,4 +1,4 @@
-{% macro make_categories_div(business) -%}
+{% macro make_categories_div(business) %}
 
     <div class="col-xs-offset col-xs-4">
         <br>
@@ -25,19 +25,17 @@
                 <input type="hidden" id="business_street_{{business.phone}}" value="{{business.address.address1}}"name="business_street_{{business.phone}}"/>
                 <input type="hidden" id="business_city_{{business.phone}}" value="{{business.address.city}}"name="business_city_{{business.phone}}"/>
                 <input type="hidden" id="business_zipcode_{{business.phone}}" value="{{business.address.zipcode}}"name="business_zipcode_{{business.phone}}"/>
+        </div>
+{% endmacro %}
 
-
-    </div>
-{%- endmacro %}
-
-{% macro business_in_category(business, category_title) -%}
+<!-- {% macro business_in_category(business, category_title) -%}
     {% for category in business.categories %}
         {% if category.title == category_title %}
             {{ make_categories_div(business) }}
         {% endif %}
     {% endfor %}
 
-{%- endmacro %}
+{%- endmacro %} -->
 {% extends 'base.html' %}
 
 {% block extra_js %}
@@ -50,32 +48,128 @@
 <h3> Here are businesses you can visit that match your criteria. <br>
     Please choose one business to visit. </h3> 
 <br>
-    <h1>Coffee Tea</h1>
-    {% for business in activity %}
-    {% if business.categories.0.title == "Coffee & Tea" %}
-        {{ make_categories_div(business) }}
-    {% endif %}
-    {% endfor %}
 
+    {% if 'Active Life' in activity_types %}
     <div>
-    <h1>Active Life</h1>
-    {% for business in activity %}
-    {% if "Hiking" in business.categories.0.title  or "Camps" in business.categories.0.title  %}
-        {{ make_categories_div(business) }}
+        <h1>Active Life</h1>
+        {% for business in activity %}
+            {# if "Hiking" in business.categories.0.title  or "Camps" in business.categories.0.title  #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
     {% endif %}
-    {% endfor %}
+
+    {% if 'Arts' in activity_types %}
     <div>
+        <h1>Arts & Entertainment</h1>
+        {% for business in activity %}
+            {# if "arcades" in business.categories.0.title  or "museum" in business.categories.0.title  or "garden" in business.categories.0.title or "galleries" in business.categories.0.title or "cabaret" in business.categories.0.title or "theater" in business.categories.0.title #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
 
+    {% if 'Beauty Services' in activity_types %}
+    <div>
+        <h1>Beauty Services</h1>
+        {% for business in activity %}
+            {# if "salon" in business.categories.0.title or "cosmetics" in business.categories.0.title or "spas" in business.categories.0.title or "hair" in business.categories.0.title #}
+                {{ make_categories_div(business) }}      
+            {# endif #}  
+        {% endfor %}
+    </div>
+    {% endif %}
 
-    <h1>Beauty</h1>
-    {% for business in activity %}
-        {% if 'Salon' in business.categories.0.title  %}
+    {% if 'Banks and ATMs' in activity_types %}
+    <div>
+        <h1>Banks and ATMs </h1>
+        {% for business in activity %}
+            {# if 'bank' in business.categories.0.title #}
+                {{ make_categories_div(business) }}      
+            {# endif #}  
+        {% endfor %}
+    </div>
+    {% endif %}
 
-        {{ make_categories_div(business) }}      
-        {% endif %}  
-    {% endfor %}
+    {% if 'Bakeries' in activity_types %}
+    <div>
+        <h1>Bakeries</h1>
+        {% for business in activity %}
+            {# if 'bakeries' in business.categories.0.title #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
 
-<!-- functions in jinja macros -->
+    {% if 'Coffee' in activity_types %}
+    <div>
+        <h1>Coffee</h1>
+        {% for business in activity %}
+            {# if 'coffee' in business.categories.0.title #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if 'Desserts' in activity_types %}
+    <div>
+        <h1>Desserts</h1>
+        {% for business in activity %}
+            {# if business.categories.0.title == "desserts" #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if 'Grocery' in activity_types %}
+    <div>
+        <h1>Grocery</h1>
+        {% for business in activity %}
+            {# if 'grocery' in business.categories.0.title #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if 'Night Life' in activity_types %}
+    <div>
+        <h1>Night Life</h1>
+        {% for business in activity %}
+            {# if business.categories.0.title == "nightlife" #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if 'Restaurants' in activity_types %}
+    <div>
+        <h1>Restaurants </h1>
+        {% for business in activity %}
+            {# if business.categories.0.title == "restaurants" #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if 'Shopping' in activity_types %}
+    <div>
+        <h1>Shopping</h1>
+        {% for business in activity %}
+            {# if business.categories.0.title == "shopping" #}
+                {{ make_categories_div(business) }}
+            {# endif #}
+        {% endfor %}
+    </div>
+    {% endif %}
+
 
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
 <input type="hidden" id="end_lng" name="end_lng" value="{{ end_lng }}"/>

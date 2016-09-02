@@ -30,7 +30,7 @@ def get_form_values():
     arrival_time = request.form["arrival_time"]
 
     activity_types = request.form.getlist("activity_type") 
-    print "\n\n\n\n\n\n", activity_types
+    # print "\n\n\n\n\n\n", activity_types
     #Get the user's location from the hidden form in the homepage.html
     user_lat = request.form.get("user_lat") 
     user_lng = request.form.get("user_lng")
@@ -140,6 +140,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     for yelp_request in activity_types:
         #for each activity, send an API call to get business details
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
+        # print "\n\n\n\n\n\n\n", r.json()
         all_businesses_in_activity.extend(r.json()['businesses'])
         
         yelp_values = helper_function_api(all_businesses_in_activity)
@@ -170,7 +171,7 @@ def helper_function_api(all_businesses_in_activity):
                 }
 
             storing_yelp_values.append(business)
-    print "\n\n\n\n\n\n", storing_yelp_values
+    # print "\n\n\n\n\n\n", storing_yelp_values
     return storing_yelp_values
 
 def remove_duplicate_businesses(storing_yelp_values):
