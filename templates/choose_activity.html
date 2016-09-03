@@ -49,13 +49,15 @@
     Please choose one business to visit. </h3> 
 <br>
 
-    {% if 'Active Life' in activity_types %}
+
+
+    {% if 'Active Life' in activity_types %} {# jsut show the heading and all the businesses not restricted to active life #}
     <div>
         <h1>Active Life</h1>
         {% for business in activity %}
-            {# if "Hiking" in business.categories.0.title  or "Camps" in business.categories.0.title  #}
+            {% if "Hiking" in business.categories.0.title  or "Camps" in business.categories.0.title  %}
                 {{ make_categories_div(business) }}
-            {# endif #}
+            {% endif %}
         {% endfor %}
     </div>
     {% endif %}
@@ -63,7 +65,7 @@
     {% if 'Arts' in activity_types %}
     <div>
         <h1>Arts & Entertainment</h1>
-        {% for business in activity %}
+        {% for business in activity |sort(attribute='categories.0.title') %}
             {# if "arcades" in business.categories.0.title  or "museum" in business.categories.0.title  or "garden" in business.categories.0.title or "galleries" in business.categories.0.title or "cabaret" in business.categories.0.title or "theater" in business.categories.0.title #}
                 {{ make_categories_div(business) }}
             {# endif #}
@@ -119,7 +121,9 @@
     <div>
         <h1>Desserts</h1>
         {% for business in activity %}
-            {# if business.categories.0.title == "desserts" #}
+            {# if business.categories.0.title == "Desserts" #}
+                {{ business.categories.0.title }}
+                <br>
                 {{ make_categories_div(business) }}
             {# endif #}
         {% endfor %}
