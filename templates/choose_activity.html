@@ -6,7 +6,7 @@
         <form action="/choose", method="POST" >
             <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
             <ul class="list-group","panel-heading"><strong>{{ business.name }}</strong><br>
-                <li class="list-group-item","panel-body">{{ business.price }}</li><br>
+                <li class="list-group-item panel-body">{{ business.price }}</li><br>
                 <li class="list-group-item","panel-body">{{ business.categories.0.title}}</li><br>
                 <li class="list-group-item","panel-body">{{ business.phone }} </li><br>
                 <li class="list-group-item","panel-body">{{ business.address.address1 }}
@@ -65,7 +65,7 @@
     {% if 'Arts' in activity_types %}
     <div>
         <h1>Arts & Entertainment</h1>
-        {% for business in activity |sort(attribute='categories.0.title') %}
+        {% for business in activity %}
             {# if "arcades" in business.categories.0.title  or "museum" in business.categories.0.title  or "garden" in business.categories.0.title or "galleries" in business.categories.0.title or "cabaret" in business.categories.0.title or "theater" in business.categories.0.title #}
                 {{ make_categories_div(business) }}
             {# endif #}
