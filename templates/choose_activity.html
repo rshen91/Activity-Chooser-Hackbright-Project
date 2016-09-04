@@ -1,41 +1,3 @@
-{% macro make_categories_div(business) %}
-
-    <div class="col-xs-offset col-xs-4">
-        <br>
-        <br>
-        <form action="/choose", method="POST" >
-            <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
-            <ul class="list-group","panel-heading"><strong>{{ business.name }}</strong><br>
-                <li class="list-group-item panel-body">{{ business.price }}</li><br>
-                <li class="list-group-item","panel-body">{{ business.categories.0.title}}</li><br>
-                <li class="list-group-item","panel-body">{{ business.phone }} </li><br>
-                <li class="list-group-item","panel-body">{{ business.address.address1 }}
-                {{ business.address.city }} 
-                {{ business.address.zipcode }}</li><br>
-                Rating on Yelp 
-                <li class="list-group-item","panel-body">{{ business.rating }}</li><br>
-            </ul>
-                <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
-                <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
-                <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
-                <input type="hidden" id="business_image_{{business.phone}}" value="{{business.image_url}}" name="business_image_{{business.phone}}"/>
-                <input type="hidden" id="business_rating_{{business.phone}}" value="{{business.rating}}" name="business_rating_{{business.phone}}"/>
-                <input type="hidden" id="business_url_{{business.phone}}" value="{{business.url}}" name="business_url_{{business.phone}}"/>
-
-                <input type="hidden" id="business_street_{{business.phone}}" value="{{business.address.address1}}"name="business_street_{{business.phone}}"/>
-                <input type="hidden" id="business_city_{{business.phone}}" value="{{business.address.city}}"name="business_city_{{business.phone}}"/>
-                <input type="hidden" id="business_zipcode_{{business.phone}}" value="{{business.address.zipcode}}"name="business_zipcode_{{business.phone}}"/>
-        </div>
-{% endmacro %}
-
-<!-- {% macro business_in_category(business, category_title) -%}
-    {% for category in business.categories %}
-        {% if category.title == category_title %}
-            {{ make_categories_div(business) }}
-        {% endif %}
-    {% endfor %}
-
-{%- endmacro %} -->
 {% extends 'base.html' %}
 
 {% block extra_js %}
@@ -49,131 +11,34 @@
     Please choose one business to visit. </h3> 
 <br>
 
+<div class="container">
+{% for business in activity %}
+    <br>
+    <br>
+            <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
+            <ul class="list-group","panel-heading"><strong>{{ business.name }}</strong><br>
+                <li class="list-group-item panel-body">{{ business.price }}</li><br>
+                <li class="list-group-item","panel-body">{{ business.categories.0.title}}</li><br>
+                <li class="list-group-item","panel-body">{{ business.phone }} </li><br>
+                <li class="list-group-item","panel-body">{{ business.address.address1 }}
+                {{ business.address.city }} 
+                {{ business.address.zipcode }}</li><br>
+                Rating on Yelp 
+                <li class="list-group-item","panel-body">{{ business.rating }}</li><br>
+            </ul>
 
+        <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
+        <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
+        <input type="hidden" id="business_coordinates_lng" value="{{business.coordinates.lng}}" name="business_lng_{{business.phone}}"/>
+        <input type="hidden" id="business_image_{{business.phone}}" value="{{business.image_url}}" name="business_image_{{business.phone}}"/>
+        <input type="hidden" id="business_rating_{{business.phone}}" value="{{business.rating}}" name="business_rating_{{business.phone}}"/>
+        <input type="hidden" id="business_url_{{business.phone}}" value="{{business.url}}" name="business_url_{{business.phone}}"/>
 
-    {% if 'Active Life' in activity_types %} {# jsut show the heading and all the businesses not restricted to active life #}
-    <div>
-        <h1>Active Life</h1>
-        {% for business in activity %}
-            {% if "Hiking" in business.categories.0.title  or "Camps" in business.categories.0.title  %}
-                {{ make_categories_div(business) }}
-            {% endif %}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Arts' in activity_types %}
-    <div>
-        <h1>Arts & Entertainment</h1>
-        {% for business in activity %}
-            {# if "arcades" in business.categories.0.title  or "museum" in business.categories.0.title  or "garden" in business.categories.0.title or "galleries" in business.categories.0.title or "cabaret" in business.categories.0.title or "theater" in business.categories.0.title #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Beauty Services' in activity_types %}
-    <div>
-        <h1>Beauty Services</h1>
-        {% for business in activity %}
-            {# if "salon" in business.categories.0.title or "cosmetics" in business.categories.0.title or "spas" in business.categories.0.title or "hair" in business.categories.0.title #}
-                {{ make_categories_div(business) }}      
-            {# endif #}  
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Banks and ATMs' in activity_types %}
-    <div>
-        <h1>Banks and ATMs </h1>
-        {% for business in activity %}
-            {# if 'bank' in business.categories.0.title #}
-                {{ make_categories_div(business) }}      
-            {# endif #}  
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Bakeries' in activity_types %}
-    <div>
-        <h1>Bakeries</h1>
-        {% for business in activity %}
-            {# if 'bakeries' in business.categories.0.title #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Coffee' in activity_types %}
-    <div>
-        <h1>Coffee</h1>
-        {% for business in activity %}
-            {# if 'coffee' in business.categories.0.title #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Desserts' in activity_types %}
-    <div>
-        <h1>Desserts</h1>
-        {% for business in activity %}
-            {# if business.categories.0.title == "Desserts" #}
-                {{ business.categories.0.title }}
-                <br>
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Grocery' in activity_types %}
-    <div>
-        <h1>Grocery</h1>
-        {% for business in activity %}
-            {# if 'grocery' in business.categories.0.title #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Night Life' in activity_types %}
-    <div>
-        <h1>Night Life</h1>
-        {% for business in activity %}
-            {# if business.categories.0.title == "nightlife" #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Restaurants' in activity_types %}
-    <div>
-        <h1>Restaurants </h1>
-        {% for business in activity %}
-            {# if business.categories.0.title == "restaurants" #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if 'Shopping' in activity_types %}
-    <div>
-        <h1>Shopping</h1>
-        {% for business in activity %}
-            {# if business.categories.0.title == "shopping" #}
-                {{ make_categories_div(business) }}
-            {# endif #}
-        {% endfor %}
-    </div>
-    {% endif %}
-
+        <input type="hidden" id="business_street_{{business.phone}}" value="{{business.address.address1}}"name="business_street_{{business.phone}}"/>
+        <input type="hidden" id="business_city_{{business.phone}}" value="{{business.address.city}}"name="business_city_{{business.phone}}"/>
+        <input type="hidden" id="business_zipcode_{{business.phone}}" value="{{business.address.zipcode}}"name="business_zipcode_{{business.phone}}"/>
+{% endfor %}
+</div>
 
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
 <input type="hidden" id="end_lng" name="end_lng" value="{{ end_lng }}"/>
@@ -200,5 +65,3 @@
 </body>
 
 {% endblock %}
-
-
