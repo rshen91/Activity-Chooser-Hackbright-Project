@@ -11,10 +11,11 @@
     Please choose one business to visit. </h3> 
 <br>
 
-<div class="container">
+<div class="container col-xs-offset col-xs-4">
 {% for business in activity %}
     <br>
     <br>
+    <form action="/choose", method="POST" >
             <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
             <ul class="list-group","panel-heading"><strong>{{ business.name }}</strong><br>
                 <li class="list-group-item panel-body">{{ business.price }}</li><br>
