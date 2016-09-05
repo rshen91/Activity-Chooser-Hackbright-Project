@@ -20,7 +20,7 @@ PostgreSQL, SQLAlchemy, Python, Flask, Jinja, Javascript,  JQuery, Bootstrap, HT
 -Information will be provided once Activity Chooser is deployed
 
 Run the Flask App
-Please see dependencies outlined in requirements.txt
+-Please see dependencies outlined in requirements.txt
 
 ***
 ## How to use Activity Chooser

@@ -27,6 +27,7 @@ def get_form_values():
 
     ################FORM VARIABLES##############################################
     end_location = request.form["end_location"] 
+    print "\n\n\n\n\n\n\n", end_location #address is showing
     arrival_time = request.form["arrival_time"]
 
     activity_types = request.form.getlist("activity_type") 
@@ -43,10 +44,17 @@ def get_form_values():
 
     ###############GETTTING LAT LNGS FOR END ADDRESS############################
     # gives the lat/lng for the address the user inputs in the homepage
-    r = geocoder.google(end_location)
+    r2 = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}".format(end_location, os.environ['KEY_KEY']))
+    end_lat = r2.json()['results'][0]['geometry']['location']['lat']
+    print "\n\n\n\n\n", end_lat
+    end_lng = r2.json()['results'][0]['geometry']['location']['lng']
+    print "\n\n\n\n\n", end_lng
+    # end_lat = geocoder.google(end_location)
+    # print "\n\n\n\n\n\n", end_location
+    # print "\n\n\n\n", r.latlng #this isnt working 
      
     # unpack the lat lng here for the api call in whats near (can't have a list)
-    end_lat, end_lng = r.latlng
+    # end_lat, end_lng = r.latlng
     end_lat = str(end_lat)
     end_lng = str(end_lng)
 
