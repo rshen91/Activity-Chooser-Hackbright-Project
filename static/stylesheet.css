@@ -1,5 +1,5 @@
-.map, #homepage-map {
-    height:400px;
+#homepage-map {
+    height:800px;
     width:300px;
     margin:0;
     padding:0;
@@ -12,6 +12,7 @@
 #body {
     height: 100%;
 }
+
 #final-map {
     height:800px;
     width:500px;
