@@ -51,8 +51,12 @@
     color: #ffffff;
 }
 
-.col-centered{
+.col-centered {
     float: none;
     margin: 0 auto;
     :overflow;
+}
+
+#middle-header {
+    text-align: center;
 }
