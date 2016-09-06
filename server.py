@@ -7,6 +7,7 @@ from datetime import datetime
 from model import db, connect_to_db, Trip, Preference, TripPreference
 import json
 import googlemaps
+import pdb
 
 app = Flask(__name__)
 
@@ -34,30 +35,43 @@ def get_form_values():
     # print "\n\n\n\n\n\n", activity_types
     #Get the user's location from the hidden form in the homepage.html
     user_lat = request.form.get("user_lat") 
+    print "\n\n\n\n user_lat", user_lat
     user_lng = request.form.get("user_lng")
+    print "\n\n\n\n\n user lng", user_lng
     activity_location_preference = request.form["activity_location_preference"] 
     # it's a string
     
     #user's current address based on lat lngs
-    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
+    # try:
+    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['server_key']))
+    print "\n\n\n\n\n starting address", s.json()
+
     start_location = s.json()['results'][0]['formatted_address']
+    # except:
+    #     start_location = "683 Sutter Street San Francisco CA"
+
+    #s.json()['results'][0]['formatted_address']
 
     ###############GETTTING LAT LNGS FOR END ADDRESS############################
     # gives the lat/lng for the address the user inputs in the homepage
-    r2 = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}".format(end_location, os.environ['KEY_KEY']))
+    # try:
+    r2 = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}".format(end_location, os.environ['server_key']))
+    print "\n\n\n\n\n ending latlngaddress", r2.json()
     end_lat = r2.json()['results'][0]['geometry']['location']['lat']
     print "\n\n\n\n\n", end_lat
     end_lng = r2.json()['results'][0]['geometry']['location']['lng']
     print "\n\n\n\n\n", end_lng
-    # end_lat = geocoder.google(end_location)
-    # print "\n\n\n\n\n\n", end_location
-    # print "\n\n\n\n", r.latlng #this isnt working 
+        # end_lat = geocoder.google(end_location)
+        # print "\n\n\n\n\n\n", end_location
+        # print "\n\n\n\n", r.latlng #this isnt working 
      
-    # unpack the lat lng here for the api call in whats near (can't have a list)
-    # end_lat, end_lng = r.latlng
+        # unpack the lat lng here for the api call in whats near (can't have a list)
+        # end_lat, end_lng = r.latlng
     end_lat = str(end_lat)
     end_lng = str(end_lng)
-
+    # except:
+    #     end_lat="37.733245"
+    #     end_lng="122.436305"
     ##############ADDING THE TRIP TO THE MODEL##################################
     add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
 

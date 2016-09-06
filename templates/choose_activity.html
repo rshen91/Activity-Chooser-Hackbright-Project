@@ -6,27 +6,33 @@
 {% block content %}
 
 <br>
+<br>
+<br>
+<br>
 <body>
 <h3> Here are businesses you can visit that match your criteria. <br>
     Please choose one business to visit. </h3> 
 <br>
 
-<div class="container col-xs-offset col-xs-4 col-lg-12">
-{% for business in activity %}
-    <br>
-    <br>
-    <form action="/choose", method="POST" >
-            <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
-            <ul class="list-group","panel-heading"><strong>{{ business.name }}</strong><br>
-                <li class="list-group-item panel-body">{{ business.price }}</li><br>
-                <li class="list-group-item","panel-body">{{ business.categories.0.title}}</li><br>
-                <li class="list-group-item","panel-body">{{ business.phone }} </li><br>
-                <li class="list-group-item","panel-body">{{ business.address.address1 }}
-                {{ business.address.city }} 
-                {{ business.address.zipcode }}</li><br>
-                Rating on Yelp 
-                <li class="list-group-item","panel-body">{{ business.rating }}</li><br>
-            </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4 col-lg-6 col-lg-offset-3 col-centered">
+            {% for business in activity %}
+            <br>
+            <br>
+            <form action="/choose", method="POST" >
+                    <br><br>
+                    <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
+                    <div class="list-group""panel-heading"><strong>{{ business.name }}</strong><br>
+                        <li class="list-group-item panel-body">{{ business.price }}</li><br>
+                        <li class="list-group-item","panel-body">{{ business.categories.0.title}}</li><br>
+                        <li class="list-group-item","panel-body">{{ business.phone }} </li><br>
+                        <li class="list-group-item","panel-body">{{ business.address.address1 }}
+                        {{ business.address.city }} 
+                        {{ business.address.zipcode }}</li><br>
+                        Rating on Yelp 
+                        <li class="list-group-item","panel-body">{{ business.rating }}</li><br>
+                    </div>
 
         <input type="hidden" id="business_name_{{business.phone}}" value="{{business.name}}" name="business_name_{{business.phone}}"/>
         <input type="hidden" id="business_coordinate_lat_{{business.phone}}" value="{{business.coordinates.lat}}" name="business_lat_{{business.phone}}"/>
@@ -38,7 +44,9 @@
         <input type="hidden" id="business_street_{{business.phone}}" value="{{business.address.address1}}"name="business_street_{{business.phone}}"/>
         <input type="hidden" id="business_city_{{business.phone}}" value="{{business.address.city}}"name="business_city_{{business.phone}}"/>
         <input type="hidden" id="business_zipcode_{{business.phone}}" value="{{business.address.zipcode}}"name="business_zipcode_{{business.phone}}"/>
-{% endfor %}
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 <input type="hidden" id="end_lat" name="end_lat" value="{{ end_lat }}"/> 
@@ -59,7 +67,9 @@
 
 <br>
     <div class="container">
-        <input class="btn btn-default" type="submit" value="Continue to map">
+        <div class="col-xs-4 col-lg-6 col-lg-offset-3 col-centered">
+        <input class="btn btn-default floating-action-button" type="submit" value="Continue to map">
+        </div>
     </div>
 </form>
 

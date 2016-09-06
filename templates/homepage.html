@@ -6,58 +6,67 @@
 <br>
 <br>
 <br>
-<div class="container"><form action= "/activity_time" method="POST">
-    <h3>Please choose activities below that you will want to visit along your trip. <br><br><br></h3> 
+<div class="container-fluid">
+    <form action= "/activity_time" method="POST">
+    <h3>Please choose activities below that you will want to visit along your trip.</h3><br><br><br> 
     <h4>To continue, please fill out the following fields:</h4>
     <br>
     <br>
         <div class="row">
-            <label for="end_location">Where do you want to go?<br> 
-            Please enter an address. <input type="text" name="end_location" id="end_location" placeholder="180 Lippard Ave. San Francisco, CA 94131"></label></input>
-        </div>
+            <div class="col-xs-12 col-md-6">
+                <label for="end_location">Where do you want to go?<br> 
+                Please enter an address. <input type="text" name="end_location" id="end_location" placeholder="180 Lippard Ave. San Francisco, CA 94131"></label></input>
     <br>
-        <div class="row">
-            <label for="arrival_time">When do you want to be there? <input type="time" name="arrival_time" value="16:00"></label></input>
-        </div>
+                <label for="arrival_time">When do you want to be there? <input type="time" name="arrival_time" value="16:00"></label></input>
     <br>
     <br>
-        <div class="row">
-        Select a type of activity you want to do in between:
-        </div>
+                Select a type of activity you want to do in between:
     <br>
     <br>
-        <div name="activity_type" id="activity_type" class="row">
+        <div name="activity_type" id="activity_type"> 
             {% for name in names %} 
             <br>
-                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6">
                     <input type = "checkbox" name="activity_type" value="{{name[0]}}"> {{ name[0] }}
-                </div>  
             <br>
             {% endfor %}
         </div>
     <br>
-        <div id="activity_location_preference" class="col-xs-3">
+        <div id="activity_location_preference">
             Do you prefer an activity...<br><br>
             <select name="activity_location_preference" class="form-control">
             <option value="near_user"> Closer to your current location </option><br>
             <option value="near_end_location" selected="near_end_location"> Closer to your destination </option><br>
         </select>
         </div>
+            <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <input class="btn btn-default" type="submit" id="submit" value="Let's get started">
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+            <label class="hidden">lat</label><input type="hidden" id="lat" name="user_lat" value=""/>
+            <label class="hidden">lng</label><input type="hidden" id="lng" name="user_lng" value=""/>
+    </form>
+    </div>    
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div id="homepage-map">
+            </div> 
+        </div>
     </div>
+</div>
+
     <br>
     <br>
     <br>
 
 
-    <div id="homepage-map" class="homepage-map container" ></div> 
-
-    <label class="hidden">lat</label><input type="hidden" id="lat" name="user_lat" value=""/>
-    <label class="hidden">lng</label><input type="hidden" id="lng" name="user_lng" value=""/>
-    <br><br><br>
-    <div>
-        <input class="btn btn-default" type="submit" id="submit" value="Let's get started"><br><br><br><br>
-    </div>
-</form>
 
 
 
