@@ -20,13 +20,23 @@ PostgreSQL, SQLAlchemy, Python, Flask, Jinja, Javascript,  JQuery, Bootstrap, HT
 -Information will be provided once Activity Chooser is deployed
 
 Run the Flask App
+
+
 -Please see dependencies outlined in requirements.txt
 
 ***
 ## How to use Activity Chooser
+
+
 -Activity Chooser consists of three pages: 
+
+
 1. Homepage
+
+
 2. Activity Selection
+
+
 3. Final Page with route and business information
 
 -At the homepage, the user should input a complete address and the time they want to arrive at their destination. Below, they can select (from the Yelp API category filters) activity types that interest them. Additionally, they are able to select a preference for an activity near their current location or closer to their destination. On this page, they can see their current location according to the Google Maps API. 
@@ -40,6 +50,12 @@ Run the Flask App
 
 The next steps:
 -Autocomplete feature for the user's destination
+
+
 -Instead of radio buttons for the business selection, implementing jQuery event listeners for each business to have a button 
+
+
 -Mouseover AJAX feature for the Yelp business link off the image on the final page
+
+
 -Implementation of datetime for directions (involves premium Google API membership)
