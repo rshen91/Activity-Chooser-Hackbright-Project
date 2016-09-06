@@ -1,5 +1,7 @@
 # Activity Chooser
 
+This is my Hackbright Project as a member of the Ada cohort from July 2016 - September 2016. I am currently seeking employment as a Software Engineer. Please feel free to direct any questions or comments to me at rachelwshen@gmail.com. 
+
 Ever plan to arrive somewhere early and want to see what activities are near your destination? Activity Chooser is a web app created by Rachel Shen which uses Yelp's API to provide pit stops that match your selection. You are provided information about the business you choose, as well as a Google Map with markers of your current location, the activity, and destination. If you prefer an activity near your current location, that is also an option!
 ***
 

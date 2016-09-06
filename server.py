@@ -137,7 +137,7 @@ def activity_chosen():
                             end_location=end_location,
                             start_location=start_location)
 
-    ############## HELPER FUNCTIONS ############################################
+################## HELPER FUNCTIONS ############################################
 def start_oAuth(end_location, end_lat, end_lng, activity_types):
     """Uses oAuth and sends request to Yelp API for activity locations near end location. 
 
@@ -162,7 +162,7 @@ def start_oAuth(end_location, end_lat, end_lng, activity_types):
     for yelp_request in activity_types:
         #for each activity, send an API call to get business details
         r = requests.get("https://api.yelp.com/v3/businesses/search?location={}cll={},{}&limit=5&sort=1&term={}&category_filter={}".format(end_location, end_lat, end_lng, yelp_request, yelp_request), headers=payload)
-        # print "\n\n\n\n\n\n\n", r.json()
+        print "\n\n\n\n\n\n\n json request from Yelp API call", r.json()
         all_businesses_in_activity.extend(r.json()['businesses'])
         
         yelp_values = helper_function_api(all_businesses_in_activity)
@@ -211,7 +211,7 @@ def remove_duplicate_businesses(storing_yelp_values):
 
     return unique_results  
 
-    ################ MODELS FUNCTION ###########################################       
+#################### MODELS FUNCTION ###########################################       
 def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
    """Add current trip to Trip table"""
 

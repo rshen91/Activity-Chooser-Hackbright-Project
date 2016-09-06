@@ -69,6 +69,7 @@ class TestRoutes(unittest.TestCase):
         self.assertIn('address', result.data)
 
     def test_next_page(self):
+        """Make sure that the choose activity page loads once values are submitted"""
         result = self.client.post('/activity_time',
                                   data={'user_lat': '37.788668',
                                         'user_lng': '-122.411499',
@@ -76,7 +77,28 @@ class TestRoutes(unittest.TestCase):
                                         'arrival_time': '12:00',
                                         'activity_type': [u'Bakeries'],
                                         'activity_location_preference': 'near_end_location' }) 
-        self.assertIn("Please choose one business to visit.",result.data)  
+        self.assertIn("Please choose one business to visit.", result.data) 
+
+    # def test_next_final_page(self):
+    #     """Make sure the final page loads once values are submitted"""
+    #     result = self.client.post('/choose',
+    #                             data={'chosen_phone': '+15107871827',
+    #                                   'business_name': 'Warehouse Cafe',
+    #                                   'business_rating': '4.0',
+    #                                   'activity_lat': '38.0464450751',
+    #                                   'activity_lng': '-122.183320586',
+    #                                   'business_image': 'http://s3-media1.fl.yelpcdn.com/bphoto/PcCGEmB-iARgxnCbb9ckSA/o.jpg',
+    #                                   'business_url': 'https://www.yelp.com/biz/warehouse-cafe-port-costa-3?adjust_creative=HzOGErjEzRrxoumZf-xlTA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=HzOGErjEzRrxoumZf-xlTA',
+    #                                   'business_street':'5 Canyon Lake Dr',
+    #                                   'business_city': 'Port Costa',
+    #                                   'business_zipcode': '',
+    #                                   'user_lat': '37.7886625',
+    #                                   'user_lng': '-122.4115566',
+    #                                   'end_lat':'37.7960282',
+    #                                   'end_lng': '-122.4308668',
+    #                                   'end_location': '2030 Vallejo Street San Francisco',
+    #                                   'start_location': '695 Sutter St, San Francisco, CA 94102, USA'}) 
+    #     self.assertIn("Here is the", result.data)
 
 
 if __name__=="__main__":

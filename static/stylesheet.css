@@ -47,8 +47,10 @@
     color: #4527A0;
 }
 
-.navbar-text {
-    color: #ffffff;
+.navbar-default .navbar-text {
+    color: #6200EA;
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 25px;
 }
 
 .col-centered {
