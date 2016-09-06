@@ -16,7 +16,7 @@ Ever plan to arrive somewhere early and want to see what activities are near you
 ## Technologies Used
 PostgreSQL, SQLAlchemy, Python, Flask, Jinja, Javascript,  JQuery, Bootstrap, HTML, CSS
 
-[Google Maps Javascript API](https://developers.google.com/maps/documentation/directions/), [Yelp API Version 3.0](https://www.yelp.com/developers/v3/preview) 
+[Google Maps Javascript API](https://developers.google.com/maps/documentation/directions/), [Yelp API Version 3.0](https://www.yelp.com/developers/v3/preview), and [Google Maps Geocoder API](https://developers.google.com/maps/documentation/geocoding/intro)
 
 ***
 ## How to locally run Activity Chooser
@@ -45,28 +45,29 @@ Run the Flask App
 -At the homepage, the user should input a complete address and the time they want to arrive at their destination. Below, they can select (from the Yelp API category filters) activity types that interest them. Additionally, they are able to select a preference for an activity near their current location or closer to their destination. On this page, they can see their current location according to the Google Maps API. 
 
 
-![homepage](~/markdown/homepage.png)
+![homepage](~/markdown/homepage.png "homepage image")
 
 -Once they hit the submit button, the user is taken to the second page where they are provided businesses that match their selection from the homepage. Here, they can see the estimated price of each business, as well as the category the business falls under. Currently, this uses a Jinja loop and radio buttons so the user can choose only one business. 
 
 
-![middlepage](~/markdown/chooseactivity.png)
+![middlepage](~/markdown/chooseactivity.png "middle page screenshot")
 
 -The final page provides the user with a Google map from their current location, to the business they selected, followed by their final destination. There is also an interactive image for the user to click to take them to the business's Yelp page.  
 
 
-![finalpage](~/markdown/finalpage.png)
+![finalpage](~/markdown/finalpage.png "final page image")
 
 ***
+
 ## Version 2.0
 
 The next steps:
 
 
--Autocomplete feature for the user's destination
+-Autocomplete feature for the user's destination on the homepage
 
 
--Instead of radio buttons for the business selection, implementing jQuery event listeners for each business to have a button 
+-Instead of radio buttons for the business selection, implementing jQuery event listeners for each business to have a button that when selected will take to the final page
 
 
 -Mouseover AJAX feature for the Yelp business link off the image on the final page
