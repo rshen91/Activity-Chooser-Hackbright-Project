@@ -3,3 +3,10 @@ env/
 secrets.sh
 *.DS_Store
 venv/
+.coverage
+ActivityChooser.docx
+CareerDayCompanies.xlsx
+bootstrap 2/
+static/grey.png
+static/hoffman.png
+~$CareerDayCompanies.xlsx
