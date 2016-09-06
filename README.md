@@ -8,6 +8,7 @@ Ever plan to arrive somewhere early and want to see what activities are near you
 2. How to locally run Activity Chooser 
 3. How to use Activity Chooser
 4. Version 2.0
+
 ***
 
 ## Technologies Used
