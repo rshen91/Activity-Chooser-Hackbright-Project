@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block extra_js %}
-<!-- <script type="text/javascript" src="static/choose_activity.js"></script> -->
+<script type="text/javascript" src="static/choose_activity.js"></script>
 {% endblock %}
 {% block content %}
 
@@ -22,9 +22,8 @@
             {% for business in activity %}
             <br>
             <br>
-            <form action="/choose", method="POST" >
-                    <br><br>
-                    <input type= "radio" name="business_phone" value="{{ business.phone }}"> 
+            <button type="submit" action="/choose", method="POST" name="business_phone" value="{{ business.phone }}" id="submit">
+                    <br><br> 
                     <div class="list-group""panel-heading"><strong>{{ business.name }}</strong><br>
                         <li class="list-group-item panel-body">{{ business.price }}</li><br>
                         <li class="list-group-item","panel-body">{{ business.categories.0.title}}</li><br>
@@ -68,12 +67,8 @@
 <br>
 
 <br>
-    <div class="container">
-        <div class="col-xs-4 col-lg-6 col-lg-offset-3 col-centered">
-        <input class="btn btn-default floating-action-button" type="submit" value="Continue to map">
-        </div>
-    </div>
-</form>
+<!-- removed submit button -->
+</button>
 
 
 <!-- put navbar similar to Angular demo where the next html page of route options is a tab -->

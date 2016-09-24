@@ -15,7 +15,6 @@ class Trip(db.Model):
     start_time = db.Column(db.DateTime, default=datetime.datetime.now()) #need datetime for this
     user_lat = db.Column(db.String(100), nullable=False) #not provided by the user but found using HTML5 Geolocation
     user_lng = db.Column(db.String(100), nullable=False)
-    arrival_time = db.Column(db.String(100), nullable=False) #need datetime for this
     end_location = db.Column(db.String(100), nullable=False)
     end_lat = db.Column(db.String(100), nullable=False)
     end_lng = db.Column(db.String(100), nullable=False)

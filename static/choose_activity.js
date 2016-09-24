@@ -3,106 +3,60 @@
 
 $(document).ready(function () {
 console.log("HEY YOU, I AM HERE in the document.ready");
+ 
+ //when the button with the business is clicked I want it to trigger the python function activity_chosen
 
-function initMap(user_lat, user_lng, end_lat, end_lng) {
-    console.log('user_lat:', user_lat, 'user_lng:', user_lng);
-
-    //rendering a new map on the homepage in the div homepage-map
-    var marker_map = new google.maps.Map(document.getElementById('marker_map'), {
-      //this function gets the values out of the DOM, see handlePositionFound
-          center: {"lat":Number(user_lat), "lng":Number(user_lng)},
-          zoom: 18
-    });    
-
-        var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(marker_map);    
-        displayDirections(marker_map);
-        
-    }
-  //When the page loads run initMap
-  google.maps.event.addDomListener(window, "load", initMap);
-
-  function getLocation() {
-      if (navigator.geolocation) {  // when the browser has geolocation capability
-          navigator.geolocation.getCurrentPosition(handlePositionFound); // when you get the lat/long from the browser, give it as an argument to showPosition.
-      } else {
-          alert("Geolocation is not supported by the browser.");
-      } 
-    } 
-
-  function handlePositionFound(position) { //get the coords
-    console.log('position:', position); //expand the arrow
-    //this prints it in the console
-      console.log("Latitude: "+ position.coords.latitude + "<br> Longitude: " + position.coords.longitude);
-      $("#lat").val(position.coords.latitude); //user_lat
-      
-      $("#lng").val(position.coords.longitude); //user_lng
-      
-      initMap(position.coords.latitude, position.coords.longitude);
-      console.log("user lat" + user_lat);
-      console.log("user lng" + user_lng);
+function submitBusiness(evt) {
+  var formInputs = {
+    .val()
   }
+  $.post("/choose", submitBusiness)
+}
 
-  function displayDirections(map) {
-        var user_lat = $("#user_lat").val();
-        var user_lng = $("#user_lng").val();
-        // var activity_lat = $("#activity_lat").val();
-        // var activity_lng = $("#activity_lng").val();
-        var end_lat = $("#end_lat").val();
-        var end_lng = $("#end_lng").val();
-        var user_lat = $("#user_lat").val();
-        var user_lng = $("#user_lng").val();
-        // var activityWaypoint = {
-        //     location: {lat: Number(activity_lat), lng: Number(activity_lng)},
-        //     stopover: true
-        var routeOptions = {
-            origin: {lat: Number(user_lat), lng: Number(user_lng)},
-            destination: {lat: Number(end_lat), lng: Number(end_lng)},
-            // waypoints: [activityWaypoint],
-            travelMode: google.maps.TravelMode.DRIVING
-        };
-        var directionsService = new google.maps.DirectionsService;
-        directionsService.route(routeOptions, function(response, status) {
-            if (status === google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(response);
-            } else {
-                window.alert('Directions request failed due to ' + status);
-            }
+$("#submit").on("click", )
 
-        // in the callback from google maps directions service
-        var lenOfDirections = response.routes[0].legs[0].steps.length;
-        console.log("The length of directions "+ lenOfDirections);
-
-        var halfwayDirectionIndex = Math.round(lenOfDirections/2);
-        console.log("The halfway direction index "+ halfwayDirectionIndex);
-
-        var halfwayDirection = response.routes[0].legs[0].steps[halfwayDirectionIndex];
-        console.log("The halfway direction "+ halfwayDirection);
-
-        var halfwayDirectionLatLng = {lat: Number(halfwayDirection.end_point.lat()), lng: Number(halfwayDirection.end_point.lng())};
-        console.log("The halfwayDirectionLatLng "+ (halfwayDirectionLatLng));
-        var halfwayLat = response.routes[0].legs[0].steps[halfwayDirectionIndex].end_point.lat();
-        
-        console.log("halfwayLat " + halfwayLat);
-        // $("#halfway_lat").val(halfwayLat)
-        $("#halfway_lat").innerhtml(halfwayLat);
-        // $("halfway_lat").data(halfwayLat)
-
-        var halfwayLng = response.routes[0].legs[0].steps[halfwayDirectionIndex].end_point.lng();
-        console.log("halfwayLng " + halfwayLng);
-        // $("#halfway_lng").val(halfwayLng)
-        $("#halfway_lng").innerhtml(halfwayLng);
-
-        }); //end of directionsService 
-
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        directionsDisplay.setMap(map);
-
-        } //end of displayDirections
+}); //end documentReady
 
 
-    }); //end documentReady
+@app.route('/choose', methods=['POST'])
+def activity_chosen():
+    """Get the form variable chosen for the business the user wants in between"""
+    
+    chosen_phone = request.form.get("business_phone")
+    
+    # each business has a unique phone number to select information only from the chosen business
+    chosen_business = request.form.get("business_name_"+ chosen_phone)
+    chosen_business_lat = request.form.get("business_lat_" + chosen_phone) 
+    chosen_business_lng = request.form.get("business_lng_" + chosen_phone) 
+    chosen_business_rating = request.form.get("business_rating_" + chosen_phone)
+    chosen_business_image = request.form.get("business_image_" + chosen_phone)
+    chosen_business_url = request.form.get("business_url_"+ chosen_phone)
+    chosen_business_street = request.form.get("business_street_" + chosen_phone)
+    chosen_business_city = request.form.get("business_city_" + chosen_phone)
+    chosen_business_zipcode = request.form.get("business_zipcode_" + chosen_phone)
+    
+    # variables from hidden text fields in choose_activity.html 
+    user_lat = request.form.get("user_lat")
+    user_lng = request.form.get("user_lng")
+    end_lat = request.form.get("end_lat")
+    end_lng = request.form.get("end_lng")
+    start_location = request.form.get("start_location")
+    end_location = request.form.get("end_location")
 
-
-
+    return render_template("final_route.html",
+                            business_name=chosen_business,
+                            business_rating=chosen_business_rating,
+                            activity_lat=chosen_business_lat,
+                            activity_lng=chosen_business_lng,
+                            business_image=chosen_business_image,
+                            business_url=chosen_business_url,
+                            business_street=chosen_business_street,
+                            business_city=chosen_business_city,
+                            business_zipcode=chosen_business_zipcode,
+                            user_lat=user_lat,
+                            user_lng=user_lng,
+                            end_lat=end_lat,
+                            end_lng=end_lng,
+                            end_location=end_location,
+                            start_location=start_location)
 

@@ -29,7 +29,6 @@ def get_form_values():
     ################FORM VARIABLES##############################################
     end_location = request.form["end_location"] 
     print "\n\n\n\n\n\n\n", end_location #address is showing
-    arrival_time = request.form["arrival_time"]
 
     activity_types = request.form.getlist("activity_type") 
     # print "\n\n\n\n\n\n", activity_types
@@ -43,7 +42,8 @@ def get_form_values():
     
     #user's current address based on lat lngs
     # try:
-    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['server_key']))
+    print "\n\n\n\n\n os.environ", os.environ
+    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['server_key'])) #google maps is using keykey
     print "\n\n\n\n\n starting address", s.json()
 
     start_location = s.json()['results'][0]['formatted_address']
@@ -61,19 +61,12 @@ def get_form_values():
     print "\n\n\n\n\n", end_lat
     end_lng = r2.json()['results'][0]['geometry']['location']['lng']
     print "\n\n\n\n\n", end_lng
-        # end_lat = geocoder.google(end_location)
-        # print "\n\n\n\n\n\n", end_location
-        # print "\n\n\n\n", r.latlng #this isnt working 
-     
-        # unpack the lat lng here for the api call in whats near (can't have a list)
-        # end_lat, end_lng = r.latlng
+
     end_lat = str(end_lat)
     end_lng = str(end_lng)
-    # except:
-    #     end_lat="37.733245"
-    #     end_lng="122.436305"
+
     ##############ADDING THE TRIP TO THE MODEL##################################
-    add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
+    add_trip_to_table(user_lat, user_lng, end_location, end_lat, end_lng)
 
     # Model.add_preference_to_model(activity_types)
 
@@ -212,11 +205,11 @@ def remove_duplicate_businesses(storing_yelp_values):
     return unique_results  
 
 #################### MODELS FUNCTION ###########################################       
-def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
+def add_trip_to_table(user_lat, user_lng, end_location, end_lat, end_lng):
    """Add current trip to Trip table"""
 
    trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
-                     arrival_time=arrival_time, end_location=end_location, 
+                     end_location=end_location, 
                       end_lat=end_lat, end_lng=end_lng)
    db.session.add(trip_id)
    db.session.commit()
