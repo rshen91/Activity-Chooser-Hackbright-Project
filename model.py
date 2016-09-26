@@ -15,7 +15,6 @@ class Trip(db.Model):
     start_time = db.Column(db.DateTime, default=datetime.datetime.now()) #need datetime for this
     user_lat = db.Column(db.String(100), nullable=False) #not provided by the user but found using HTML5 Geolocation
     user_lng = db.Column(db.String(100), nullable=False)
-    arrival_time = db.Column(db.String(100), nullable=False) #need datetime for this
     end_location = db.Column(db.String(100), nullable=False)
     end_lat = db.Column(db.String(100), nullable=False)
     end_lng = db.Column(db.String(100), nullable=False)
@@ -82,9 +81,9 @@ def example_data():
     exactivity3 = Preference(name="Shop", yelp_id="SHOP")
 
 
-    extrip1 = Trip(user_lat="37.2939421", user_lng="-122.0063066", arrival_time="12:00", end_location="683 Sutter Street San Francisco CA", end_lat="37.788668", end_lng="-122.411499")
-    extrip2 = Trip(user_lat="37.2638324", user_lng="-122.0230146", arrival_time="16:00", end_location="2 Fox Run Wilton CT", end_lat="41.244991", end_lng="-73.476671")
-    extrip3 = Trip(user_lat="23.028779", user_lng="72.425437", arrival_time="4:00", end_location="333 Brannan St San Francisco CA", end_lat="37.780798", end_lng="-122.392501")
+    extrip1 = Trip(user_lat="37.2939421", user_lng="-122.0063066", end_location="683 Sutter Street San Francisco CA", end_lat="37.788668", end_lng="-122.411499")
+    extrip2 = Trip(user_lat="37.2638324", user_lng="-122.0230146", end_location="2 Fox Run Wilton CT", end_lat="41.244991", end_lng="-73.476671")
+    extrip3 = Trip(user_lat="23.028779", user_lng="72.425437", end_location="333 Brannan St San Francisco CA", end_lat="37.780798", end_lng="-122.392501")
 
     db.session.add_all([exactivity1, exactivity2, exactivity3, extrip1, extrip2, extrip3])
     db.session.commit()

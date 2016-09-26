@@ -29,7 +29,6 @@ def get_form_values():
     ################FORM VARIABLES##############################################
     end_location = request.form["end_location"] 
     print "\n\n\n\n\n\n\n", end_location #address is showing
-    arrival_time = request.form["arrival_time"]
 
     activity_types = request.form.getlist("activity_type") 
     # print "\n\n\n\n\n\n", activity_types
@@ -73,7 +72,7 @@ def get_form_values():
     #     end_lat="37.733245"
     #     end_lng="122.436305"
     ##############ADDING THE TRIP TO THE MODEL##################################
-    add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng)
+    add_trip_to_table(user_lat, user_lng, end_location, end_lat, end_lng)
 
     # Model.add_preference_to_model(activity_types)
 
