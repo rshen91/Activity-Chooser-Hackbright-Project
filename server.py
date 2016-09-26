@@ -211,11 +211,11 @@ def remove_duplicate_businesses(storing_yelp_values):
     return unique_results  
 
 #################### MODELS FUNCTION ###########################################       
-def add_trip_to_table(user_lat, user_lng, arrival_time, end_location, end_lat, end_lng):
+def add_trip_to_table(user_lat, user_lng, end_location, end_lat, end_lng):
    """Add current trip to Trip table"""
 
    trip_id = Trip(user_lat=user_lat, user_lng=user_lng, 
-                     arrival_time=arrival_time, end_location=end_location, 
+                      end_location=end_location, 
                       end_lat=end_lat, end_lng=end_lng)
    db.session.add(trip_id)
    db.session.commit()
