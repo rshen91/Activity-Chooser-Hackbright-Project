@@ -3,17 +3,26 @@
 
 $(document).ready(function () {
 console.log("HEY YOU, I AM HERE in the document.ready");
+var chosen_phone = ('#business_name_{{business.phone}}').val()
  
- //when the button with the business is clicked I want it to trigger the python function activity_chosen
+//when the button with the business is clicked I want it to trigger the python function activity_chosen
+$('#btnsend').click(function() {
+    $.ajax({
+        type: 'POST',
+        url:'/choose',
+        success: function(data) {
+            ;
+        }
+    });
+});
+// function submitBusiness(evt) {
+//   var formInputs = {
+//     .val()
+//   }
+//   // $.post("/choose", submitBusiness)
+// }
 
-function submitBusiness(evt) {
-  var formInputs = {
-    .val()
-  }
-  $.post("/choose", submitBusiness)
-}
-
-$("#submit").on("click", )
+// // $("#submit").on("click", )
 
 }); //end documentReady
 
