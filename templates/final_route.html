@@ -18,7 +18,7 @@
         <li><strong>{{business_name}}:</strong> {{ business_street }}
         {{ business_city }}
         {{ business_zipcode }}<br></li>
-        <li><strong>Destination:</strong>{{ end_location }}</li>
+        <li><strong>Destination:</strong> {{ end_location }}</li>
     </ul>
 <br>
 
@@ -26,7 +26,8 @@
 
     <h4>Yelp Rating {{ business_rating }}</h4> 
 
-    <h3><a href="{{ business_url }}" ><img id="business_image" class="img-circle" src="{{ business_image }}"></a></h3>
+    <h3><a href="{{ business_url }}" ><br>
+    <img id="business_image" class="img-circle" src="{{ business_image }}"></a></h3>
 </div>
 
 <!-- see developers guide for waypoints --> 

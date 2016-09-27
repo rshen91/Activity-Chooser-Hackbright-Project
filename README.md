@@ -64,13 +64,5 @@ Run the Flask App
 The next steps:
 
 
--Autocomplete feature for the user's destination on the homepage
-
-
--Instead of radio buttons for the business selection, implementing jQuery event listeners for each business to have a button that when selected will take to the final page
-
-
 -Mouseover AJAX feature for the Yelp business link off the image on the final page
 
-
--Implementation of datetime for directions (involves premium Google API membership)

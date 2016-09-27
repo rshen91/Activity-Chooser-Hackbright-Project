@@ -25,7 +25,6 @@ $(document).ready(function () {
 
         var onChangeHandler = function(){
             calculateAndDisplayRoute(directionsService, displayDirections);
-        };
 
         //sets the map traffic layer
         var trafficLayer = new google.maps.TrafficLayer();
