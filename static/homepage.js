@@ -17,15 +17,8 @@ function initMap(user_lat, user_lng) {
         var userMarker = addMarker(map, user_lat, user_lng);
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map); 
-        initAutocomplete();
-
-        function initAutocomplete() {
-          autocomplete = new google.maps.places.Autocomplete(
-            (document.getElementById('autocomplete')),
-          {types: ['geocode']});
-
-          autocomplete.addDomListener();
-        }
+  
+  $("#end_location").geocomplete();
 
         
     }
@@ -62,7 +55,7 @@ function addMarker(map, user_lat, user_lng) {
 
 // $(function() {
 
-//   $("#end_location").geocomplete();
+//   
 
 //     .bind("geocode: result", function(event, result){
 //       $.log("Result: "+ result.formatted_address);
