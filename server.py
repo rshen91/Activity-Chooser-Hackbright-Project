@@ -10,8 +10,8 @@ import googlemaps
 import pdb
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "abcef")
 
-app.secret_key = "ABC"
 
 @app.route('/')
 def homepage():
@@ -205,6 +205,10 @@ def add_trip_to_table(user_lat, user_lng, end_location, end_lat, end_lng):
 
 
 if __name__ == "__main__":
-    DebugToolbarExtension(app)
-    connect_to_db(app)
-    app.run(debug=True, host='0.0.0.0', port=5000) #vagrant requires port to be 5000
+    connect_to_db(app, os.environ.get("DATABASE_URI"))
+    db.create_all(app=app)
+
+    DEBUG = "NO_DEBUG" not in os.environ
+    PORT = int(os.environ.get("PORT", 5000))
+    
+    app.run(debug=DEBUG, host='0.0.0.0', port=PORT) #vagrant requires port to be 5000

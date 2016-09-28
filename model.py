@@ -68,6 +68,7 @@ def connect_to_db(app, dburi='postgresql:///project'):
 #    app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
+    print "Connected to DB."
 
 def example_data():
     """Create some sample data"""
@@ -88,7 +89,5 @@ def example_data():
     db.session.add_all([exactivity1, exactivity2, exactivity3, extrip1, extrip2, extrip3])
     db.session.commit()
 
-if __name__== "__main__":
-    from server import app
-    connect_to_db(app)
+
 
