@@ -58,12 +58,12 @@ class Preference(db.Model):
 
     #####################TEST FUNCTIONS ########################################
 #defaults to the project actual database
-def connect_to_db(app, dburi='postgresql:///project'):
+def connect_to_db(app, db_uri=None):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
     #dburi is in test.py so when the setUp is called it goes here and uses the test example data below
-    app.config['SQLALCHEMY_DATABASE_URI'] = dburi 
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///project'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #    app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
