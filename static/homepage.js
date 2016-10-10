@@ -39,6 +39,7 @@ function handlePositionFound(position) { //get the coords
     $("#lat").val(position.coords.latitude); 
     $("#lng").val(position.coords.longitude);
     
+    //this should trigger initMap
     initMap(position.coords.latitude, position.coords.longitude);
 }
 

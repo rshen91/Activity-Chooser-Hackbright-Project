@@ -38,14 +38,14 @@ def get_form_values():
 
     activity_location_preference = request.form["activity_location_preference"] 
 
-    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['server_key']))
-
+    s = requests.get("https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}".format(user_lat, user_lng, os.environ['KEY_KEY']))
+    print "\n\n\n\n\n s", s.json()
     start_location = s.json()['results'][0]['formatted_address']
 
 
     ###############GETTTING LAT LNGS FOR END ADDRESS############################
 
-    r2 = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}".format(end_location, os.environ['server_key']))
+    r2 = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}".format(end_location, os.environ['KEY_KEY']))
     print "\n\n\n\n\n ending latlngaddress", r2.json()
     end_lat = r2.json()['results'][0]['geometry']['location']['lat']
     print "\n\n\n\n\n", end_lat

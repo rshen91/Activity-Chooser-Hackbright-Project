@@ -1,5 +1,5 @@
-$(document).ready(function () {
-    console.log("HEY YOU, I AM HERE in the document.ready");
+// $(document).ready(function () {
+//     console.log("HEY YOU, I AM HERE in the document.ready");
 
     function initMap(user_lat, user_lng, business_lat, business_lng, end_lat, end_lng) {
 
@@ -23,6 +23,7 @@ $(document).ready(function () {
         directionsDisplay(final_map);
         // directionsDisplay(document.getElementById('right-panel'));
 
+
         var onChangeHandler = function(){
             calculateAndDisplayRoute(directionsService, displayDirections);
 
@@ -35,8 +36,8 @@ $(document).ready(function () {
         var activityMarker = addMarker(final_map, activity_lat, activity_lng);
         var userEndMarker = addMarker(final_map, Number(end_lat), Number(end_lng));
         
-    }
-
+    }//for onChangeHandler
+    };
     google.maps.event.addDomListener(window, "load", initMap);
 
     function directionsDisplay(map) {
@@ -90,4 +91,6 @@ $(document).ready(function () {
       return marker;
     }
 
-}); //end documentReady
+// }
+// ); //end documentReady
+

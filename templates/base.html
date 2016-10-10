@@ -4,13 +4,14 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <title> ActivityChooser </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <script src="https://maps.googleapis.com/maps/api/js?key={{KEY_KEY}}&libraries=places"></script>
+ 
+<!--      // <script src="https://maps.googleapis.com/maps/api/js?key={{KEY_KEY}}&libraries=places"></script> -->
     <!--  // <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script> -->
-<!--      <script src="jquery.geocomplete.min.js"></script> -->
-     <script src="https://cdn.jsdelivr.net/jquery.geocomplete/1.7.0/jquery.geocomplete.min.js"></script>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Quattrocento" rel="stylesheet"> -->
-<!-- <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet"> -->
-<!-- <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet"> -->
+<script src="https://code.jquery.com/jquery.js"></script>
+     
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTUsqTR-0D9ug_2EBITnpA0YSDjyg4W6I&callback=initMap"
+  type="text/javascript"></script>
+
 <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch" rel="stylesheet">
 
     <link rel="stylesheet" href="static/stylesheet.css">
@@ -28,6 +29,10 @@
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="static/jquery.geocomplete.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.js"></script> -->
+
+
 {% block content %} Put your body here. 
 
 {% endblock %}
